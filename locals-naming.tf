@@ -1,7 +1,6 @@
 locals {
   name_prefix = lower(var.name_prefix)
   name_suffix = lower(var.name_suffix)
-  clara_slug  = "vwan"
   caf_naming_resources = [
     "azurerm_virtual_wan",
     "azurerm_express_route_gateway",
