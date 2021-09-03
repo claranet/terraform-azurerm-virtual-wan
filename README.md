@@ -79,14 +79,14 @@ module "virtualwan" {
 
 | Name | Version |
 |------|---------|
-| azurecaf | ~> 1.1 |
-| azurerm | >= 2.74.0 |
+| azurecaf | 1.2.6 |
+| azurerm | 2.75.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics-settings | claranet/diagnostic-settings/azurerm | 4.0.2 |
+| diagnostics\_settings | claranet/diagnostic-settings/azurerm | 4.0.2 |
 
 ## Resources
 
@@ -110,7 +110,6 @@ module "virtualwan" {
 | custom\_erc\_name | Optional custom express route circuit name | `string` | `null` | no |
 | custom\_ergw\_name | Optional custom express route gateway name | `string` | `null` | no |
 | custom\_fw\_name | Optional custom firewall's name | `string` | `null` | no |
-| custom\_fw\_pip\_name | Optional custom firewall public ip's name | `string` | `null` | no |
 | custom\_vhub\_name | Optional custom virtual hub's name | `string` | `null` | no |
 | custom\_vwan\_name | Optional custom virtual wan's name. | `string` | `null` | no |
 | disable\_vpn\_encryption | Optional boolean flag to specify whether VPN encryption is disabled | `bool` | `false` | no |
