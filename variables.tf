@@ -40,6 +40,12 @@ variable "name_suffix" {
   default     = ""
 }
 
+variable "name_slug" {
+  description = "Optional slug to use with the generated resources names."
+  type        = string
+  default     = ""
+}
+
 variable "extra_tags" {
   description = "Map of additional tags."
   type        = map(string)

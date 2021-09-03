@@ -140,6 +140,7 @@ module "virtualwan" {
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set. | `list(string)` | n/a | yes |
 | name\_prefix | Optional prefiix for generated resources names. | `string` | `""` | no |
+| name\_slug | Optional slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated resources names. | `string` | `""` | no |
 | office365\_local\_breakout\_category | Optional specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
