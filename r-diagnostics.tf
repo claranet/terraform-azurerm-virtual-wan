@@ -2,7 +2,7 @@ data "azurerm_resources" "resources" {
   resource_group_name = var.resource_group_name
 }
 
-module "diagnostics-settings" {
+module "diagnostics_settings" {
   for_each = {
     for r in data.azurerm_resources.resources.resources : r.id => r
     if length(regexall("virtualHubs|virtualWans|expressRouteGateways", r.type)) == 0

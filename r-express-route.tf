@@ -28,7 +28,7 @@ resource "azurerm_express_route_circuit" "erc" {
 }
 
 resource "azurerm_express_route_circuit_peering" "ercprivatepeer" {
-  for_each                      = var.enable_express_route ? var.enable_er_private_peering ? toset(["express_route"]) : toset([]) : toset({})
+  for_each                      = var.enable_express_route ? var.enable_er_private_peering ? toset(["express_route"]) : toset([]) : toset([])
   resource_group_name           = var.resource_group_name
   express_route_circuit_name    = azurerm_express_route_circuit.erc["express_route"].name
   peering_type                  = "AzurePrivatePeering"

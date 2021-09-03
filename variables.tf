@@ -233,11 +233,6 @@ variable "fw_extra_tags" {
   type        = map(string)
   default     = {}
 }
-variable "custom_fw_pip_name" {
-  description = "Optional custom firewall public ip's name"
-  type        = string
-  default     = null
-}
 
 variable "fw_sku_tier" {
   description = "Optional sku tier of the Firewall. Possible values are `Premium` and `Standard`."

@@ -11,15 +11,13 @@ locals {
     "azurerm_firewall_ip_configuration"
   ]
 
-  vwan_name   = coalesce(var.custom_vwan_name, azurecaf_name.caf["azurerm_virtual_wan"].result)
-  ergw_name   = coalesce(var.custom_ergw_name, azurecaf_name.caf["azurerm_express_route_gateway"].result)
-  erc_name    = coalesce(var.custom_erc_name, azurecaf_name.caf["azurerm_express_route_circuit"].result)
-  fw_name     = coalesce(var.custom_fw_name, azurecaf_name.caf["azurerm_firewall"].result)
-  fw_pip_name = coalesce(var.custom_fw_pip_name, azurecaf_name.caf["azurerm_public_ip"].result)
+  vwan_name = coalesce(var.custom_vwan_name, azurecaf_name.caf["azurerm_virtual_wan"].result)
+  ergw_name = coalesce(var.custom_ergw_name, azurecaf_name.caf["azurerm_express_route_gateway"].result)
+  erc_name  = coalesce(var.custom_erc_name, azurecaf_name.caf["azurerm_express_route_circuit"].result)
+  fw_name   = coalesce(var.custom_fw_name, azurecaf_name.caf["azurerm_firewall"].result)
 
-  default_name_prefix = var.name_prefix != "" ? replace(var.name_prefix, "/[a-z0-9]$/", "$0-") : ""
-  default_naming      = "${local.name_prefix}${var.stack}-${var.client_name}-${var.location_short}-${var.environment}"
-  default_vhub_name   = "${local.default_naming}-vhub"
+  default_naming    = "${local.name_prefix}${var.stack}-${var.client_name}-${var.location_short}-${var.environment}"
+  default_vhub_name = "${local.default_naming}-vhub"
 
   vhub_name = coalesce(var.custom_vhub_name, local.default_vhub_name)
 }
