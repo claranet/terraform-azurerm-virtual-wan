@@ -79,8 +79,8 @@ module "virtualwan" {
 
 | Name | Version |
 |------|---------|
-| azurecaf | 1.2.6 |
-| azurerm | 2.75.0 |
+| azurecaf | ~> 1.1 |
+| azurerm | >= 2.74.0 |
 
 ## Modules
 
