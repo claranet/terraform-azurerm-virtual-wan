@@ -1,0 +1,11 @@
+location       = "France Central"
+location_short = "frc"
+client_name    = "test"
+environment    = "test"
+stack          = "ci"
+
+vhub_address_prefix = "10.254.0.0/23"
+
+extra_tags = {
+  foo = "bar"
+}
