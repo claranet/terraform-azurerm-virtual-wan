@@ -5,7 +5,7 @@ data "azurerm_resources" "resources" {
 module "diagnostics_settings" {
   for_each = {
     for r in data.azurerm_resources.resources.resources : r.id => r
-    if length(regexall("virtualHubs|virtualWans|expressRouteGateways|firewallPolicies", r.type)) == 0
+    if length(regexall("virtualHubs|virtualWans|expressRouteGateways|firewallPolicies|workbooks", r.type)) == 0
   }
 
   source  = "claranet/diagnostic-settings/azurerm"
