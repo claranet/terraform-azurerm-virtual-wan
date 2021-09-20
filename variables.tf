@@ -29,19 +29,19 @@ variable "location_short" {
 }
 
 variable "name_prefix" {
-  description = "Optional prefiix for generated resources names."
+  description = "Prefix for generated resources names."
   type        = string
   default     = ""
 }
 
 variable "name_suffix" {
-  description = "Optional suffix for the generated resources names."
+  description = "Suffix for the generated resources names."
   type        = string
   default     = ""
 }
 
 variable "name_slug" {
-  description = "Optional slug to use with the generated resources names."
+  description = "Slug to use with the generated resources names."
   type        = string
   default     = ""
 }
@@ -58,44 +58,44 @@ variable "logs_destinations_ids" {
 }
 # Virtual Wan specific variables
 variable "custom_vwan_name" {
-  description = "Optional custom virtual wan's name."
+  description = "Custom virtual wan's name."
   type        = string
   default     = null
 }
 
 variable "disable_vpn_encryption" {
-  description = "Optional boolean flag to specify whether VPN encryption is disabled"
+  description = "Boolean flag to specify whether VPN encryption is disabled"
   type        = bool
   default     = false
 }
 
 variable "allow_branch_to_branch_traffic" {
-  description = "Optional boolean flag to specify whether branch to branch traffic is allowed"
+  description = "Boolean flag to specify whether branch to branch traffic is allowed"
   type        = bool
   default     = true
 }
 
 variable "office365_local_breakout_category" {
-  description = "Optional specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None`"
+  description = "Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None`"
   type        = string
   default     = "None"
 }
 
 variable "vwan_type" {
-  description = "Optional specifies the Virtual WAN type. Possible Values include: `Basic` and `Standard`"
+  description = "Specifies the Virtual WAN type. Possible Values include: `Basic` and `Standard`"
   type        = string
   default     = "Standard"
 }
 
 variable "vwan_extra_tags" {
-  description = "Optional extra tags for this virtual wan"
+  description = "Extra tags for this virtual wan"
   type        = map(string)
   default     = {}
 }
 
 # Virtual Hub specific variables
 variable "custom_vhub_name" {
-  description = "Optional custom virtual hub's name"
+  description = "Custom virtual hub's name"
   type        = string
   default     = null
 }
@@ -106,19 +106,19 @@ variable "vhub_address_prefix" {
 }
 
 variable "vhub_sku" {
-  description = "Optional the sku of the virtual hub. Possible values are `Basic` and `Standard`"
+  description = "The sku of the virtual hub. Possible values are `Basic` and `Standard`"
   type        = string
   default     = "Standard"
 }
 
 variable "vhub_extra_tags" {
-  description = "Optional extra tags for this virtual hub"
+  description = "Extra tags for this virtual hub"
   type        = map(string)
   default     = {}
 }
 
 variable "vhub_routes" {
-  description = "Optional list of route blocks"
+  description = "List of route blocks. next_hop_ip_address values can be azure_firewall or an ip address"
   type = list(object({
     address_prefixes    = list(string),
     next_hop_ip_address = string
@@ -133,19 +133,19 @@ variable "enable_express_route" {
   default     = false
 }
 variable "custom_ergw_name" {
-  description = "Optional custom express route gateway name"
+  description = "Custom express route gateway name"
   type        = string
   default     = null
 }
 
 variable "ergw_exta_tags" {
-  description = "Option extra tags for Express Route Gateway"
+  description = "Extra tags for Express Route Gateway"
   type        = map(string)
   default     = {}
 }
 
 variable "custom_erc_name" {
-  description = "Optional custom express route circuit name"
+  description = "Custom express route circuit name"
   type        = string
   default     = null
 }
@@ -162,7 +162,7 @@ variable "erc_peering_location" {
 }
 
 variable "erc_bandwidth_in_mbps" {
-  description = "Optional the bandwith in Mbps of the circuite being created on the Service Provider"
+  description = "The bandwith in Mbps of the circuit being created on the Service Provider"
   type        = number
   default     = null
 }
@@ -229,49 +229,49 @@ variable "enable_firewall" {
 }
 
 variable "custom_fw_name" {
-  description = "Optional custom firewall's name"
+  description = "Custom firewall's name"
   type        = string
   default     = null
 }
 
 variable "fw_extra_tags" {
-  description = "Optional extra tags for Firewall resource"
+  description = "Extra tags for Firewall resource"
   type        = map(string)
   default     = {}
 }
 
 variable "fw_sku_tier" {
-  description = "Optional sku tier of the Firewall. Possible values are `Premium` and `Standard`."
+  description = "Sku tier of the Firewall. Possible values are `Premium` and `Standard`."
   type        = string
   default     = "Standard"
 }
 
 variable "fw_policy_id" {
-  description = "Optional ID of the Firewall Policy applied to this Firewall."
+  description = "ID of the Firewall Policy applied to this Firewall."
   type        = string
   default     = null
 }
 
 variable "fw_availibility_zones" {
-  description = "Optional availability zones in which the Azure Firewall should be created."
+  description = " availability zones in which the Azure Firewall should be created."
   type        = list(number)
   default     = [1, 2, 3]
 }
 
 variable "fw_public_ip_count" {
-  description = "Optional number of public IPs to assign to the Firewall."
+  description = "Number of public IPs to assign to the Firewall."
   type        = number
   default     = 1
 }
 
 variable "fw_dns_servers" {
-  description = "Optional list of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution"
+  description = "List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution"
   type        = list(string)
   default     = null
 }
 
 variable "fw_private_ip_ranges" {
-  description = "Optional list of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918"
+  description = "List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918"
   type        = list(string)
   default     = null
 }
