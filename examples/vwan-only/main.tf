@@ -11,7 +11,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_log_analytics_workspace" "logs" {
-  location            = module.azure-regions.location
+  location            = module.azure-region.location
   name                = var.log_analytics_workspace_name
   resource_group_name = module.rg.resource_group_name
   sku                 = "PerGB2018"
@@ -20,7 +20,7 @@ resource "azurerm_log_analytics_workspace" "logs" {
 resource "azurerm_virtual_network" "vnet" {
   address_space       = var.vnet_address_space
   name                = var.vnet_name
-  location            = module.azure-regions.location
+  location            = module.azure-region.location
   resource_group_name = module.rg.resource_group_name
 }
 
