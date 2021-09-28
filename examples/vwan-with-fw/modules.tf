@@ -1,13 +1,13 @@
 module "azure_region" {
   source  = "claranet/regions/azurerm"
-  version = "4.1.1"
+  version = "x.x.x"
 
   azure_region = var.azure_region
 }
 
 module "rg" {
   source  = "claranet/rg/azurerm"
-  version = "5.0.1"
+  version = "x.x.x"
 
   location    = module.azure_region.location
   client_name = var.client_name
@@ -17,7 +17,7 @@ module "rg" {
 
 module "virtual_wan" {
   source  = "claranet/virtual-wan/azurerm"
-  version = "5.0.0"
+  version = "x.x.x"
 
   client_name = var.client_name
   environment = var.environment
