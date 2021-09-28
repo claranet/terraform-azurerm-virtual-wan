@@ -1,4 +1,4 @@
-module "azure-region" {
+module "azure_region" {
   source  = "claranet/regions/azurerm"
   version = "4.1.1"
 
@@ -9,13 +9,13 @@ module "rg" {
   source  = "claranet/rg/azurerm"
   version = "5.0.1"
 
-  location    = module.azure-region.location
+  location    = module.azure_region.location
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
 }
 
-module "virtual-wan" {
+module "virtual_wan" {
   source  = "claranet/virtual-wan/azurerm"
   version = "5.0.0"
 
@@ -23,8 +23,8 @@ module "virtual-wan" {
   environment = var.environment
   stack       = var.stack
 
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
 
   vhub_address_prefix = var.vhub_address_prefix
