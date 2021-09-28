@@ -75,6 +75,64 @@ module "virtualwan" {
 ```
 
 <!-- BEGIN_TF_DOCS -->
+## Global versionning rule for Claranet Azure modules
+
+| Module version | Terraform version | AzureRM version |
+| -------------- | ----------------- | --------------- |
+| >= 5.x.x       | 0.15.x & 1.0.x    | >= 2.0          |
+| >= 4.x.x       | 0.13.x            | >= 2.0          |
+| >= 3.x.x       | 0.12.x            | >= 2.0          |
+| >= 2.x.x       | 0.12.x            | < 2.0           |
+| <  2.x.x       | 0.11.x            | < 2.0           |
+
+## Usage
+
+This module is optimized to work with the [Claranet terraform-wrapper](https://github.com/claranet/terraform-wrapper) tool
+which set some terraform variables in the environment needed by this module.
+More details about variables set by the `terraform-wrapper` available in the [documentation](https://github.com/claranet/terraform-wrapper#environment).
+
+```hcl
+module "azure-region" {
+  source  = "claranet/regions/azurerm"
+  version = "4.1.1"
+
+  azure_region = var.azure_region
+}
+
+module "rg" {
+  source  = "claranet/rg/azurerm"
+  version = "5.0.1"
+
+  location    = module.azure-region.location
+  client_name = var.client_name
+  environment = var.environment
+  stack       = var.stack
+}
+
+module "virtual-wan" {
+  source  = "claranet/virtual-wan/azurerm"
+  version = "5.0.0"
+
+  client_name = var.client_name
+  environment = var.environment
+  stack       = var.stack
+
+  location            = module.azure-region.location
+  location_short      = module.azure-region.location_short
+  resource_group_name = module.rg.resource_group_name
+
+  vhub_address_prefix = var.vhub_address_prefix
+
+  enable_firewall      = false
+  enable_express_route = false
+
+  logs_destinations_ids = [
+    azurerm_log_analytics_workspace.logs.id
+  ]
+}
+
+```
+
 ## Providers
 
 | Name | Version |
