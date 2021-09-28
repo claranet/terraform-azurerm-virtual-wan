@@ -1,55 +1,69 @@
 variable "client_name" {
-  type = string
+  description = "Name of client."
+  type        = string
 }
 
 variable "environment" {
-  type = string
+  description = "Name of application's environment."
+  type        = string
 }
 
 variable "stack" {
-  type = string
+  description = "Name of application's stack."
+  type        = string
 }
 
 variable "azure_region" {
-  type = string
+  description = "Name of the Region."
+  type        = string
 }
 
 variable "log_analytics_workspace_name" {
-  type = string
+  description = "Name of the log Analytics Workspace."
+  type        = string
 }
 
 variable "vhub_address_prefix" {
-  type = string
+  description = "CIDR Range to use with the virtual hub. /24 mini, /23 recommended."
+  type        = string
 }
 
 variable "erc_service_provider" {
-  type = string
+  description = "The name of the ExpressRoute Service Provider."
+  type        = string
 }
 
 variable "erc_peering_location" {
-  type = string
+  description = "The name of the peering location that this Express Route is."
+  type        = string
 }
 
 variable "erc_bandwidth_in_mbps" {
-  type = number
+  description = "The bandwith in Mbps of the circuit being created on the Service Provider"
+  type        = number
 }
 
 variable "erc_private_peering_primary_peer_address_prefix" {
-  type = string
+  description = "Primary peer address prefix for Express Route Circuit private peering"
+  type        = string
 }
 
 variable "erc_private_peering_secondary_peer_address_prefix" {
-  type = string
+  description = "Secondary peer address prefix for Express Route Circuit private peering"
+  type        = string
 }
 
 variable "erc_private_peering_vlan_id" {
-  type = number
+  description = "VLAN Id for Express Route "
+  type        = number
 }
 
 variable "erc_private_peering_peer_asn" {
-  type = number
+  description = "Peer BGP ASN for Express Route Circuit Private Peering"
+  type        = number
 }
 
 variable "erc_private_peering_shared_key" {
-  type = string
+  description = "Shared secret key for Express Route Circuit Private Peering"
+  type        = string
 }

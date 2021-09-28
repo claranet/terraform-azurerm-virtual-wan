@@ -1,23 +1,29 @@
 variable "client_name" {
-  type = string
+  description = "Name of client."
+  type        = string
 }
 
 variable "environment" {
-  type = string
+  description = "Name of application's environment."
+  type        = string
 }
 
 variable "stack" {
-  type = string
+  description = "Name of application's stack."
+  type        = string
 }
 
 variable "azure_region" {
-  type = string
+  description = "Name of the Region."
+  type        = string
 }
 
 variable "log_analytics_workspace_name" {
-  type = string
+  description = "Name of the log Analytics Workspace."
+  type        = string
 }
 
 variable "vhub_address_prefix" {
-  type = string
+  description = "CIDR Range to use with the virtual hub. /24 mini, /23 recommended."
+  type        = string
 }
