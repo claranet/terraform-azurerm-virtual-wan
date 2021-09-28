@@ -75,7 +75,7 @@ module "virtualwan" {
 ```
 
 <!-- BEGIN_TF_DOCS -->
-## Global versionning rule for Claranet Azure modules
+## Global versioning rule for Claranet Azure modules
 
 | Module version | Terraform version | AzureRM version |
 | -------------- | ----------------- | --------------- |
@@ -92,33 +92,33 @@ which set some terraform variables in the environment needed by this module.
 More details about variables set by the `terraform-wrapper` available in the [documentation](https://github.com/claranet/terraform-wrapper#environment).
 
 ```hcl
-module "azure-region" {
+module "azure_region" {
   source  = "claranet/regions/azurerm"
-  version = "4.1.1"
+  version = "x.x.x"
 
   azure_region = var.azure_region
 }
 
 module "rg" {
   source  = "claranet/rg/azurerm"
-  version = "5.0.1"
+  version = "x.x.x"
 
-  location    = module.azure-region.location
+  location    = module.azure_region.location
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
 }
 
-module "virtual-wan" {
+module "virtual_wan" {
   source  = "claranet/virtual-wan/azurerm"
-  version = "5.0.0"
+  version = "x.x.x"
 
   client_name = var.client_name
   environment = var.environment
   stack       = var.stack
 
-  location            = module.azure-region.location
-  location_short      = module.azure-region.location_short
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
 
   vhub_address_prefix = var.vhub_address_prefix
