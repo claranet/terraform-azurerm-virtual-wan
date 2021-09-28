@@ -15,7 +15,7 @@ module "rg" {
   stack       = var.stack
 }
 
-module "virtual-wan" {
+module "virtual_wan" {
   source  = "claranet/virtual-wan/azurerm"
   version = "5.0.0"
 
