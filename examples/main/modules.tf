@@ -1,3 +1,37 @@
+locals {
+  vnets = [
+    {
+      vnet_name = "MyVnet1"
+      vnet_cidr = "10.10.0.0/16"
+    },
+    {
+      vnet_name = "MyVnet2"
+      vnet_cidr = "10.100.0.0/16"
+    }
+  ]
+  subnets = [
+    {
+      name      = "MySubnet1OnVnet1"
+      cidr      = ["10.10.0.0/24"]
+      vnet_name = module.azure_virtual_network["MyVnet1"].virtual_network_name
+    },
+    {
+      name      = "MySubnet2OnVnet1"
+      cidr      = ["10.10.1.0/24"]
+      vnet_name = module.azure_virtual_network["MyVnet1"].virtual_network_name
+    },
+    {
+      name      = "MySubnet1OnVnet2"
+      cidr      = ["10.100.0.0/24"]
+      vnet_name = module.azure_virtual_network["MyVnet2"].virtual_network_name
+    },
+    {
+      name      = "MySubnet2OnVnet2"
+      cidr      = ["10.100.1.0/24"]
+      vnet_name = module.azure_virtual_network["MyVnet2"].virtual_network_name
+    }
+  ]
+}
 module "azure_region" {
   source  = "claranet/regions/azurerm"
   version = "x.x.x"
@@ -44,35 +78,65 @@ module "virtual_wan" {
   erc_private_peering_shared_key                    = "MySuperSecretSharedKey"
 
   logs_destinations_ids = [
-    azurerm_log_analytics_workspace.logs.id
+    module.logs.log_analytics_workspace_id,
+    module.logs.logs_storage_account_id
   ]
 }
 
+module "azure_virtual_network" {
+  for_each = { for vnet in local.vnets : vnet.vnet_name => vnet }
+  source   = "claranet/vnet/azurerm"
+  version  = "x.x.x"
 
-resource "azurerm_log_analytics_workspace" "logs" {
-  location            = module.azure_region.location
-  name                = "MyLogAnalyticWorkspace"
+  environment = var.environment
+  client_name = var.client_name
+  stack       = var.stack
+
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+
   resource_group_name = module.rg.resource_group_name
-  sku                 = "PerGB2018"
+
+  custom_vnet_name = "MyVnet"
+  vnet_cidr        = ["10.10.0.0/16"]
 }
 
-resource "azurerm_virtual_network" "vnet" {
-  address_space       = ["10.10.0.0/16"]
-  name                = "MyVnet"
-  location            = module.azure_region.location
-  resource_group_name = module.rg.resource_group_name
-}
+module "azure_network_subnet" {
+  source  = "claranet/subnet/azurerm"
+  version = "x.x.x"
 
-resource "azurerm_subnet" "subnet" {
-  name                 = "MySubnet"
+  for_each    = { for subnet in local.subnets : subnet.name => subnet }
+  environment = var.environment
+  client_name = var.client_name
+  stack       = var.stack
+
+  location_short = module.azure_region.location_short
+
+  custom_subnet_name = each.key
+
   resource_group_name  = module.rg.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet.id
+  virtual_network_name = each.value.vnet_name
+  subnet_cidr_list     = each.value
 
-  address_prefixes = ["10.10.0.0/24"]
 }
+
+module "logs" {
+  source = "claranet/run-common/azurerm//modules/logs"
+
+  client_name = var.client_name
+  environment = var.environment
+  stack       = var.stack
+
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+
+  resource_group_name = module.rg.resource_group_name
+}
+
 
 resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
-  name                      = "${azurerm_virtual_network.vnet.name}-to-hub"
-  remote_virtual_network_id = azurerm_virtual_network.vnet.id
+  for_each                  = { for vnet in local.vnets : vnet.vnet_name => vnet }
+  name                      = "${module.azure_virtual_network[each.key].virtual_network_name}-to-hub"
+  remote_virtual_network_id = module.azure_virtual_network[each.key].virtual_network_id
   virtual_hub_id            = module.virtual_wan.virtual_hub_id
 }
