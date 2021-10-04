@@ -61,21 +61,21 @@ module "virtual_wan" {
   location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
 
-  vhub_address_prefix = "10.254.0.0/23"
+  virtual_hub_address_prefix = "10.254.0.0/23"
 
-  enable_firewall           = true
-  enable_express_route      = true
-  enable_er_private_peering = true
+  firewall_enabled                      = true
+  express_route_enabled                 = true
+  express_route_private_peering_enabled = true
 
-  erc_service_provider  = "Equinix"
-  erc_peering_location  = "Paris"
-  erc_bandwidth_in_mbps = 100
+  express_route_circuit_service_provider  = "Equinix"
+  express_route_circuit_peering_location  = "Paris"
+  express_route_circuit_bandwidth_in_mbps = 100
 
-  erc_private_peering_primary_peer_address_prefix   = "169.254.254.0/30"
-  erc_private_peering_secondary_peer_address_prefix = "169.254.254.4/30"
-  erc_private_peering_vlan_id                       = 1234
-  erc_private_peering_peer_asn                      = 4321
-  erc_private_peering_shared_key                    = "MySuperSecretSharedKey"
+  express_route_circuit_private_peering_primary_peer_address_prefix   = "169.254.254.0/30"
+  express_route_circuit_private_peering_secondary_peer_address_prefix = "169.254.254.4/30"
+  express_route_circuit_private_peering_vlan_id                       = 1234
+  express_route_circuit_private_peering_peer_asn                      = 4321
+  express_route_circuit_private_peering_shared_key                    = "MySuperSecretSharedKey"
 
   logs_destinations_ids = [
     module.logs.log_analytics_workspace_id,
@@ -85,8 +85,9 @@ module "virtual_wan" {
 
 module "azure_virtual_network" {
   for_each = { for vnet in local.vnets : vnet.vnet_name => vnet }
-  source   = "claranet/vnet/azurerm"
-  version  = "x.x.x"
+
+  source  = "claranet/vnet/azurerm"
+  version = "x.x.x"
 
   environment = var.environment
   client_name = var.client_name
@@ -121,7 +122,8 @@ module "azure_network_subnet" {
 }
 
 module "logs" {
-  source = "claranet/run-common/azurerm//modules/logs"
+  source  = "claranet/run-common/azurerm//modules/logs"
+  version = "x.x.x"
 
   client_name = var.client_name
   environment = var.environment

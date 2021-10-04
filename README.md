@@ -1,7 +1,7 @@
 # Azure Virtual Wan
 [![Changelog](https://img.shields.io/badge/changelog-release-green.svg)](CHANGELOG.md) [![Notice](https://img.shields.io/badge/notice-copyright-yellow.svg)](NOTICE) [![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-orange.svg)](LICENSE) [![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/claranet/virtual-wan/azurerm/)
 
-Azure Virtual Wan module to create a virtual wan with one virtual hub, an Azure Firewall and an Express Route Circuit with its Private Peering
+Azure Virtual Wan module to create a virtual wan with one virtual hub, an Azure Firewall and an Express Route Circuit with its Private Peering. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
 
 ## Version compatibility
 
@@ -105,21 +105,21 @@ module "virtual_wan" {
   location_short      = module.azure_region.location_short
   resource_group_name = module.rg.resource_group_name
 
-  vhub_address_prefix = "10.254.0.0/23"
+  virtual_hub_address_prefix = "10.254.0.0/23"
 
-  enable_firewall           = true
-  enable_express_route      = true
-  enable_er_private_peering = true
+  firewall_enabled                      = true
+  express_route_enabled                 = true
+  express_route_private_peering_enabled = true
 
-  erc_service_provider  = "Equinix"
-  erc_peering_location  = "Paris"
-  erc_bandwidth_in_mbps = 100
+  express_route_circuit_service_provider  = "Equinix"
+  express_route_circuit_peering_location  = "Paris"
+  express_route_circuit_bandwidth_in_mbps = 100
 
-  erc_private_peering_primary_peer_address_prefix   = "169.254.254.0/30"
-  erc_private_peering_secondary_peer_address_prefix = "169.254.254.4/30"
-  erc_private_peering_vlan_id                       = 1234
-  erc_private_peering_peer_asn                      = 4321
-  erc_private_peering_shared_key                    = "MySuperSecretSharedKey"
+  express_route_circuit_private_peering_primary_peer_address_prefix   = "169.254.254.0/30"
+  express_route_circuit_private_peering_secondary_peer_address_prefix = "169.254.254.4/30"
+  express_route_circuit_private_peering_vlan_id                       = 1234
+  express_route_circuit_private_peering_peer_asn                      = 4321
+  express_route_circuit_private_peering_shared_key                    = "MySuperSecretSharedKey"
 
   logs_destinations_ids = [
     module.logs.log_analytics_workspace_id,
@@ -129,8 +129,9 @@ module "virtual_wan" {
 
 module "azure_virtual_network" {
   for_each = { for vnet in local.vnets : vnet.vnet_name => vnet }
-  source   = "claranet/vnet/azurerm"
-  version  = "x.x.x"
+
+  source  = "claranet/vnet/azurerm"
+  version = "x.x.x"
 
   environment = var.environment
   client_name = var.client_name
@@ -165,7 +166,8 @@ module "azure_network_subnet" {
 }
 
 module "logs" {
-  source = "claranet/run-common/azurerm//modules/logs"
+  source  = "claranet/run-common/azurerm//modules/logs"
+  version = "x.x.x"
 
   client_name = var.client_name
   environment = var.environment
@@ -217,37 +219,36 @@ resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| allow\_branch\_to\_branch\_traffic | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
+| branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
-| custom\_erc\_name | Custom express route circuit name | `string` | `null` | no |
-| custom\_ergw\_name | Custom express route gateway name | `string` | `null` | no |
-| custom\_fw\_name | Custom firewall's name | `string` | `null` | no |
-| custom\_vhub\_name | Custom virtual hub's name | `string` | `null` | no |
+| custom\_express\_route\_circuit\_name | Custom express route circuit name | `string` | `null` | no |
+| custom\_express\_route\_gateway\_name | Custom express route gateway name | `string` | `null` | no |
+| custom\_firewall\_name | Custom firewall's name | `string` | `null` | no |
+| custom\_virtual\_hub\_name | Custom virtual hub's name | `string` | `null` | no |
 | custom\_vwan\_name | Custom virtual wan's name. | `string` | `null` | no |
-| disable\_vpn\_encryption | Boolean flag to specify whether VPN encryption is disabled | `bool` | `false` | no |
-| enable\_er\_private\_peering | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
-| enable\_express\_route | Enable or not express route configuration | `bool` | `false` | no |
-| enable\_firewall | Enable or not Azure Firewall in the Virtual Hub | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
-| er\_scale\_unit | The number of scale unit with which to provision the ExpressRoute gateway. | `number` | `1` | no |
-| er\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
-| erc\_bandwidth\_in\_mbps | The bandwith in Mbps of the circuit being created on the Service Provider | `number` | `null` | no |
-| erc\_peering\_location | The name of the peering location that this Express Route is. | `string` | `null` | no |
-| erc\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
-| erc\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| erc\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| erc\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
-| erc\_private\_peering\_vlan\_id | VLAN Id for Express Route | `number` | `null` | no |
-| erc\_service\_provider | The name of the ExpressRoute Service Provider. | `string` | `null` | no |
-| ergw\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
+| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the circuit being created on the Service Provider | `number` | `null` | no |
+| express\_route\_circuit\_peering\_location | Express route peering location. | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
+| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route | `number` | `null` | no |
+| express\_route\_circuit\_service\_provider | The name of the ExpressRoute Service Provider. | `string` | `null` | no |
+| express\_route\_enabled | Enable or not express route configuration | `bool` | `false` | no |
+| express\_route\_gateway\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
+| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute gateway. | `number` | `1` | no |
+| express\_route\_private\_peering\_enabled | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
+| express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `{}` | no |
-| fw\_availibility\_zones | availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
-| fw\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
-| fw\_extra\_tags | Extra tags for Firewall resource | `map(string)` | `{}` | no |
-| fw\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
-| fw\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
-| fw\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
-| fw\_sku\_tier | Sku tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
+| firewall\_availibility\_zones | availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
+| firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
+| firewall\_enabled | Enable or not Azure Firewall in the Virtual Hub | `bool` | `true` | no |
+| firewall\_extra\_tags | Extra tags for Firewall resource | `map(string)` | `{}` | no |
+| firewall\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
+| firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
+| firewall\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
+| firewall\_sku\_tier | Sku tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set. | `list(string)` | n/a | yes |
@@ -257,12 +258,13 @@ resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
-| vhub\_address\_prefix | The address prefix which should be used for this virtual hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
-| vhub\_extra\_tags | Extra tags for this virtual hub | `map(string)` | `{}` | no |
-| vhub\_routes | List of route blocks. next\_hop\_ip\_address values can be azure\_firewall or an ip address | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
-| vhub\_sku | The sku of the virtual hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
-| vwan\_extra\_tags | Extra tags for this virtual wan | `map(string)` | `{}` | no |
-| vwan\_type | Specifies the Virtual WAN type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
+| virtual\_hub\_address\_prefix | The address prefix which should be used for this virtual hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
+| virtual\_hub\_extra\_tags | Extra tags for this virtual hub | `map(string)` | `{}` | no |
+| virtual\_hub\_routes | List of route blocks. next\_hop\_ip\_address values can be azure\_firewall or an ip address | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
+| virtual\_hub\_sku | The sku of the virtual hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
+| virtual\_wan\_extra\_tags | Extra tags for this virtual wan | `map(string)` | `{}` | no |
+| virtual\_wan\_type | Specifies the Virtual WAN type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
+| vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled | `bool` | `true` | no |
 
 ## Outputs
 

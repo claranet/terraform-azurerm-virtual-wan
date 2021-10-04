@@ -1,3 +1,4 @@
 # Unreleased
 
-*  AZ-559: Create virtual wan module
+Added
+  *  AZ-559: Create virtual wan module

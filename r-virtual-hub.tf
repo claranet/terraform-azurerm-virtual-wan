@@ -4,17 +4,17 @@ resource "azurerm_virtual_hub" "vhub" {
   resource_group_name = var.resource_group_name
 
   virtual_wan_id = azurerm_virtual_wan.vwan.id
-  address_prefix = var.vhub_address_prefix
+  address_prefix = var.virtual_hub_address_prefix
 
-  sku = var.vhub_sku
+  sku = var.virtual_hub_sku
 
   dynamic "route" {
-    for_each = toset(var.vhub_routes)
+    for_each = toset(var.virtual_hub_routes)
     content {
       address_prefixes    = route.value.address_prefixes
       next_hop_ip_address = route.value.next_hop_ip_address
     }
   }
 
-  tags = merge(local.tags, var.vhub_extra_tags)
+  tags = merge(local.tags, var.virtual_hub_extra_tags)
 }
