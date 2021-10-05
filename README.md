@@ -1,28 +1,12 @@
 # Azure Virtual Wan
 [![Changelog](https://img.shields.io/badge/changelog-release-green.svg)](CHANGELOG.md) [![Notice](https://img.shields.io/badge/notice-copyright-yellow.svg)](NOTICE) [![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-orange.svg)](LICENSE) [![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/claranet/virtual-wan/azurerm/)
 
-Azure Virtual Wan module to create a virtual wan with one virtual hub, an Azure Firewall and an Express Route Circuit with its Private Peering. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
-
-## Version compatibility
-
-| Module version | Terraform version | AzureRM version |
-| -------------- | ----------------- | --------------- |
-| >= 5.x.x       | 0.15.x & 1.0.x    | >= 2.0          |
-| >= 4.x.x       | 0.13.x & 0.14.x   | >= 2.0          |
-| >= 3.x.x       | 0.12.x            | >= 2.0          |
-| >= 2.x.x       | 0.12.x            | < 2.0           |
-| <  2.x.x       | 0.11.x            | < 2.0           |
+Azure Virtual Wan module to create a Virtual Wan with one Virtual Hub, an Azure Firewall and an Express Route Circuit with its Private Peering. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
 
 ## Naming
 
 Resource naming is based on the [Microsoft CAF naming convention best practices](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). Use the parameter `custom_<resource>_name` to override names.
 We rely on [the official Terraform Azure CAF naming provider](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/azurecaf_name) to generate resource names.
-
-## Usage
-
-This module is optimized to work with the [Claranet terraform-wrapper](https://github.com/claranet/terraform-wrapper) tool
-which set some terraform variables in the environment needed by this module.
-More details about variables set by the `terraform-wrapper` available in the [documentation](https://github.com/claranet/terraform-wrapper#environment).
 
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules
@@ -217,23 +201,23 @@ module "logs" {
 |------|-------------|------|---------|:--------:|
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
-| custom\_express\_route\_circuit\_name | Custom express route circuit name | `string` | `null` | no |
-| custom\_express\_route\_gateway\_name | Custom express route gateway name | `string` | `null` | no |
-| custom\_firewall\_name | Custom firewall's name | `string` | `null` | no |
-| custom\_virtual\_hub\_name | Custom virtual hub's name | `string` | `null` | no |
-| custom\_vwan\_name | Custom virtual wan's name. | `string` | `null` | no |
+| custom\_express\_route\_circuit\_name | Custom Express Route Circuit name | `string` | `null` | no |
+| custom\_express\_route\_gateway\_name | Custom Express Route Gateway name | `string` | `null` | no |
+| custom\_firewall\_name | Custom Firewall's name | `string` | `null` | no |
+| custom\_virtual\_hub\_name | Custom Virtual Hub's name | `string` | `null` | no |
+| custom\_vwan\_name | Custom Virtual Wan's name. | `string` | `null` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
-| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the circuit being created on the Service Provider | `number` | `null` | no |
-| express\_route\_circuit\_peering\_location | Express route peering location. | `string` | `null` | no |
+| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Circuit being created on the Service Provider | `number` | `null` | no |
+| express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
 | express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route | `number` | `null` | no |
-| express\_route\_circuit\_service\_provider | The name of the ExpressRoute Service Provider. | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route Circuit | `number` | `null` | no |
+| express\_route\_circuit\_service\_provider | The name of the Express Route Circuit Service Provider. | `string` | `null` | no |
 | express\_route\_enabled | Enable or not express route configuration | `bool` | `false` | no |
 | express\_route\_gateway\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
-| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute gateway. | `number` | `1` | no |
+| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the Express Route Gateway. | `number` | `1` | no |
 | express\_route\_private\_peering\_enabled | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
 | express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `{}` | no |
@@ -252,15 +236,15 @@ module "logs" {
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
-| peered\_virtual\_networks | List of Virtual networks IDs to peer with the Virtual Hub. | `list(string)` | `[]` | no |
+| peered\_virtual\_networks | List of Virtual Networks IDs to peer with the Virtual Hub. | `list(string)` | `[]` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
-| virtual\_hub\_address\_prefix | The address prefix which should be used for this virtual hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
-| virtual\_hub\_extra\_tags | Extra tags for this virtual hub | `map(string)` | `{}` | no |
-| virtual\_hub\_routes | List of route blocks. next\_hop\_ip\_address values can be azure\_firewall or an ip address | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
-| virtual\_hub\_sku | The sku of the virtual hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
-| virtual\_wan\_extra\_tags | Extra tags for this virtual wan | `map(string)` | `{}` | no |
-| virtual\_wan\_type | Specifies the Virtual WAN type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
+| virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
+| virtual\_hub\_extra\_tags | Extra tags for this Virtual Hub | `map(string)` | `{}` | no |
+| virtual\_hub\_routes | List of route blocks. next\_hop\_ip\_address values can be azure\_firewall or an Ip address | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
+| virtual\_hub\_sku | The sku of the Virtual Hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
+| virtual\_wan\_extra\_tags | Extra tags for this Virtual Wan | `map(string)` | `{}` | no |
+| virtual\_wan\_type | Specifies the Virtual Wan type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
 | vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled | `bool` | `true` | no |
 
 ## Outputs
@@ -280,6 +264,6 @@ module "logs" {
 
 ## Related documentation
 
-- Azure virtual wan: [docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about](https://docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
-- Azure firewall: [docs.microsoft.com/en-us/azure/firewall/overview](https://docs.microsoft.com/en-us/azure/firewall/overview)
+- Azure Virtual Wan: [docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about](https://docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
+- Azure Firewall: [docs.microsoft.com/en-us/azure/firewall/overview](https://docs.microsoft.com/en-us/azure/firewall/overview)
 - Azure Express Route Circuit: [docs.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings](https://docs.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings)
