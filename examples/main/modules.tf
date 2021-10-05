@@ -81,6 +81,14 @@ module "virtual_wan" {
     module.logs.log_analytics_workspace_id,
     module.logs.logs_storage_account_id
   ]
+
+  peered_virtual_networks = [
+    for vnet in local.vnets :
+    {
+      connection_name    = "peer_${vnet.vnet_name}",
+      virtual_network_id = module.azure_virtual_network[vnet.vnet_name].virtual_network_id
+    }
+  ]
 }
 
 module "azure_virtual_network" {
@@ -98,8 +106,8 @@ module "azure_virtual_network" {
 
   resource_group_name = module.rg.resource_group_name
 
-  custom_vnet_name = "MyVnet"
-  vnet_cidr        = ["10.10.0.0/16"]
+  custom_vnet_name = each.value.vnet_name
+  vnet_cidr        = each.value.vnet_cidr
 }
 
 module "azure_network_subnet" {

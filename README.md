@@ -125,6 +125,14 @@ module "virtual_wan" {
     module.logs.log_analytics_workspace_id,
     module.logs.logs_storage_account_id
   ]
+
+  peered_virtual_networks = [
+    for vnet in local.vnets :
+    {
+      connection_name    = "peer_${vnet.vnet_name}",
+      virtual_network_id = module.azure_virtual_network[vnet.vnet_name].virtual_network_id
+    }
+  ]
 }
 
 module "azure_virtual_network" {
@@ -142,8 +150,8 @@ module "azure_virtual_network" {
 
   resource_group_name = module.rg.resource_group_name
 
-  custom_vnet_name = "MyVnet"
-  vnet_cidr        = ["10.10.0.0/16"]
+  custom_vnet_name = each.value.vnet_name
+  vnet_cidr        = each.value.vnet_cidr
 }
 
 module "azure_network_subnet" {
@@ -212,6 +220,7 @@ resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
 | [azurerm_express_route_gateway.ergw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_gateway) | resource |
 | [azurerm_firewall.azfw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/firewall) | resource |
 | [azurerm_virtual_hub.vhub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub) | resource |
+| [azurerm_virtual_hub_connection.peer_vnets_to_hub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_connection) | resource |
 | [azurerm_virtual_wan.vwan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
 | [azurerm_resources.resources](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resources) | data source |
 
@@ -256,6 +265,7 @@ resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
+| peered\_virtual\_networks | List Map of Virtual networks to peer with the Virtual Hub.<br>Allowed fields are `connection_name` and `virtual_network_id`.<pre>{<br>  connection_name = "NameOfTheConnection"<br>  virtual_network_id = "/Id/Of/The/Vnet/To/Peer/With/Hub"<br>}</pre> | `list(map(string))` | `[]` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
 | virtual\_hub\_address\_prefix | The address prefix which should be used for this virtual hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |

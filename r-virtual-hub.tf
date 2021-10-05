@@ -18,3 +18,11 @@ resource "azurerm_virtual_hub" "vhub" {
 
   tags = merge(local.tags, var.virtual_hub_extra_tags)
 }
+
+resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
+  for_each = { for virtual_network in var.peered_virtual_networks : virtual_network.connection_name => virtual_network }
+
+  name                      = each.value.connection_name
+  remote_virtual_network_id = each.value.virtual_network_id
+  virtual_hub_id            = azurerm_virtual_hub.vhub.id
+}
