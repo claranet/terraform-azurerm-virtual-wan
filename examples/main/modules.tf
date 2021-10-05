@@ -82,13 +82,8 @@ module "virtual_wan" {
     module.logs.logs_storage_account_id
   ]
 
-  peered_virtual_networks = [
-    for vnet in local.vnets :
-    {
-      connection_name    = "peer_${vnet.vnet_name}",
-      virtual_network_id = module.azure_virtual_network[vnet.vnet_name].virtual_network_id
-    }
-  ]
+  peered_virtual_networks = [for vnet in local.vnets : module.azure_virtual_network[vnet.vnet_name].virtual_network_id]
+
 }
 
 module "azure_virtual_network" {
@@ -141,12 +136,4 @@ module "logs" {
   location_short = module.azure_region.location_short
 
   resource_group_name = module.rg.resource_group_name
-}
-
-
-resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
-  for_each                  = { for vnet in local.vnets : vnet.vnet_name => vnet }
-  name                      = "${module.azure_virtual_network[each.key].virtual_network_name}-to-hub"
-  remote_virtual_network_id = module.azure_virtual_network[each.key].virtual_network_id
-  virtual_hub_id            = module.virtual_wan.virtual_hub_id
 }

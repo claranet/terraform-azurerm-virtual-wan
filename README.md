@@ -126,13 +126,8 @@ module "virtual_wan" {
     module.logs.logs_storage_account_id
   ]
 
-  peered_virtual_networks = [
-    for vnet in local.vnets :
-    {
-      connection_name    = "peer_${vnet.vnet_name}",
-      virtual_network_id = module.azure_virtual_network[vnet.vnet_name].virtual_network_id
-    }
-  ]
+  peered_virtual_networks = [for vnet in local.vnets : module.azure_virtual_network[vnet.vnet_name].virtual_network_id]
+
 }
 
 module "azure_virtual_network" {
@@ -185,14 +180,6 @@ module "logs" {
   location_short = module.azure_region.location_short
 
   resource_group_name = module.rg.resource_group_name
-}
-
-
-resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
-  for_each                  = { for vnet in local.vnets : vnet.vnet_name => vnet }
-  name                      = "${module.azure_virtual_network[each.key].virtual_network_name}-to-hub"
-  remote_virtual_network_id = module.azure_virtual_network[each.key].virtual_network_id
-  virtual_hub_id            = module.virtual_wan.virtual_hub_id
 }
 
 ```
@@ -265,7 +252,7 @@ resource "azurerm_virtual_hub_connection" "peer_vnet_to_hub" {
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
-| peered\_virtual\_networks | List Map of Virtual networks to peer with the Virtual Hub.<br>Allowed fields are `connection_name` and `virtual_network_id`.<pre>{<br>  connection_name = "NameOfTheConnection"<br>  virtual_network_id = "/Id/Of/The/Vnet/To/Peer/With/Hub"<br>}</pre> | `list(map(string))` | `[]` | no |
+| peered\_virtual\_networks | List of Virtual networks IDs to peer with the Virtual Hub. | `list(string)` | `[]` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
 | virtual\_hub\_address\_prefix | The address prefix which should be used for this virtual hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |

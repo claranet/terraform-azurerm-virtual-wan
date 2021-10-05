@@ -20,9 +20,8 @@ resource "azurerm_virtual_hub" "vhub" {
 }
 
 resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
-  for_each = { for virtual_network in var.peered_virtual_networks : virtual_network.connection_name => virtual_network }
-
-  name                      = each.value.connection_name
-  remote_virtual_network_id = each.value.virtual_network_id
+  for_each                  = toset(var.peered_virtual_networks)
+  name                      = "peer_${split("/", each.value)[8]}_to_${local.vhub_name}"
+  remote_virtual_network_id = each.value
   virtual_hub_id            = azurerm_virtual_hub.vhub.id
 }

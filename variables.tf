@@ -281,15 +281,7 @@ variable "firewall_private_ip_ranges" {
 }
 
 variable "peered_virtual_networks" {
-  description = <<-EOD
-List Map of Virtual networks to peer with the Virtual Hub.
-Allowed fields are `connection_name` and `virtual_network_id`.
-```
-{
-  connection_name = "NameOfTheConnection"
-  virtual_network_id = "/Id/Of/The/Vnet/To/Peer/With/Hub"
-} ```
-EOD
-  type        = list(map(string))
+  description = "List of Virtual networks IDs to peer with the Virtual Hub."
+  type        = list(string)
   default     = []
 }
