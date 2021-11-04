@@ -207,7 +207,7 @@ module "logs" {
 | custom\_virtual\_hub\_name | Custom Virtual Hub's name | `string` | `null` | no |
 | custom\_vwan\_name | Custom Virtual Wan's name. | `string` | `null` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
-| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Circuit being created on the Service Provider | `number` | `null` | no |
+| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
 | express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
 | express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
@@ -215,20 +215,20 @@ module "logs" {
 | express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route Circuit | `number` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the Express Route Circuit Service Provider. | `string` | `null` | no |
-| express\_route\_enabled | Enable or not express route configuration | `bool` | `false` | no |
+| express\_route\_enabled | Enable or not Express Route configuration | `bool` | `false` | no |
 | express\_route\_gateway\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the Express Route Gateway. | `number` | `1` | no |
 | express\_route\_private\_peering\_enabled | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
-| express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
+| express\_route\_sku | Express Route SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `{}` | no |
-| firewall\_availibility\_zones | availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
+| firewall\_availibility\_zones | Availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
 | firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
 | firewall\_enabled | Enable or not Azure Firewall in the Virtual Hub | `bool` | `true` | no |
 | firewall\_extra\_tags | Extra tags for Firewall resource | `map(string)` | `{}` | no |
 | firewall\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
 | firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
 | firewall\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
-| firewall\_sku\_tier | Sku tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
+| firewall\_sku\_tier | SKU tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set. | `list(string)` | n/a | yes |
@@ -241,8 +241,8 @@ module "logs" {
 | stack | Name of application's stack. | `string` | n/a | yes |
 | virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
 | virtual\_hub\_extra\_tags | Extra tags for this Virtual Hub | `map(string)` | `{}` | no |
-| virtual\_hub\_routes | List of route blocks. next\_hop\_ip\_address values can be azure\_firewall or an Ip address | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
-| virtual\_hub\_sku | The sku of the Virtual Hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
+| virtual\_hub\_routes | List of route blocks. `next_hop_ip_address` values can be `azure_firewall` or an IP address. | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
+| virtual\_hub\_sku | The SKU of the Virtual Hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
 | virtual\_wan\_extra\_tags | Extra tags for this Virtual Wan | `map(string)` | `{}` | no |
 | virtual\_wan\_type | Specifies the Virtual Wan type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
 | vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled | `bool` | `true` | no |

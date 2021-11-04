@@ -110,7 +110,7 @@ variable "virtual_hub_address_prefix" {
 }
 
 variable "virtual_hub_sku" {
-  description = "The sku of the Virtual Hub. Possible values are `Basic` and `Standard`"
+  description = "The SKU of the Virtual Hub. Possible values are `Basic` and `Standard`"
   type        = string
   default     = "Standard"
 }
@@ -122,7 +122,7 @@ variable "virtual_hub_extra_tags" {
 }
 
 variable "virtual_hub_routes" {
-  description = "List of route blocks. next_hop_ip_address values can be azure_firewall or an Ip address"
+  description = "List of route blocks. `next_hop_ip_address` values can be `azure_firewall` or an IP address."
   type = list(object({
     address_prefixes    = list(string),
     next_hop_ip_address = string
@@ -132,7 +132,7 @@ variable "virtual_hub_routes" {
 
 # Express route variables
 variable "express_route_enabled" {
-  description = "Enable or not express route configuration"
+  description = "Enable or not Express Route configuration"
   type        = bool
   default     = false
 }
@@ -166,7 +166,7 @@ variable "express_route_circuit_peering_location" {
 }
 
 variable "express_route_circuit_bandwidth_in_mbps" {
-  description = "The bandwith in Mbps of the Circuit being created on the Service Provider"
+  description = "The bandwith in Mbps of the Express Route Circuit being created on the Service Provider"
   type        = number
   default     = null
 }
@@ -178,7 +178,7 @@ variable "express_route_circuit_service_provider" {
 }
 
 variable "express_route_sku" {
-  description = "ExpressRoute SKU"
+  description = "Express Route SKU"
   type = object({
     tier   = string,
     family = string
@@ -245,7 +245,7 @@ variable "firewall_extra_tags" {
 }
 
 variable "firewall_sku_tier" {
-  description = "Sku tier of the Firewall. Possible values are `Premium` and `Standard`."
+  description = "SKU tier of the Firewall. Possible values are `Premium` and `Standard`."
   type        = string
   default     = "Standard"
 }
@@ -257,7 +257,7 @@ variable "firewall_policy_id" {
 }
 
 variable "firewall_availibility_zones" {
-  description = " availability zones in which the Azure Firewall should be created."
+  description = "Availability zones in which the Azure Firewall should be created."
   type        = list(number)
   default     = [1, 2, 3]
 }
