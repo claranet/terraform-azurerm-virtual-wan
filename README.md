@@ -179,7 +179,7 @@ module "logs" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics\_settings | claranet/diagnostic-settings/azurerm | 4.0.2 |
+| diagnostics\_settings | claranet/diagnostic-settings/azurerm | 4.0.3 |
 
 ## Resources
 
