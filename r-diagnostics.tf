@@ -9,7 +9,7 @@ module "diagnostics_settings" {
   }
 
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "4.0.2"
+  version = "4.0.3"
 
   resource_id = each.value.id
 
