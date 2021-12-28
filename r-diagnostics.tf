@@ -5,11 +5,11 @@ data "azurerm_resources" "resources" {
 module "diagnostics_settings" {
   for_each = {
     for r in data.azurerm_resources.resources.resources : r.id => r
-    if length(regexall("virtualHubs|virtualWans|expressRouteGateways|firewallPolicies|workbooks", r.type)) == 0
+    if length(regexall("virtualHubs|virtualWans|expressRouteGateways|firewallPolicies|workbooks|ipGroups", r.type)) == 0
   }
 
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "4.0.2"
+  version = "4.0.3"
 
   resource_id = each.value.id
 
