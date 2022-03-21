@@ -179,21 +179,16 @@ module "logs" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics\_settings | claranet/diagnostic-settings/azurerm | 4.0.3 |
+| express\_route | ./modules/express-route | n/a |
+| firewall | ./modules/firewall | n/a |
+| vhub | ./modules/virtual-hub | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurecaf_name.caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
-| [azurerm_express_route_circuit.erc](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit) | resource |
-| [azurerm_express_route_circuit_peering.ercprivatepeer](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit_peering) | resource |
-| [azurerm_express_route_gateway.ergw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_gateway) | resource |
-| [azurerm_firewall.azfw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/firewall) | resource |
-| [azurerm_virtual_hub.vhub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub) | resource |
-| [azurerm_virtual_hub_connection.peer_vnets_to_hub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_connection) | resource |
+| [azurecaf_name.virtual_wan_caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurerm_virtual_wan.vwan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
-| [azurerm_resources.resources](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resources) | data source |
 
 ## Inputs
 
@@ -260,6 +255,7 @@ module "logs" {
 | firewall\_private\_ip\_address | Private IP address of the firewall |
 | firewall\_public\_ip | Public IP address of the Firewall |
 | virtual\_hub\_id | Id of the virtual hub |
+| virtual\_wan\_id | Id of the Virtual Wan |
 <!-- END_TF_DOCS -->
 
 ## Related documentation

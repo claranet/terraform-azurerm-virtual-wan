@@ -1,3 +1,8 @@
+# Unreleased
+
+Breaking
+    * AZ-715 Split sub-resources into sub-modules
+
 # v5.0.1 - 2021-12-28
 
 Fixed

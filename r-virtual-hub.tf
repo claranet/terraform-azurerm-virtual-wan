@@ -1,27 +1,24 @@
-resource "azurerm_virtual_hub" "vhub" {
-  name                = local.vhub_name
+module "vhub" {
+  source = "./modules/virtual-hub"
+
+  client_name             = var.client_name
+  environment             = var.environment
+  custom_virtual_hub_name = var.custom_virtual_hub_name
+
   location            = var.location
+  location_short      = var.location_short
   resource_group_name = var.resource_group_name
 
-  virtual_wan_id = azurerm_virtual_wan.vwan.id
-  address_prefix = var.virtual_hub_address_prefix
+  logs_destinations_ids = var.logs_destinations_ids
+  stack                 = var.stack
 
-  sku = var.virtual_hub_sku
+  virtual_wan_id             = azurerm_virtual_wan.vwan.id
+  virtual_hub_address_prefix = var.virtual_hub_address_prefix
 
-  dynamic "route" {
-    for_each = toset(var.virtual_hub_routes)
-    content {
-      address_prefixes    = route.value.address_prefixes
-      next_hop_ip_address = route.value.next_hop_ip_address
-    }
-  }
+  virtual_hub_sku    = var.virtual_hub_sku
+  virtual_hub_routes = var.virtual_hub_routes
 
-  tags = merge(local.tags, var.virtual_hub_extra_tags)
-}
+  peered_virtual_networks = var.peered_virtual_networks
 
-resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
-  for_each                  = toset(var.peered_virtual_networks)
-  name                      = "peer_${split("/", each.value)[8]}_to_${local.vhub_name}"
-  remote_virtual_network_id = each.value
-  virtual_hub_id            = azurerm_virtual_hub.vhub.id
+  virtual_hub_tags = merge(local.tags, var.virtual_hub_extra_tags)
 }

@@ -1,45 +1,50 @@
 output "express_route_circuit_id" {
   description = "The ID of the ExpressRoute circuit"
-  value       = azurerm_express_route_circuit.erc["express_route"].id
+  value       = try(module.express_route["express_route"].express_route_circuit_id, null)
 }
 
 output "express_route_circuit_service_provider_provisioning_state" {
   description = "The ExpressRoute circuit provisioning state from your chosen service provider"
-  value       = azurerm_express_route_circuit.erc["express_route"].service_provider_provisioning_state
+  value       = try(module.express_route["express_route"].express_route_circuit_service_provider_provisioning_state, null)
 }
 
 output "express_route_circuit_service_key" {
   description = "The string needed by the service provider to provision the ExressRoute circuit"
-  value       = azurerm_express_route_circuit.erc["express_route"].service_key
+  value       = try(module.express_route["express_route"].express_route_circuit_service_key, null)
   sensitive   = true
 }
 
 output "express_route_gateway_id" {
   description = "Id of the ExpressRoute gateway"
-  value       = azurerm_express_route_gateway.ergw["express_route"].id
+  value       = try(module.express_route["express_route"].express_route_gateway_id, null)
 }
 
 output "express_route_peering_azure_asn" {
   description = "ASN (Autonomous System Number) Used by Azure for BGP Peering"
-  value       = azurerm_express_route_circuit_peering.ercprivatepeer["express_route"].azure_asn
+  value       = try(module.express_route["express_route"].express_route_peering_azure_asn, null)
 }
 
 output "firewall_public_ip" {
   description = "Public IP address of the Firewall"
-  value       = azurerm_firewall.azfw["firewall"].virtual_hub[0].public_ip_addresses
+  value       = try(module.firewall.firewall_public_ip, null)
 }
 
 output "firewall_id" {
   description = "Id of the firewall"
-  value       = azurerm_firewall.azfw["firewall"].id
+  value       = try(module.firewall.firewall_id, null)
 }
 
 output "firewall_private_ip_address" {
   description = "Private IP address of the firewall"
-  value       = azurerm_firewall.azfw["firewall"].virtual_hub[0].private_ip_address
+  value       = try(module.firewall.firewall_private_ip_address, null)
 }
 
 output "virtual_hub_id" {
   description = "Id of the virtual hub"
-  value       = azurerm_virtual_hub.vhub.id
+  value       = module.vhub.virtual_hub_id
+}
+
+output "virtual_wan_id" {
+  description = "Id of the Virtual Wan"
+  value       = azurerm_virtual_wan.vwan.id
 }

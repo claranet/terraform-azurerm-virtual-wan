@@ -285,3 +285,29 @@ variable "peered_virtual_networks" {
   type        = list(string)
   default     = []
 }
+
+# VPN Specific variables
+variable "custom_vpn_gateway_name" {
+  description = "Custom name for the VPN Gateway"
+  type        = string
+  default     = null
+}
+
+variable "vpn_gateway_tags" {
+  description = "Extra tags for the VPN Gateway"
+  type        = map(string)
+  default     = null
+}
+
+variable "vpn_gateway_routing_preference" {
+  description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
+  type        = string
+  default     = "Microsoft network"
+}
+
+variable "vpn_gateway_scale_unit" {
+  description = "The scale unit for this VPN Gateway"
+  type        = number
+  default     = 1
+}
+
