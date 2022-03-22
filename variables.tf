@@ -302,7 +302,7 @@ variable "vpn_gateway_tags" {
 variable "vpn_gateway_routing_preference" {
   description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
   type        = string
-  default     = "Microsoft network"
+  default     = "Microsoft Network"
 }
 
 variable "vpn_gateway_scale_unit" {
@@ -311,3 +311,69 @@ variable "vpn_gateway_scale_unit" {
   default     = 1
 }
 
+variable "vpn_sites" {
+  description = "VPN Site configuration"
+  type = list(object({
+    name          = string,
+    address_cidrs = optional(list(string))
+    links = list(object({
+      name       = string
+      fqdn       = optional(string)
+      ip_address = optional(string)
+      bgp = optional(list(object({
+        asn             = string
+        peering_address = string
+      })))
+      provider_name = optional(string)
+      speed_in_mbps = optional(string)
+    }))
+    device_model  = optional(string)
+    device_vendor = optional(string)
+  }))
+  default = null
+}
+
+variable "vpn_gateway_instance_0_bgp_peering_address" {
+  description = "List of custom BGP IP Addresses to assign to the first instance"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpn_gateway_instance_1_bgp_peering_address" {
+  description = "List of custom BGP IP Addresses to assign to the second instance"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpn_connections" {
+  description = "VPN Connections configuration"
+  type = list(object({
+    name      = string
+    site_name = string
+    links = list(object({
+      name                 = string,
+      egress_nat_rule_ids  = optional(list(string))
+      ingress_nat_rule_ids = optional(list(string))
+      bandwidth_mbps       = optional(number)
+      bgp_enabled          = optional(bool)
+      connection_mode      = optional(string)
+      ipsec_policy = optional(object({
+        dh_group                 = string
+        ike_encryption_algorithm = string
+        ike_integrity_algorithm  = string
+        encryption_algorithm     = string
+        integrity_algorithm      = string
+        pfs_group                = string
+        sa_data_size_kb          = number
+        sa_lifetime_sec          = number
+      }))
+      protocol                              = optional(string)
+      ratelimit_enabled                     = optional(bool)
+      route_weight                          = optional(number)
+      shared_key                            = optional(string)
+      local_azure_ip_address_enabled        = optional(bool)
+      policy_based_traffic_selector_enabled = optional(bool)
+    }))
+  }))
+  default = null
+}

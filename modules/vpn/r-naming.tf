@@ -7,3 +7,4 @@ resource "azurecaf_name" "azure_vpngw_caf" {
   clean_input   = true
   separator     = "-"
 }
+

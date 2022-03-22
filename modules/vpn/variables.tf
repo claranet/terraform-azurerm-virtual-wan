@@ -57,12 +57,6 @@ variable "custom_vpn_gateway_name" {
   default     = null
 }
 
-variable "custom_vpn_gateway_connection_name" {
-  description = "Custom name for the VPN Connection"
-  type        = string
-  default     = null
-}
-
 variable "vpn_gateway_tags" {
   description = "Extra tags for the VPN Gateway"
   type        = map(string)
@@ -72,12 +66,13 @@ variable "vpn_gateway_tags" {
 variable "vpn_gateway_routing_preference" {
   description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
   type        = string
-  default     = "Microsoft network"
+  default     = "Microsoft Network"
 }
 
 variable "vpn_gateway_bgp_asn" {
   description = "Peer ASN of this vpn gateway"
   type        = number
+  default     = 65515
 }
 
 variable "vpn_gateway_bgp_peer_weight" {
@@ -90,12 +85,21 @@ variable "vpn_gateway_instance_0_bgp_peering_address" {
   description = "List of custom BGP IP Addresses to assign to the first instance"
   type        = list(string)
   default     = null
+  validation {
+    #    condition     = can(regex("169\\.254\\.2[1,2]\\.(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", var.vpn_gateway_instance_0_bgp_peering_address) || var.vpn_gateway_instance_0_bgp_peering_address == null)
+    condition     = alltrue([for ip in var.vpn_gateway_instance_0_bgp_peering_address : can(regex("169\\.254\\.2[1,2]\\.(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", ip))]) || var.vpn_gateway_instance_0_bgp_peering_address == null
+    error_message = "BPG Peering address must be in range 169.254.21.0/24 or 169.254.22.0/24."
+  }
 }
 
 variable "vpn_gateway_instance_1_bgp_peering_address" {
   description = "List of custom BGP IP Addresses to assign to the second instance"
   type        = list(string)
   default     = null
+  validation {
+    condition     = alltrue([for ip in var.vpn_gateway_instance_1_bgp_peering_address : can(regex("169\\.254\\.2[1,2]\\.(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", ip))]) || var.vpn_gateway_instance_1_bgp_peering_address == null
+    error_message = "BPG Peering address must be in range 169.254.21.0/24 or 169.254.22.0/24."
+  }
 }
 
 
@@ -105,12 +109,11 @@ variable "vpn_gateway_scale_unit" {
   default     = 1
 }
 
-variable "vpn_site" {
+variable "vpn_sites" {
   description = "VPN Site configuration"
   type = list(object({
-    name           = string,
-    address_cidrs  = list(string)
-    virtual_wan_id = string
+    name          = string,
+    address_cidrs = optional(list(string))
     links = list(object({
       name       = string
       fqdn       = optional(string)
@@ -129,6 +132,43 @@ variable "vpn_site" {
 }
 
 variable "virtual_hub_id" {
-  description = "Id of the Virtual Hub in which to deploy the Firewall"
+  description = "Id of the Virtual Hub in which to deploy the VPN"
   type        = string
+}
+
+variable "virtual_wan_id" {
+  description = "Id of the Virtual Wan who hosts the Virtual Hub"
+}
+
+variable "vpn_connections" {
+  description = "VPN Connections configuration"
+  type = list(object({
+    name      = string
+    site_name = string
+    links = list(object({
+      name                 = string,
+      egress_nat_rule_ids  = optional(list(string))
+      ingress_nat_rule_ids = optional(list(string))
+      bandwidth_mbps       = optional(number)
+      bgp_enabled          = optional(bool)
+      connection_mode      = optional(string)
+      ipsec_policy = optional(object({
+        dh_group                 = string
+        ike_encryption_algorithm = string
+        ike_integrity_algorithm  = string
+        encryption_algorithm     = string
+        integrity_algorithm      = string
+        pfs_group                = string
+        sa_data_size_kb          = number
+        sa_lifetime_sec          = number
+      }))
+      protocol                              = optional(string)
+      ratelimit_enabled                     = optional(bool)
+      route_weight                          = optional(number)
+      shared_key                            = optional(string)
+      local_azure_ip_address_enabled        = optional(bool)
+      policy_based_traffic_selector_enabled = optional(bool)
+    }))
+  }))
+  default = null
 }
