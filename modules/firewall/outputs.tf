@@ -15,10 +15,10 @@ output "firewall_management_ip_configuration" {
 
 output "firewall_public_ip" {
   description = "Public IP address of the firewall"
-  value       = azurerm_firewall.azfw.virtual_hub.0.public_ip_addresses
+  value       = azurerm_firewall.azfw.virtual_hub[0].public_ip_addresses
 }
 
 output "firewall_private_ip_address" {
   description = "Private IP address of the firewall"
-  value       = azurerm_firewall.azfw.virtual_hub.0.private_ip_address
+  value       = azurerm_firewall.azfw.virtual_hub[0].private_ip_address
 }

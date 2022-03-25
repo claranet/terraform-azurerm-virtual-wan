@@ -173,7 +173,7 @@ module "logs" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | >= 2.74.0 |
+| azurerm | ~> 2.90 |
 
 ## Modules
 
@@ -182,6 +182,7 @@ module "logs" {
 | express\_route | ./modules/express-route | n/a |
 | firewall | ./modules/firewall | n/a |
 | vhub | ./modules/virtual-hub | n/a |
+| vpn | ./modules/vpn | n/a |
 
 ## Resources
 
@@ -200,6 +201,7 @@ module "logs" {
 | custom\_express\_route\_gateway\_name | Custom Express Route Gateway name | `string` | `null` | no |
 | custom\_firewall\_name | Custom Firewall's name | `string` | `null` | no |
 | custom\_virtual\_hub\_name | Custom Virtual Hub's name | `string` | `null` | no |
+| custom\_vpn\_gateway\_name | Custom name for the VPN Gateway | `string` | `null` | no |
 | custom\_vwan\_name | Custom Virtual Wan's name. | `string` | `null` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
 | express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
@@ -240,7 +242,14 @@ module "logs" {
 | virtual\_hub\_sku | The SKU of the Virtual Hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
 | virtual\_wan\_extra\_tags | Extra tags for this Virtual Wan | `map(string)` | `{}` | no |
 | virtual\_wan\_type | Specifies the Virtual Wan type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
+| vpn\_connections | VPN Connections configuration | <pre>list(object({<br>    name      = string<br>    site_name = string<br>    links = list(object({<br>      name                 = string,<br>      egress_nat_rule_ids  = optional(list(string))<br>      ingress_nat_rule_ids = optional(list(string))<br>      bandwidth_mbps       = optional(number)<br>      bgp_enabled          = optional(bool)<br>      connection_mode      = optional(string)<br>      ipsec_policy = optional(object({<br>        dh_group                 = string<br>        ike_encryption_algorithm = string<br>        ike_integrity_algorithm  = string<br>        encryption_algorithm     = string<br>        integrity_algorithm      = string<br>        pfs_group                = string<br>        sa_data_size_kb          = number<br>        sa_lifetime_sec          = number<br>      }))<br>      protocol                              = optional(string)<br>      ratelimit_enabled                     = optional(bool)<br>      route_weight                          = optional(number)<br>      shared_key                            = optional(string)<br>      local_azure_ip_address_enabled        = optional(bool)<br>      policy_based_traffic_selector_enabled = optional(bool)<br>    }))<br>  }))</pre> | `null` | no |
 | vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled | `bool` | `true` | no |
+| vpn\_gateway\_extra\_tags | Extra tags for the VPN Gateway | `map(string)` | `null` | no |
+| vpn\_gateway\_instance\_0\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the first instance | `list(string)` | `[]` | no |
+| vpn\_gateway\_instance\_1\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the second instance | `list(string)` | `[]` | no |
+| vpn\_gateway\_routing\_preference | Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet` | `string` | `"Microsoft Network"` | no |
+| vpn\_gateway\_scale\_unit | The scale unit for this VPN Gateway | `number` | `1` | no |
+| vpn\_sites | VPN Site configuration | <pre>list(object({<br>    name          = string,<br>    address_cidrs = optional(list(string))<br>    links = list(object({<br>      name       = string<br>      fqdn       = optional(string)<br>      ip_address = optional(string)<br>      bgp = optional(list(object({<br>        asn             = string<br>        peering_address = string<br>      })))<br>      provider_name = optional(string)<br>      speed_in_mbps = optional(string)<br>    }))<br>    device_model  = optional(string)<br>    device_vendor = optional(string)<br>  }))</pre> | `null` | no |
 
 ## Outputs
 
@@ -252,10 +261,16 @@ module "logs" {
 | express\_route\_gateway\_id | Id of the ExpressRoute gateway |
 | express\_route\_peering\_azure\_asn | ASN (Autonomous System Number) Used by Azure for BGP Peering |
 | firewall\_id | Id of the firewall |
+| firewall\_ip\_configuration | IP configuration of the created firewall |
+| firewall\_management\_ip\_configuration | Management IP configuration of the created firewall |
 | firewall\_private\_ip\_address | Private IP address of the firewall |
 | firewall\_public\_ip | Public IP address of the Firewall |
+| virtual\_hub\_default\_route\_table\_id | Id of the default route table in the Virtual Hub |
 | virtual\_hub\_id | Id of the virtual hub |
 | virtual\_wan\_id | Id of the Virtual Wan |
+| vpn\_gateway\_bgp\_settings | BGP Settings of the VPN Gateway |
+| vpn\_gateway\_connections\_ids | List of name and ids of vpn gateway connections |
+| vpn\_gateway\_id | Id of the VPN Gateway |
 <!-- END_TF_DOCS -->
 
 ## Related documentation

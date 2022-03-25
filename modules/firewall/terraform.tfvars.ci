@@ -1,0 +1,16 @@
+client_name         = "firewall-client"
+environment         = "prod"
+stack               = "hub"
+location            = "France Central"
+location_short      = "frc"
+resource_group_name = "firewall-rg"
+logs_destinations_ids = [
+  "/subscription/blablabla/toto/titi",
+  "/subscription/aaaaa-bbbb-cccccc/test/sa"
+]
+virtual_hub_id = "/subscription/aaaaaa-bbbbbb-cccccc/vhub/id"
+
+firewall_tags = {
+  env   = "prod"
+  stack = "hub"
+}

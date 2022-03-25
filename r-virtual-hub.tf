@@ -9,8 +9,7 @@ module "vhub" {
   location_short      = var.location_short
   resource_group_name = var.resource_group_name
 
-  logs_destinations_ids = var.logs_destinations_ids
-  stack                 = var.stack
+  stack = var.stack
 
   virtual_wan_id             = azurerm_virtual_wan.vwan.id
   virtual_hub_address_prefix = var.virtual_hub_address_prefix

@@ -46,10 +46,6 @@ variable "name_slug" {
   default     = ""
 }
 
-variable "logs_destinations_ids" {
-  description = "List of destination resources IDs for logs diagnostic destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set."
-  type        = list(string)
-}
 # VPN Specific variables
 variable "custom_vpn_gateway_name" {
   description = "Custom name for the VPN Gateway"
@@ -67,12 +63,6 @@ variable "vpn_gateway_routing_preference" {
   description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
   type        = string
   default     = "Microsoft Network"
-}
-
-variable "vpn_gateway_bgp_asn" {
-  description = "Peer ASN of this vpn gateway"
-  type        = number
-  default     = 65515
 }
 
 variable "vpn_gateway_bgp_peer_weight" {
@@ -138,6 +128,7 @@ variable "virtual_hub_id" {
 
 variable "virtual_wan_id" {
   description = "Id of the Virtual Wan who hosts the Virtual Hub"
+  type        = string
 }
 
 variable "vpn_connections" {

@@ -293,7 +293,7 @@ variable "custom_vpn_gateway_name" {
   default     = null
 }
 
-variable "vpn_gateway_tags" {
+variable "vpn_gateway_extra_tags" {
   description = "Extra tags for the VPN Gateway"
   type        = map(string)
   default     = null

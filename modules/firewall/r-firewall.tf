@@ -21,11 +21,3 @@ resource "azurerm_firewall" "azfw" {
 
   tags = var.firewall_tags
 }
-
-module "firewall-diagnostics-settings" {
-  source  = "claranet/diagnostic-settings/azurerm"
-  version = "5.0.0"
-
-  logs_destinations_ids = var.logs_destinations_ids
-  resource_id           = azurerm_firewall.azfw.id
-}
