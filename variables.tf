@@ -286,7 +286,12 @@ variable "peered_virtual_networks" {
   default     = []
 }
 
-# VPN Specific variables
+# VPN Gateway Specific variables
+variable "vpn_gateway_enabled" {
+  description = "Enable or not the deployment of a VPN Gateway and its Connections"
+  type        = bool
+  default     = false
+}
 variable "custom_vpn_gateway_name" {
   description = "Custom name for the VPN Gateway"
   type        = string

@@ -1,5 +1,6 @@
 module "vpn" {
-  source = "./modules/vpn"
+  for_each = var.vpn_gateway_enabled ? toset(["vpn"]) : toset([])
+  source   = "./modules/vpn"
 
   client_name = var.client_name
   environment = var.environment
