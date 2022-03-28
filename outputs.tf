@@ -26,27 +26,27 @@ output "express_route_peering_azure_asn" {
 
 output "firewall_public_ip" {
   description = "Public IP address of the Firewall"
-  value       = try(module.firewall.firewall_public_ip, null)
+  value       = try(module.firewall["firewall"].firewall_public_ip, null)
 }
 
 output "firewall_id" {
   description = "Id of the firewall"
-  value       = try(module.firewall.firewall_id, null)
+  value       = try(module.firewall["firewall"].firewall_id, null)
 }
 
 output "firewall_private_ip_address" {
   description = "Private IP address of the firewall"
-  value       = try(module.firewall.firewall_private_ip_address, null)
+  value       = try(module.firewall["firewall"].firewall_private_ip_address, null)
 }
 
 output "firewall_ip_configuration" {
   description = "IP configuration of the created firewall"
-  value       = module.firewall.firewall_ip_configuration
+  value       = try(module.firewall["firewall"].firewall_ip_configuration, null)
 }
 
 output "firewall_management_ip_configuration" {
   description = "Management IP configuration of the created firewall"
-  value       = module.firewall.firewall_management_ip_configuration
+  value       = try(module.firewall["firewall"].firewall_management_ip_configuration, null)
 }
 
 output "virtual_hub_id" {
@@ -66,15 +66,15 @@ output "virtual_wan_id" {
 
 output "vpn_gateway_id" {
   description = "Id of the VPN Gateway"
-  value       = module.vpn.vpn_gateway_id
+  value       = try(module.vpn["vpn"].vpn_gateway_id, null)
 }
 
 output "vpn_gateway_bgp_settings" {
   description = "BGP Settings of the VPN Gateway"
-  value       = module.vpn.vpn_gateway_bgp_settings
+  value       = try(module.vpn["vpn"].vpn_gateway_bgp_settings, null)
 }
 
 output "vpn_gateway_connections_ids" {
   description = "List of name and ids of vpn gateway connections"
-  value       = module.vpn.vpn_gateway_connection_ids
+  value       = try(module.vpn["vpn"].vpn_gateway_connection_ids, null)
 }
