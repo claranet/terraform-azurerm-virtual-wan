@@ -19,5 +19,5 @@ resource "azurerm_firewall" "azfw" {
   dns_servers       = var.firewall_dns_servers
   private_ip_ranges = var.firewall_private_ip_ranges
 
-  tags = var.firewall_tags
+  tags = merge(local.default_tags, var.firewall_tags)
 }

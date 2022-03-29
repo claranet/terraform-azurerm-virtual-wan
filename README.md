@@ -203,6 +203,7 @@ module "logs" {
 | custom\_virtual\_hub\_name | Custom Virtual Hub's name | `string` | `null` | no |
 | custom\_vpn\_gateway\_name | Custom name for the VPN Gateway | `string` | `null` | no |
 | custom\_vwan\_name | Custom Virtual Wan's name. | `string` | `null` | no |
+| default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
 | express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
 | express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |

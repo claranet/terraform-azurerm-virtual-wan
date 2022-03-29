@@ -67,12 +67,6 @@ variable "virtual_hub_sku" {
   default     = "Standard"
 }
 
-variable "virtual_hub_tags" {
-  description = "tags for this Virtual Hub"
-  type        = map(string)
-  default     = {}
-}
-
 variable "virtual_hub_routes" {
   description = "List of route blocks. `next_hop_ip_address` values can be `azure_firewall` or an IP address."
   type = list(object({

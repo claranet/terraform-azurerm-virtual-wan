@@ -10,6 +10,7 @@ Added
     * AZ-713 Add `virtual_wan_id` output
     * AZ-712 Allow the creation of `azurerm_vpn_gateway`, `azurerm_vpn_site` and `azurerm_vpn_gateway_connection` in Virtual Wan
     * AZ-715 Bump diagnostic-settings module to `v5.0.0`
+    * AZ-615 Add an option to enable or disable default tags
 
 # v5.0.1 - 2021-12-28
 

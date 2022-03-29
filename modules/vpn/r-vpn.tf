@@ -28,9 +28,7 @@ resource "azurerm_vpn_gateway" "vpn" {
     }
   }
 
-
-
-  tags = var.vpn_gateway_tags
+  tags = merge(local.default_tags, var.vpn_gateway_tags)
 }
 
 resource "azurerm_vpn_site" "vpn_site" {
@@ -63,7 +61,7 @@ resource "azurerm_vpn_site" "vpn_site" {
   device_model  = lookup(each.value, "device_model", null)
   device_vendor = lookup(each.value, "device_vendor", null)
 
-  tags = var.vpn_gateway_tags
+  tags = merge(local.default_tags, var.vpn_gateway_tags)
 }
 
 resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {

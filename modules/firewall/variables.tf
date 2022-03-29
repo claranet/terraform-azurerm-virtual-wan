@@ -53,12 +53,6 @@ variable "custom_firewall_name" {
   default     = null
 }
 
-variable "firewall_tags" {
-  description = "Tags for Firewall resource"
-  type        = map(string)
-  default     = {}
-}
-
 variable "firewall_sku_tier" {
   description = "SKU tier of the Firewall. Possible values are `Premium` and `Standard`."
   type        = string

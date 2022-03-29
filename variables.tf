@@ -46,12 +46,6 @@ variable "name_slug" {
   default     = ""
 }
 
-variable "extra_tags" {
-  description = "Map of additional tags."
-  type        = map(string)
-  default     = {}
-}
-
 variable "logs_destinations_ids" {
   description = "List of destination resources IDs for logs diagnostic destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set."
   type        = list(string)
@@ -87,12 +81,6 @@ variable "virtual_wan_type" {
   default     = "Standard"
 }
 
-variable "virtual_wan_extra_tags" {
-  description = "Extra tags for this Virtual Wan"
-  type        = map(string)
-  default     = {}
-}
-
 # Virtual Hub specific variables
 variable "custom_virtual_hub_name" {
   description = "Custom Virtual Hub's name"
@@ -115,12 +103,6 @@ variable "virtual_hub_sku" {
   default     = "Standard"
 }
 
-variable "virtual_hub_extra_tags" {
-  description = "Extra tags for this Virtual Hub"
-  type        = map(string)
-  default     = {}
-}
-
 variable "virtual_hub_routes" {
   description = "List of route blocks. `next_hop_ip_address` values can be `azure_firewall` or an IP address."
   type = list(object({
@@ -140,12 +122,6 @@ variable "custom_express_route_gateway_name" {
   description = "Custom Express Route Gateway name"
   type        = string
   default     = null
-}
-
-variable "express_route_gateway_exta_tags" {
-  description = "Extra tags for Express Route Gateway"
-  type        = map(string)
-  default     = {}
 }
 
 variable "custom_express_route_circuit_name" {
@@ -238,12 +214,6 @@ variable "custom_firewall_name" {
   default     = null
 }
 
-variable "firewall_extra_tags" {
-  description = "Extra tags for Firewall resource"
-  type        = map(string)
-  default     = {}
-}
-
 variable "firewall_sku_tier" {
   description = "SKU tier of the Firewall. Possible values are `Premium` and `Standard`."
   type        = string
@@ -295,12 +265,6 @@ variable "vpn_gateway_enabled" {
 variable "custom_vpn_gateway_name" {
   description = "Custom name for the VPN Gateway"
   type        = string
-  default     = null
-}
-
-variable "vpn_gateway_extra_tags" {
-  description = "Extra tags for the VPN Gateway"
-  type        = map(string)
   default     = null
 }
 

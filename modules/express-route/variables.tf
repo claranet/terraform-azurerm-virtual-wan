@@ -52,11 +52,6 @@ variable "custom_express_route_gateway_name" {
   default     = null
 }
 
-variable "express_route_gateway_tags" {
-  description = "Extra tags for Express Route Gateway"
-  type        = map(string)
-  default     = {}
-}
 
 variable "custom_express_route_circuit_name" {
   description = "Custom Express Route Circuit name"

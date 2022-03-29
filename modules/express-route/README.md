@@ -34,6 +34,7 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | custom\_express\_route\_circuit\_name | Custom Express Route Circuit name | `string` | `null` | no |
 | custom\_express\_route\_gateway\_name | Custom Express Route Gateway name | `string` | `null` | no |
+| default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
 | express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
 | express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |

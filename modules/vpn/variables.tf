@@ -53,12 +53,6 @@ variable "custom_vpn_gateway_name" {
   default     = null
 }
 
-variable "vpn_gateway_tags" {
-  description = "Extra tags for the VPN Gateway"
-  type        = map(string)
-  default     = null
-}
-
 variable "vpn_gateway_routing_preference" {
   description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
   type        = string
