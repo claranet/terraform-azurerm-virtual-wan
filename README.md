@@ -95,6 +95,7 @@ module "virtual_wan" {
   firewall_enabled                      = true
   express_route_enabled                 = true
   express_route_private_peering_enabled = true
+  vpn_gateway_enabled                   = true
 
   express_route_circuit_service_provider  = "Equinix"
   express_route_circuit_peering_location  = "Paris"
@@ -113,6 +114,80 @@ module "virtual_wan" {
 
   peered_virtual_networks = [for vnet in local.vnets : module.azure_virtual_network[vnet.vnet_name].virtual_network_id]
 
+  vpn_gateway_instance_0_bgp_peering_address = ["169.254.21.1"]
+  vpn_gateway_instance_1_bgp_peering_address = ["169.254.22.1"]
+
+  vpn_sites = [
+    {
+      name = "site1"
+      links = [
+        {
+          name       = "site1-primary-endpoint"
+          ip_address = "20.20.20.20"
+          bgp = [
+            {
+              asn             = 65530
+              peering_address = "169.254.21.2"
+            }
+          ]
+        },
+        {
+          name       = "site1-secondary-endpoint"
+          ip_address = "21.21.21.21"
+          bgp = [
+            {
+              asn             = 65530
+              peering_address = "169.254.22.2"
+            }
+          ]
+        }
+      ]
+
+    }
+  ]
+
+  vpn_connections = [
+    {
+      name      = "cn-hub-to-site1"
+      site_name = "site1"
+      links = [
+        {
+          name           = "site1-primary-link"
+          bandwidth_mbps = 200
+          bgp_enabled    = true
+          ipsec_policy = {
+            dh_group                 = "DHGroup14"
+            ike_encryption_algorithm = "AES256"
+            ike_integrity_algorithm  = "SHA256"
+            encryption_algorithm     = "AES256"
+            integrity_algorithm      = "SHA256"
+            pfs_group                = "PFS14"
+            sa_data_size_kb          = 102400000
+            sa_lifetime_sec          = 3600
+          }
+          protocol   = "IKEv2"
+          shared_key = "VeryStrongSecretKeyForPrimaryLink"
+        },
+        {
+          name           = "site1-secondary-link"
+          bandwidth_mbps = 200
+          bgp_enabled    = true
+          ipsec_policy = {
+            dh_group                 = "DHGroup14"
+            ike_encryption_algorithm = "AES256"
+            ike_integrity_algorithm  = "SHA256"
+            encryption_algorithm     = "AES256"
+            integrity_algorithm      = "SHA256"
+            pfs_group                = "PFS14"
+            sa_data_size_kb          = 102400000
+            sa_lifetime_sec          = 3600
+          }
+          protocol   = "IKEv2"
+          shared_key = "VeryStrongSecretKeyForSecondaryLink"
+        }
+      ]
+    }
+  ]
 }
 
 module "azure_virtual_network" {
