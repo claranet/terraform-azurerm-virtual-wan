@@ -128,8 +128,9 @@ variable "virtual_wan_id" {
 variable "vpn_connections" {
   description = "VPN Connections configuration"
   type = list(object({
-    name      = string
-    site_name = string
+    name                      = string
+    site_name                 = string
+    internet_security_enabled = optional(string)
     links = list(object({
       name                 = string,
       egress_nat_rule_ids  = optional(list(string))

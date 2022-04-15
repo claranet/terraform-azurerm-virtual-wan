@@ -7,7 +7,6 @@ resource "azurerm_vpn_gateway" "vpn" {
   routing_preference = var.vpn_gateway_routing_preference
   scale_unit         = var.vpn_gateway_scale_unit
 
-  # Provisioning is failing when using theses parameters.
   bgp_settings {
     # Fixed in the VWAN. Cannot be another value
     asn         = 65515
@@ -65,10 +64,11 @@ resource "azurerm_vpn_site" "vpn_site" {
 }
 
 resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
-  for_each           = { for conn in var.vpn_connections : conn.name => conn }
-  name               = each.key
-  remote_vpn_site_id = azurerm_vpn_site.vpn_site[each.value.site_name].id
-  vpn_gateway_id     = azurerm_vpn_gateway.vpn.id
+  for_each                  = { for conn in var.vpn_connections : conn.name => conn }
+  name                      = each.key
+  remote_vpn_site_id        = azurerm_vpn_site.vpn_site[each.value.site_name].id
+  vpn_gateway_id            = azurerm_vpn_gateway.vpn.id
+  internet_security_enabled = lookup(each.value, "internet_security_enabled", false)
 
   dynamic "vpn_link" {
     for_each = { for lnk in each.value.links : lnk.name => lnk }
