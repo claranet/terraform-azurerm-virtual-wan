@@ -112,7 +112,7 @@ variable "vpn_sites" {
     device_model  = optional(string)
     device_vendor = optional(string)
   }))
-  default = null
+  default = []
 }
 
 variable "virtual_hub_id" {
@@ -156,5 +156,5 @@ variable "vpn_connections" {
       policy_based_traffic_selector_enabled = optional(bool)
     }))
   }))
-  default = null
+  default = []
 }

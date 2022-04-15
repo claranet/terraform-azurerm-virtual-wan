@@ -299,7 +299,7 @@ variable "vpn_sites" {
     device_model  = optional(string)
     device_vendor = optional(string)
   }))
-  default = null
+  default = []
 }
 
 variable "vpn_gateway_instance_0_bgp_peering_address" {
@@ -345,5 +345,5 @@ variable "vpn_connections" {
       policy_based_traffic_selector_enabled = optional(bool)
     }))
   }))
-  default = null
+  default = []
 }
