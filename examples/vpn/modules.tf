@@ -13,19 +13,17 @@ module "rg" {
   environment = var.environment
   location    = module.azure_region.location
   stack       = var.stack
-
 }
 
 module "logs" {
   source  = "claranet/run-common/azurerm//modules/logs"
   version = "x.x.x"
 
-  client_name    = var.client_name
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  environment    = var.environment
-  stack          = var.stack
-
+  client_name         = var.client_name
+  location            = module.azure_region.location
+  location_short      = module.azure_region.location_short
+  environment         = var.environment
+  stack               = var.stack
   resource_group_name = module.rg.resource_group_name
 }
 
@@ -99,7 +97,6 @@ module "vpn" {
           ]
         }
       ]
-
     }
   ]
 

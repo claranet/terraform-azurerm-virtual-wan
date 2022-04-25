@@ -1,7 +1,7 @@
 # Unreleased
 
 Fixed
-    * AZ-709 Fix issue on diagnostic settings for_each value that depends on resource attributes that cannot be determined until apply
+    * AZ-709 Fix issue on diagnostic settings `for_each` value that depends on resource attributes that cannot be determined until apply
 
 Breaking
     * AZ-715 Split sub-resources into sub-modules

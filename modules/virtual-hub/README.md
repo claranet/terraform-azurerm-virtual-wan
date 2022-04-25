@@ -1,4 +1,4 @@
-# Azure Firewall
+# Azure Virtual Hub
 This module creates a Virtual Hub and attach it to an existing Virtual Wan.
 
 <!-- BEGIN_TF_DOCS -->
@@ -37,13 +37,13 @@ No modules.
 | virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
 | virtual\_hub\_routes | List of route blocks. `next_hop_ip_address` values can be `azure_firewall` or an IP address. | <pre>list(object({<br>    address_prefixes    = list(string),<br>    next_hop_ip_address = string<br>  }))</pre> | `[]` | no |
 | virtual\_hub\_sku | The SKU of the Virtual Hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
-| virtual\_hub\_tags | tags for this Virtual Hub | `map(string)` | `{}` | no |
-| virtual\_wan\_id | Id of the Virtual Wan which host this Virtual Hub | `string` | n/a | yes |
+| virtual\_hub\_tags | Tags for this Virtual Hub | `map(string)` | `{}` | no |
+| virtual\_wan\_id | ID of the Virtual Wan which host this Virtual Hub | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| virtual\_hub\_default\_route\_table\_id | Id of the default route table in the Virtual Hub |
-| virtual\_hub\_id | Id of the virtual hub |
+| virtual\_hub\_default\_route\_table\_id | ID of the default route table in the Virtual Hub |
+| virtual\_hub\_id | ID of the virtual hub |
 <!-- END_TF_DOCS -->

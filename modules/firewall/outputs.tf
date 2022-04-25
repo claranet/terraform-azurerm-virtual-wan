@@ -1,5 +1,5 @@
 output "firewall_id" {
-  description = "Id of the created firewall"
+  description = "ID of the created firewall"
   value       = azurerm_firewall.azfw.id
 }
 

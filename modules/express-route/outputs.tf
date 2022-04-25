@@ -9,13 +9,13 @@ output "express_route_circuit_service_provider_provisioning_state" {
 }
 
 output "express_route_circuit_service_key" {
-  description = "The string needed by the service provider to provision the ExressRoute circuit"
+  description = "The string needed by the service provider to provision the ExpressRoute circuit"
   value       = azurerm_express_route_circuit.erc.service_key
   sensitive   = true
 }
 
 output "express_route_gateway_id" {
-  description = "Id of the ExpressRoute gateway"
+  description = "ID of the ExpressRoute gateway"
   value       = azurerm_express_route_gateway.ergw.id
 }
 

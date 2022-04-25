@@ -28,31 +28,6 @@ variable "location_short" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Prefix for generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_suffix" {
-  description = "Suffix for the generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_slug" {
-  description = "Slug to use with the generated resources names."
-  type        = string
-  default     = ""
-}
-
-# Firewall specific variables
-variable "custom_firewall_name" {
-  description = "Custom Firewall's name"
-  type        = string
-  default     = null
-}
-
 variable "firewall_sku_tier" {
   description = "SKU tier of the Firewall. Possible values are `Premium` and `Standard`."
   type        = string
@@ -90,6 +65,6 @@ variable "firewall_private_ip_ranges" {
 }
 
 variable "virtual_hub_id" {
-  description = "Id of the Virtual Hub in which to deploy the Firewall"
+  description = "ID of the Virtual Hub in which to deploy the Firewall"
   type        = string
 }

@@ -50,13 +50,13 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
-| virtual\_hub\_id | Id of the Virtual Hub in which to deploy the Firewall | `string` | n/a | yes |
+| virtual\_hub\_id | ID of the Virtual Hub in which to deploy the Firewall | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| firewall\_id | Id of the created firewall |
+| firewall\_id | ID of the created firewall |
 | firewall\_ip\_configuration | IP configuration of the created firewall |
 | firewall\_management\_ip\_configuration | Management IP configuration of the created firewall |
 | firewall\_private\_ip\_address | Private IP address of the firewall |

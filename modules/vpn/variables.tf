@@ -28,31 +28,6 @@ variable "location_short" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Prefix for generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_suffix" {
-  description = "Suffix for the generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_slug" {
-  description = "Slug to use with the generated resources names."
-  type        = string
-  default     = ""
-}
-
-# VPN Specific variables
-variable "custom_vpn_gateway_name" {
-  description = "Custom name for the VPN Gateway"
-  type        = string
-  default     = null
-}
-
 variable "vpn_gateway_routing_preference" {
   description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
   type        = string
@@ -70,7 +45,6 @@ variable "vpn_gateway_instance_0_bgp_peering_address" {
   type        = list(string)
   default     = null
   validation {
-    #    condition     = can(regex("169\\.254\\.2[1,2]\\.(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", var.vpn_gateway_instance_0_bgp_peering_address) || var.vpn_gateway_instance_0_bgp_peering_address == null)
     condition     = alltrue([for ip in var.vpn_gateway_instance_0_bgp_peering_address : can(regex("169\\.254\\.2[1,2]\\.(?:25[0-4]|2[0-4][0-9]|[01]?[0-9][0-9]?)$", ip))]) || var.vpn_gateway_instance_0_bgp_peering_address == null
     error_message = "BPG Peering address must be in range 169.254.21.0/24 or 169.254.22.0/24."
   }
@@ -85,7 +59,6 @@ variable "vpn_gateway_instance_1_bgp_peering_address" {
     error_message = "BPG Peering address must be in range 169.254.21.0/24 or 169.254.22.0/24."
   }
 }
-
 
 variable "vpn_gateway_scale_unit" {
   description = "The scale unit for this VPN Gateway"
@@ -116,12 +89,12 @@ variable "vpn_sites" {
 }
 
 variable "virtual_hub_id" {
-  description = "Id of the Virtual Hub in which to deploy the VPN"
+  description = "ID of the Virtual Hub in which to deploy the VPN"
   type        = string
 }
 
 variable "virtual_wan_id" {
-  description = "Id of the Virtual Wan who hosts the Virtual Hub"
+  description = "ID of the Virtual Wan who hosts the Virtual Hub"
   type        = string
 }
 

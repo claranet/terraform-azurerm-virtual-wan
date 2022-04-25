@@ -36,18 +36,18 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | custom\_express\_route\_gateway\_name | Custom Express Route Gateway name | `string` | `null` | no |
 | default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
-| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
-| express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
-| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route Circuit | `number` | `null` | no |
-| express\_route\_circuit\_service\_provider | The name of the Express Route Circuit Service Provider. | `string` | `null` | no |
-| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the Express Route Gateway. | `number` | `1` | no |
+| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the ExpressRoute Circuit being created on the Service Provider | `number` | `null` | no |
+| express\_route\_circuit\_peering\_location | ExpressRoute Circuit peering location. | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for ExpressRoute Circuit Private Peering | `number` | `null` | no |
+| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for ExpressRoute Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for ExpressRoute Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for ExpressRoute Circuit Private Peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN ID for ExpressRoute Circuit | `number` | `null` | no |
+| express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
+| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
 | express\_route\_gateway\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
-| express\_route\_private\_peering\_enabled | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
-| express\_route\_sku | Express Route SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
+| express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
+| express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
@@ -59,15 +59,15 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
-| virtual\_hub\_id | Id of the Virtual Hub in which to deploy the Firewall | `string` | n/a | yes |
+| virtual\_hub\_id | ID of the Virtual Hub in which to deploy the Firewall | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | express\_route\_circuit\_id | The ID of the ExpressRoute circuit |
-| express\_route\_circuit\_service\_key | The string needed by the service provider to provision the ExressRoute circuit |
+| express\_route\_circuit\_service\_key | The string needed by the service provider to provision the ExpressRoute circuit |
 | express\_route\_circuit\_service\_provider\_provisioning\_state | The ExpressRoute circuit provisioning state from your chosen service provider |
-| express\_route\_gateway\_id | Id of the ExpressRoute gateway |
+| express\_route\_gateway\_id | ID of the ExpressRoute gateway |
 | express\_route\_peering\_azure\_asn | ASN (Autonomous System Number) Used by Azure for BGP Peering |
 <!-- END_TF_DOCS -->

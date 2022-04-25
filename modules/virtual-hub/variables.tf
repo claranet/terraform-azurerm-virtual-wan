@@ -28,27 +28,8 @@ variable "location_short" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Prefix for generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_suffix" {
-  description = "Suffix for the generated resources names."
-  type        = string
-  default     = ""
-}
-
-# Virtual Hub specific variables
-variable "custom_virtual_hub_name" {
-  description = "Custom Virtual Hub's name"
-  type        = string
-  default     = null
-}
-
 variable "virtual_wan_id" {
-  description = "Id of the Virtual Wan which host this Virtual Hub"
+  description = "ID of the Virtual Wan which host this Virtual Hub"
   type        = string
 }
 

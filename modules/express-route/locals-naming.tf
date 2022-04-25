@@ -3,5 +3,4 @@ locals {
   name_suffix = lower(var.name_suffix)
   ergw_name   = coalesce(var.custom_express_route_gateway_name, azurecaf_name.azure_express_route_gateway_caf.result)
   erc_name    = coalesce(var.custom_express_route_circuit_name, azurecaf_name.azure_express_route_circuit_caf.result)
-
 }

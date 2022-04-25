@@ -272,27 +272,27 @@ module "logs" {
 |------|-------------|------|---------|:--------:|
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
-| custom\_express\_route\_circuit\_name | Custom Express Route Circuit name | `string` | `null` | no |
-| custom\_express\_route\_gateway\_name | Custom Express Route Gateway name | `string` | `null` | no |
+| custom\_express\_route\_circuit\_name | Custom ExpressRoute Circuit name | `string` | `null` | no |
+| custom\_express\_route\_gateway\_name | Custom ExpressRoute Gateway name | `string` | `null` | no |
 | custom\_firewall\_name | Custom Firewall's name | `string` | `null` | no |
 | custom\_virtual\_hub\_name | Custom Virtual Hub's name | `string` | `null` | no |
 | custom\_vpn\_gateway\_name | Custom name for the VPN Gateway | `string` | `null` | no |
 | custom\_vwan\_name | Custom Virtual Wan's name. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
-| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
-| express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
-| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route Circuit | `number` | `null` | no |
-| express\_route\_circuit\_service\_provider | The name of the Express Route Circuit Service Provider. | `string` | `null` | no |
-| express\_route\_enabled | Enable or not Express Route configuration | `bool` | `false` | no |
+| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the ExpressRoute Circuit being created on the Service Provider | `number` | `null` | no |
+| express\_route\_circuit\_peering\_location | ExpressRoute Circuit peering location. | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for ExpressRoute Circuit Private Peering | `number` | `null` | no |
+| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for ExpressRoute Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for ExpressRoute Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for ExpressRoute Circuit Private Peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for ExpressRoute Circuit | `number` | `null` | no |
+| express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
+| express\_route\_enabled | Enable or not ExpressRoute configuration | `bool` | `false` | no |
 | express\_route\_gateway\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
-| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the Express Route Gateway. | `number` | `1` | no |
-| express\_route\_private\_peering\_enabled | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
-| express\_route\_sku | Express Route SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
+| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
+| express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
+| express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `{}` | no |
 | firewall\_availibility\_zones | Availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
 | firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
@@ -333,21 +333,21 @@ module "logs" {
 | Name | Description |
 |------|-------------|
 | express\_route\_circuit\_id | The ID of the ExpressRoute circuit |
-| express\_route\_circuit\_service\_key | The string needed by the service provider to provision the ExressRoute circuit |
+| express\_route\_circuit\_service\_key | The string needed by the service provider to provision the ExpressRoute circuit |
 | express\_route\_circuit\_service\_provider\_provisioning\_state | The ExpressRoute circuit provisioning state from your chosen service provider |
-| express\_route\_gateway\_id | Id of the ExpressRoute gateway |
+| express\_route\_gateway\_id | ID of the ExpressRoute gateway |
 | express\_route\_peering\_azure\_asn | ASN (Autonomous System Number) Used by Azure for BGP Peering |
-| firewall\_id | Id of the firewall |
+| firewall\_id | ID of the firewall |
 | firewall\_ip\_configuration | IP configuration of the created firewall |
 | firewall\_management\_ip\_configuration | Management IP configuration of the created firewall |
 | firewall\_private\_ip\_address | Private IP address of the firewall |
 | firewall\_public\_ip | Public IP address of the Firewall |
-| virtual\_hub\_default\_route\_table\_id | Id of the default route table in the Virtual Hub |
-| virtual\_hub\_id | Id of the virtual hub |
-| virtual\_wan\_id | Id of the Virtual Wan |
+| virtual\_hub\_default\_route\_table\_id | ID of the default route table in the Virtual Hub |
+| virtual\_hub\_id | ID of the virtual hub |
+| virtual\_wan\_id | ID of the Virtual Wan |
 | vpn\_gateway\_bgp\_settings | BGP Settings of the VPN Gateway |
-| vpn\_gateway\_connections\_ids | List of name and ids of vpn gateway connections |
-| vpn\_gateway\_id | Id of the VPN Gateway |
+| vpn\_gateway\_connections\_ids | List of name and IDs of VPN gateway connections |
+| vpn\_gateway\_id | ID of the VPN Gateway |
 <!-- END_TF_DOCS -->
 
 ## Related documentation

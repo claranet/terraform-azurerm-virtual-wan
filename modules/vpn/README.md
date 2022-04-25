@@ -1,3 +1,5 @@
+# Azure VPN
+
 <!-- BEGIN_TF_DOCS -->
 ## Providers
 
@@ -41,8 +43,8 @@
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
-| virtual\_hub\_id | Id of the Virtual Hub in which to deploy the VPN | `string` | n/a | yes |
-| virtual\_wan\_id | Id of the Virtual Wan who hosts the Virtual Hub | `string` | n/a | yes |
+| virtual\_hub\_id | ID of the Virtual Hub in which to deploy the VPN | `string` | n/a | yes |
+| virtual\_wan\_id | ID of the Virtual Wan who hosts the Virtual Hub | `string` | n/a | yes |
 | vpn\_connections | VPN Connections configuration | <pre>list(object({<br>    name                      = string<br>    site_name                 = string<br>    internet_security_enabled = optional(string)<br>    links = list(object({<br>      name                 = string,<br>      egress_nat_rule_ids  = optional(list(string))<br>      ingress_nat_rule_ids = optional(list(string))<br>      bandwidth_mbps       = optional(number)<br>      bgp_enabled          = optional(bool)<br>      connection_mode      = optional(string)<br>      ipsec_policy = optional(object({<br>        dh_group                 = string<br>        ike_encryption_algorithm = string<br>        ike_integrity_algorithm  = string<br>        encryption_algorithm     = string<br>        integrity_algorithm      = string<br>        pfs_group                = string<br>        sa_data_size_kb          = number<br>        sa_lifetime_sec          = number<br>      }))<br>      protocol                              = optional(string)<br>      ratelimit_enabled                     = optional(bool)<br>      route_weight                          = optional(number)<br>      shared_key                            = optional(string)<br>      local_azure_ip_address_enabled        = optional(bool)<br>      policy_based_traffic_selector_enabled = optional(bool)<br>    }))<br>  }))</pre> | `[]` | no |
 | vpn\_gateway\_bgp\_peer\_weight | The weight added to Routes learned from this BGP Speaker. | `number` | `0` | no |
 | vpn\_gateway\_instance\_0\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the first instance | `list(string)` | `null` | no |
@@ -56,7 +58,7 @@
 
 | Name | Description |
 |------|-------------|
-| vpn\_gateway\_bgp\_settings | BGP Settings of the VPN Gateway |
-| vpn\_gateway\_connection\_ids | List of name and ids of vpn gateway connections |
-| vpn\_gateway\_id | Id of the created vpn gateway |
+| vpn\_gateway\_bgp\_settings | BGP settings of the VPN Gateway |
+| vpn\_gateway\_connection\_ids | List of name and IDs of VPN gateway connections |
+| vpn\_gateway\_id | ID of the created VPN gateway |
 <!-- END_TF_DOCS -->
