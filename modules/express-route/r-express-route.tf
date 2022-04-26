@@ -5,7 +5,7 @@ resource "azurerm_express_route_gateway" "ergw" {
   scale_units         = var.express_route_gateway_scale_unit
   virtual_hub_id      = var.virtual_hub_id
 
-  tags = merge(local.default_tags, var.express_route_gateway_tags)
+  tags = merge(local.default_tags, var.extra_tags)
 }
 
 resource "azurerm_express_route_circuit" "erc" {
@@ -22,7 +22,7 @@ resource "azurerm_express_route_circuit" "erc" {
     family = var.express_route_sku.family
   }
 
-  tags = var.express_route_gateway_tags
+  tags = var.extra_tags
 }
 
 resource "azurerm_express_route_circuit_peering" "ercprivatepeer" {

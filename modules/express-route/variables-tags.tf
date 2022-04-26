@@ -4,7 +4,7 @@ variable "default_tags_enabled" {
   default     = true
 }
 
-variable "express_route_gateway_tags" {
+variable "extra_tags" {
   description = "Extra tags for Express Route Gateway"
   type        = map(string)
   default     = {}

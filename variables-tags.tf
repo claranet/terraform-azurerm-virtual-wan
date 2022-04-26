@@ -23,7 +23,7 @@ variable "virtual_hub_extra_tags" {
   default     = {}
 }
 
-variable "express_route_gateway_exta_tags" {
+variable "express_route_gateway_extra_tags" {
   description = "Extra tags for Express Route Gateway"
   type        = map(string)
   default     = {}

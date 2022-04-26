@@ -9,6 +9,10 @@ module "vhub" {
   location_short      = var.location_short
   resource_group_name = var.resource_group_name
 
+  name_prefix = var.name_prefix
+  name_slug   = var.name_slug
+  name_suffix = var.name_suffix
+
   stack = var.stack
 
   virtual_wan_id             = azurerm_virtual_wan.vwan.id
@@ -19,5 +23,5 @@ module "vhub" {
 
   peered_virtual_networks = var.peered_virtual_networks
 
-  virtual_hub_tags = merge(local.tags, var.virtual_hub_extra_tags)
+  extra_tags = merge(local.tags, var.virtual_hub_extra_tags)
 }

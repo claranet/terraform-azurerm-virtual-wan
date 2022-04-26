@@ -4,7 +4,7 @@ variable "default_tags_enabled" {
   default     = true
 }
 
-variable "virtual_hub_tags" {
+variable "extra_tags" {
   description = "Tags for this Virtual Hub"
   type        = map(string)
   default     = {}

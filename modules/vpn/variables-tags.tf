@@ -3,7 +3,7 @@ variable "default_tags_enabled" {
   type        = bool
   default     = true
 }
-variable "vpn_gateway_tags" {
+variable "extra_tags" {
   description = "Extra tags for the VPN Gateway"
   type        = map(string)
   default     = null

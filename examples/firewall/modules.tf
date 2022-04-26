@@ -49,7 +49,7 @@ module "virtual_hub" {
   virtual_hub_address_prefix = "10.0.0.0/23"
   virtual_wan_id             = data.azurerm_virtual_wan.virtual_wan.id
 
-  virtual_hub_tags = local.tags
+  extra_tags = local.tags
 }
 
 module "firewall" {
@@ -69,7 +69,7 @@ module "firewall" {
   ]
   virtual_hub_id = module.virtual_hub.virtual_hub_id
 
-  firewall_tags = local.tags
+  extra_tags = local.tags
 }
 
 locals {

@@ -10,6 +10,10 @@ module "express_route" {
   location_short      = var.location_short
   resource_group_name = var.resource_group_name
 
+  name_prefix = var.name_prefix
+  name_slug   = var.name_slug
+  name_suffix = var.name_suffix
+
   logs_destinations_ids = var.logs_destinations_ids
 
   virtual_hub_id = module.vhub.virtual_hub_id
@@ -30,5 +34,5 @@ module "express_route" {
   express_route_circuit_private_peering_shared_key                    = var.express_route_circuit_private_peering_shared_key
   express_route_circuit_private_peering_peer_asn                      = var.express_route_circuit_private_peering_peer_asn
 
-  express_route_gateway_tags = merge(local.tags, var.express_route_gateway_exta_tags)
+  extra_tags = merge(local.tags, var.express_route_gateway_extra_tags)
 }

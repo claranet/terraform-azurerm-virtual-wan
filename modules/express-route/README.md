@@ -1,5 +1,6 @@
 # Azure Express Route
-This module creates an Express Route attached to a Virtual Hub.
+This module creates an [Express Route](https://docs.microsoft.com/en-us/azure/expressroute/) attached to a Virtual Hub.
+
 Using this module outside the Virtual Wan module need an existing Virtual Hub.
 
 <!-- BEGIN_TF_DOCS -->
@@ -45,9 +46,9 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | express\_route\_circuit\_private\_peering\_vlan\_id | VLAN ID for ExpressRoute Circuit | `number` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
-| express\_route\_gateway\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
 | express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
+| extra\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |

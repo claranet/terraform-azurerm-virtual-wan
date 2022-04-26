@@ -16,7 +16,7 @@ resource "azurerm_virtual_hub" "vhub" {
     }
   }
 
-  tags = merge(local.default_tags, var.virtual_hub_tags)
+  tags = merge(local.default_tags, var.extra_tags)
 }
 
 resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {

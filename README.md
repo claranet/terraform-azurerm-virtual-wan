@@ -1,7 +1,14 @@
 # Azure Virtual Wan
 [![Changelog](https://img.shields.io/badge/changelog-release-green.svg)](CHANGELOG.md) [![Notice](https://img.shields.io/badge/notice-copyright-yellow.svg)](NOTICE) [![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-orange.svg)](LICENSE) [![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/claranet/virtual-wan/azurerm/)
 
-Azure Virtual Wan module to create a Virtual Wan with one Virtual Hub, an Azure Firewall and an Express Route Circuit with its Private Peering. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
+Azure Virtual Wan module to create a Virtual Wan with one Virtual Hub, an Azure Firewall and an Express Route Circuit with its Private Peering and VPN connections. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
+
+This module use multiple sub-modules:
+
+  * [Virtual Hub](./modules/virtual-hub/README.md): Manage all Virtual Hub configurations
+  * [Azure Firewall](./modules/firewall/README.md): Manage the creation of Azure Firewall in a Secured Hub
+  * [Azure ExpressRoute](./modules/express-route/README.md): Manage ExpressRoute creation and configuration
+  * [Azure VPN](./modules/vpn/README.md): Manage VPN connection in a Virtual Hub
 
 ## Naming
 
@@ -289,7 +296,7 @@ module "logs" {
 | express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for ExpressRoute Circuit | `number` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
 | express\_route\_enabled | Enable or not ExpressRoute configuration | `bool` | `false` | no |
-| express\_route\_gateway\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
+| express\_route\_gateway\_extra\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
 | express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
 | express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |

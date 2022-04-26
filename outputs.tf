@@ -1,52 +1,52 @@
 output "express_route_circuit_id" {
   description = "The ID of the ExpressRoute circuit"
-  value       = try(module.express_route["express_route"].express_route_circuit_id, null)
+  value       = one(module.express_route[*].express_route_circuit_id)
 }
 
 output "express_route_circuit_service_provider_provisioning_state" {
   description = "The ExpressRoute circuit provisioning state from your chosen service provider"
-  value       = try(module.express_route["express_route"].express_route_circuit_service_provider_provisioning_state, null)
+  value       = one(module.express_route[*].express_route_circuit_service_provider_provisioning_state)
 }
 
 output "express_route_circuit_service_key" {
   description = "The string needed by the service provider to provision the ExpressRoute circuit"
-  value       = try(module.express_route["express_route"].express_route_circuit_service_key, null)
+  value       = one(module.express_route[*].express_route_circuit_service_key)
   sensitive   = true
 }
 
 output "express_route_gateway_id" {
   description = "ID of the ExpressRoute gateway"
-  value       = try(module.express_route["express_route"].express_route_gateway_id, null)
+  value       = one(module.express_route[*].express_route_gateway_id)
 }
 
 output "express_route_peering_azure_asn" {
   description = "ASN (Autonomous System Number) Used by Azure for BGP Peering"
-  value       = try(module.express_route["express_route"].express_route_peering_azure_asn, null)
+  value       = one(module.express_route[*].express_route_peering_azure_asn)
 }
 
 output "firewall_public_ip" {
   description = "Public IP address of the Firewall"
-  value       = try(module.firewall["firewall"].firewall_public_ip, null)
+  value       = one(module.firewall[*].firewall_public_ip)
 }
 
 output "firewall_id" {
   description = "ID of the firewall"
-  value       = try(module.firewall["firewall"].firewall_id, null)
+  value       = one(module.firewall[*].firewall_id)
 }
 
 output "firewall_private_ip_address" {
   description = "Private IP address of the firewall"
-  value       = try(module.firewall["firewall"].firewall_private_ip_address, null)
+  value       = one(module.firewall[*].firewall_private_ip_address)
 }
 
 output "firewall_ip_configuration" {
   description = "IP configuration of the created firewall"
-  value       = try(module.firewall["firewall"].firewall_ip_configuration, null)
+  value       = one(module.firewall[*].firewall_ip_configuration)
 }
 
 output "firewall_management_ip_configuration" {
   description = "Management IP configuration of the created firewall"
-  value       = try(module.firewall["firewall"].firewall_management_ip_configuration, null)
+  value       = one(module.firewall[*].firewall_management_ip_configuration)
 }
 
 output "virtual_hub_id" {
@@ -66,15 +66,15 @@ output "virtual_wan_id" {
 
 output "vpn_gateway_id" {
   description = "ID of the VPN Gateway"
-  value       = try(module.vpn["vpn"].vpn_gateway_id, null)
+  value       = one(module.vpn[*].vpn_gateway_id)
 }
 
 output "vpn_gateway_bgp_settings" {
   description = "BGP Settings of the VPN Gateway"
-  value       = try(module.vpn["vpn"].vpn_gateway_bgp_settings, null)
+  value       = one(module.vpn[*].vpn_gateway_bgp_settings)
 }
 
 output "vpn_gateway_connections_ids" {
   description = "List of name and IDs of VPN gateway connections"
-  value       = try(module.vpn["vpn"].vpn_gateway_connection_ids, null)
+  value       = one(module.vpn[*].vpn_gateway_connection_ids)
 }

@@ -1,5 +1,6 @@
 # Azure Firewall
-This module creates an Azure Firewall attached to a Virtual Hub.
+This module creates an [Azure Firewall](https://docs.microsoft.com/en-us/azure/firewall/) attached to a Virtual Hub.
+
 Using this module outside the Virtual Wan module need an existing Virtual Hub.
 
 <!-- BEGIN_TF_DOCS -->
@@ -29,16 +30,16 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 |------|-------------|------|---------|:--------:|
 | client\_name | Name of client. | `string` | n/a | yes |
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
-| custom\_firewall\_name | Custom Firewall's name | `string` | `null` | no |
+| custom\_name | Custom Firewall's name | `string` | `null` | no |
 | default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
+| extra\_tags | Tags for Firewall resource | `map(string)` | `{}` | no |
 | firewall\_availibility\_zones | Availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
 | firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
 | firewall\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
 | firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
 | firewall\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
 | firewall\_sku\_tier | SKU tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
-| firewall\_tags | Tags for Firewall resource | `map(string)` | `{}` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |

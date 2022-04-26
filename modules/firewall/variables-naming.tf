@@ -17,7 +17,7 @@ variable "name_slug" {
 }
 
 # Firewall specific variables
-variable "custom_firewall_name" {
+variable "custom_name" {
   description = "Custom Firewall's name"
   type        = string
   default     = null

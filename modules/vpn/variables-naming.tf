@@ -17,7 +17,7 @@ variable "name_slug" {
 }
 
 # VPN Specific variables
-variable "custom_vpn_gateway_name" {
+variable "custom_name" {
   description = "Custom name for the VPN Gateway"
   type        = string
   default     = null

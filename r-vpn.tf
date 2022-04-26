@@ -6,7 +6,10 @@ module "vpn" {
   environment = var.environment
   stack       = var.stack
 
-  custom_vpn_gateway_name = var.custom_vpn_gateway_name
+  name_prefix = var.name_prefix
+  name_slug   = var.name_slug
+  name_suffix = var.name_suffix
+  custom_name = var.custom_vpn_gateway_name
 
   location            = var.location
   location_short      = var.location_short
@@ -26,5 +29,5 @@ module "vpn" {
 
   vpn_connections = var.vpn_connections
 
-  vpn_gateway_tags = merge(local.tags, var.vpn_gateway_extra_tags)
+  extra_tags = merge(local.tags, var.vpn_gateway_extra_tags)
 }

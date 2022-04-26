@@ -2,14 +2,18 @@ module "firewall" {
   for_each = var.firewall_enabled ? toset(["firewall"]) : toset([])
   source   = "./modules/firewall"
 
-  client_name          = var.client_name
-  environment          = var.environment
-  stack                = var.stack
-  custom_firewall_name = var.custom_firewall_name
+  client_name = var.client_name
+  environment = var.environment
+  stack       = var.stack
+  custom_name = var.custom_firewall_name
 
   location            = var.location
   location_short      = var.location_short
   resource_group_name = var.resource_group_name
+
+  name_prefix = var.name_prefix
+  name_slug   = var.name_slug
+  name_suffix = var.name_suffix
 
   logs_destinations_ids = var.logs_destinations_ids
 
@@ -23,5 +27,5 @@ module "firewall" {
   firewall_dns_servers        = var.firewall_dns_servers
   firewall_private_ip_ranges  = var.firewall_private_ip_ranges
 
-  firewall_tags = merge(local.tags, var.firewall_extra_tags)
+  extra_tags = merge(local.tags, var.firewall_extra_tags)
 }

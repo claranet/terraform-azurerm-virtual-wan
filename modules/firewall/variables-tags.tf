@@ -4,7 +4,7 @@ variable "default_tags_enabled" {
   default     = true
 }
 
-variable "firewall_tags" {
+variable "extra_tags" {
   description = "Tags for Firewall resource"
   type        = map(string)
   default     = {}
