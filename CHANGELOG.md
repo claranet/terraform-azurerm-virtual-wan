@@ -1,4 +1,4 @@
-# Unreleased
+# v5.1.0 - 2022-05-13
 
 Fixed
     * AZ-709 Fix issue on diagnostic settings `for_each` value that depends on resource attributes that cannot be determined until apply
