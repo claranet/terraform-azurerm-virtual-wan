@@ -28,41 +28,7 @@ variable "location_short" {
   type        = string
 }
 
-variable "name_prefix" {
-  description = "Prefix for generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_suffix" {
-  description = "Suffix for the generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "name_slug" {
-  description = "Slug to use with the generated resources names."
-  type        = string
-  default     = ""
-}
-
-variable "extra_tags" {
-  description = "Map of additional tags."
-  type        = map(string)
-  default     = {}
-}
-
-variable "logs_destinations_ids" {
-  description = "List of destination resources IDs for logs diagnostic destination. Can be Storage Account, Log Analytics Workspace and Event Hub. No more than one of each can be set."
-  type        = list(string)
-}
 # Virtual Wan specific variables
-variable "custom_vwan_name" {
-  description = "Custom Virtual Wan's name."
-  type        = string
-  default     = null
-}
-
 variable "vpn_encryption_enabled" {
   description = "Boolean flag to specify whether VPN encryption is enabled"
   type        = bool
@@ -87,19 +53,7 @@ variable "virtual_wan_type" {
   default     = "Standard"
 }
 
-variable "virtual_wan_extra_tags" {
-  description = "Extra tags for this Virtual Wan"
-  type        = map(string)
-  default     = {}
-}
-
 # Virtual Hub specific variables
-variable "custom_virtual_hub_name" {
-  description = "Custom Virtual Hub's name"
-  type        = string
-  default     = null
-}
-
 variable "virtual_hub_address_prefix" {
   description = "The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure"
   type        = string
@@ -115,12 +69,6 @@ variable "virtual_hub_sku" {
   default     = "Standard"
 }
 
-variable "virtual_hub_extra_tags" {
-  description = "Extra tags for this Virtual Hub"
-  type        = map(string)
-  default     = {}
-}
-
 variable "virtual_hub_routes" {
   description = "List of route blocks. `next_hop_ip_address` values can be `azure_firewall` or an IP address."
   type = list(object({
@@ -132,53 +80,36 @@ variable "virtual_hub_routes" {
 
 # Express route variables
 variable "express_route_enabled" {
-  description = "Enable or not Express Route configuration"
+  description = "Enable or not ExpressRoute configuration"
   type        = bool
   default     = false
 }
-variable "custom_express_route_gateway_name" {
-  description = "Custom Express Route Gateway name"
-  type        = string
-  default     = null
-}
-
-variable "express_route_gateway_exta_tags" {
-  description = "Extra tags for Express Route Gateway"
-  type        = map(string)
-  default     = {}
-}
-
-variable "custom_express_route_circuit_name" {
-  description = "Custom Express Route Circuit name"
-  type        = string
-  default     = null
-}
 
 variable "express_route_gateway_scale_unit" {
-  description = "The number of scale unit with which to provision the Express Route Gateway."
+  description = "The number of scale unit with which to provision the ExpressRoute Gateway."
   type        = number
   default     = 1
 }
 variable "express_route_circuit_peering_location" {
-  description = "Express Route Circuit peering location."
+  description = "ExpressRoute Circuit peering location."
   type        = string
   default     = null
 }
 
 variable "express_route_circuit_bandwidth_in_mbps" {
-  description = "The bandwith in Mbps of the Express Route Circuit being created on the Service Provider"
+  description = "The bandwith in Mbps of the ExpressRoute Circuit being created on the Service Provider"
   type        = number
   default     = null
 }
 
 variable "express_route_circuit_service_provider" {
-  description = "The name of the Express Route Circuit Service Provider."
+  description = "The name of the ExpressRoute Circuit Service Provider."
   type        = string
   default     = null
 }
 
 variable "express_route_sku" {
-  description = "Express Route SKU"
+  description = "ExpressRoute SKU"
   type = object({
     tier   = string,
     family = string
@@ -190,37 +121,37 @@ variable "express_route_sku" {
 }
 
 variable "express_route_private_peering_enabled" {
-  description = "Enable Express Route Circuit Private Peering"
+  description = "Enable ExpressRoute Circuit Private Peering"
   type        = bool
   default     = false
 }
 
 variable "express_route_circuit_private_peering_primary_peer_address_prefix" {
-  description = "Primary peer address prefix for Express Route Circuit private peering"
+  description = "Primary peer address prefix for ExpressRoute Circuit private peering"
   type        = string
   default     = null
 }
 
 variable "express_route_circuit_private_peering_secondary_peer_address_prefix" {
-  description = "Secondary peer address prefix for Express Route Circuit private peering"
+  description = "Secondary peer address prefix for ExpressRoute Circuit private peering"
   type        = string
   default     = null
 }
 
 variable "express_route_circuit_private_peering_shared_key" {
-  description = "Shared secret key for Express Route Circuit Private Peering"
+  description = "Shared secret key for ExpressRoute Circuit Private Peering"
   type        = string
   default     = null
 }
 
 variable "express_route_circuit_private_peering_vlan_id" {
-  description = "VLAN Id for Express Route Circuit"
+  description = "VLAN Id for ExpressRoute Circuit"
   type        = number
   default     = null
 }
 
 variable "express_route_circuit_private_peering_peer_asn" {
-  description = "Peer BGP ASN for Express Route Circuit Private Peering"
+  description = "Peer BGP ASN for ExpressRoute Circuit Private Peering"
   type        = number
   default     = null
 }
@@ -230,18 +161,6 @@ variable "firewall_enabled" {
   description = "Enable or not Azure Firewall in the Virtual Hub"
   type        = bool
   default     = true
-}
-
-variable "custom_firewall_name" {
-  description = "Custom Firewall's name"
-  type        = string
-  default     = null
-}
-
-variable "firewall_extra_tags" {
-  description = "Extra tags for Firewall resource"
-  type        = map(string)
-  default     = {}
 }
 
 variable "firewall_sku_tier" {
@@ -284,4 +203,91 @@ variable "peered_virtual_networks" {
   description = "List of Virtual Networks IDs to peer with the Virtual Hub."
   type        = list(string)
   default     = []
+}
+
+# VPN Gateway Specific variables
+variable "vpn_gateway_enabled" {
+  description = "Enable or not the deployment of a VPN Gateway and its Connections"
+  type        = bool
+  default     = false
+}
+
+variable "vpn_gateway_routing_preference" {
+  description = "Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet`"
+  type        = string
+  default     = "Microsoft Network"
+}
+
+variable "vpn_gateway_scale_unit" {
+  description = "The scale unit for this VPN Gateway"
+  type        = number
+  default     = 1
+}
+
+variable "vpn_sites" {
+  description = "VPN Site configuration"
+  type = list(object({
+    name          = string,
+    address_cidrs = optional(list(string))
+    links = list(object({
+      name       = string
+      fqdn       = optional(string)
+      ip_address = optional(string)
+      bgp = optional(list(object({
+        asn             = string
+        peering_address = string
+      })))
+      provider_name = optional(string)
+      speed_in_mbps = optional(string)
+    }))
+    device_model  = optional(string)
+    device_vendor = optional(string)
+  }))
+  default = []
+}
+
+variable "vpn_gateway_instance_0_bgp_peering_address" {
+  description = "List of custom BGP IP Addresses to assign to the first instance"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpn_gateway_instance_1_bgp_peering_address" {
+  description = "List of custom BGP IP Addresses to assign to the second instance"
+  type        = list(string)
+  default     = []
+}
+
+variable "vpn_connections" {
+  description = "VPN Connections configuration"
+  type = list(object({
+    name                      = string
+    site_name                 = string
+    internet_security_enabled = optional(string)
+    links = list(object({
+      name                 = string,
+      egress_nat_rule_ids  = optional(list(string))
+      ingress_nat_rule_ids = optional(list(string))
+      bandwidth_mbps       = optional(number)
+      bgp_enabled          = optional(bool)
+      connection_mode      = optional(string)
+      ipsec_policy = optional(object({
+        dh_group                 = string
+        ike_encryption_algorithm = string
+        ike_integrity_algorithm  = string
+        encryption_algorithm     = string
+        integrity_algorithm      = string
+        pfs_group                = string
+        sa_data_size_kb          = number
+        sa_lifetime_sec          = number
+      }))
+      protocol                              = optional(string)
+      ratelimit_enabled                     = optional(bool)
+      route_weight                          = optional(number)
+      shared_key                            = optional(string)
+      local_azure_ip_address_enabled        = optional(bool)
+      policy_based_traffic_selector_enabled = optional(bool)
+    }))
+  }))
+  default = []
 }

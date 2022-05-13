@@ -1,0 +1,26 @@
+client_name         = "expressroute-client"
+environment         = "prod"
+stack               = "hub"
+location            = "France Central"
+location_short      = "frc"
+resource_group_name = "expressroute-rg"
+logs_destinations_ids = [
+  "/subscription/blablabla/toto/titi",
+  "/subscription/aaaaa-bbbb-cccccc/test/sa"
+]
+virtual_hub_id                          = "/subscription/aaaaaa-bbbbbb-cccccc/vhub/id"
+express_route_circuit_service_provider  = "Equinix"
+express_route_circuit_peering_location  = "Paris"
+express_route_circuit_bandwidth_in_mbps = 200
+
+express_route_private_peering_enabled                               = true
+express_route_circuit_private_peering_primary_peer_address_prefix   = "169.254.254.0/30"
+express_route_circuit_private_peering_secondary_peer_address_prefix = "169.254.254.4/30"
+express_route_circuit_private_peering_vlan_id                       = 1234
+express_route_circuit_private_peering_peer_asn                      = 65520
+express_route_circuit_private_peering_shared_key                    = "VeryStrongSharedKey"
+
+express_route_gateway_tags = {
+  env   = "prod"
+  stack = "hub"
+}

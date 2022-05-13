@@ -1,7 +1,14 @@
 # Azure Virtual Wan
 [![Changelog](https://img.shields.io/badge/changelog-release-green.svg)](CHANGELOG.md) [![Notice](https://img.shields.io/badge/notice-copyright-yellow.svg)](NOTICE) [![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-orange.svg)](LICENSE) [![TF Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/claranet/virtual-wan/azurerm/)
 
-Azure Virtual Wan module to create a Virtual Wan with one Virtual Hub, an Azure Firewall and an Express Route Circuit with its Private Peering. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
+Azure Virtual Wan module to create a Virtual Wan with one Virtual Hub, an Azure Firewall and an Express Route Circuit with its Private Peering and VPN connections. An infrastructure example referenced in the Azure Cloud Adoption Framework is available here: [raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf](https://raw.githubusercontent.com/microsoft/CloudAdoptionFramework/master/ready/enterprise-scale-architecture.pdf)
+
+This module use multiple sub-modules:
+
+  * [Virtual Hub](./modules/virtual-hub/README.md): Manage all Virtual Hub configurations
+  * [Azure Firewall](./modules/firewall/README.md): Manage the creation of Azure Firewall in a Secured Hub
+  * [Azure ExpressRoute](./modules/express-route/README.md): Manage ExpressRoute creation and configuration
+  * [Azure VPN](./modules/vpn/README.md): Manage VPN connection in a Virtual Hub
 
 ## Naming
 
@@ -95,6 +102,7 @@ module "virtual_wan" {
   firewall_enabled                      = true
   express_route_enabled                 = true
   express_route_private_peering_enabled = true
+  vpn_gateway_enabled                   = true
 
   express_route_circuit_service_provider  = "Equinix"
   express_route_circuit_peering_location  = "Paris"
@@ -113,6 +121,80 @@ module "virtual_wan" {
 
   peered_virtual_networks = [for vnet in local.vnets : module.azure_virtual_network[vnet.vnet_name].virtual_network_id]
 
+  vpn_gateway_instance_0_bgp_peering_address = ["169.254.21.1"]
+  vpn_gateway_instance_1_bgp_peering_address = ["169.254.22.1"]
+
+  vpn_sites = [
+    {
+      name = "site1"
+      links = [
+        {
+          name       = "site1-primary-endpoint"
+          ip_address = "20.20.20.20"
+          bgp = [
+            {
+              asn             = 65530
+              peering_address = "169.254.21.2"
+            }
+          ]
+        },
+        {
+          name       = "site1-secondary-endpoint"
+          ip_address = "21.21.21.21"
+          bgp = [
+            {
+              asn             = 65530
+              peering_address = "169.254.22.2"
+            }
+          ]
+        }
+      ]
+
+    }
+  ]
+
+  vpn_connections = [
+    {
+      name      = "cn-hub-to-site1"
+      site_name = "site1"
+      links = [
+        {
+          name           = "site1-primary-link"
+          bandwidth_mbps = 200
+          bgp_enabled    = true
+          ipsec_policy = {
+            dh_group                 = "DHGroup14"
+            ike_encryption_algorithm = "AES256"
+            ike_integrity_algorithm  = "SHA256"
+            encryption_algorithm     = "AES256"
+            integrity_algorithm      = "SHA256"
+            pfs_group                = "PFS14"
+            sa_data_size_kb          = 102400000
+            sa_lifetime_sec          = 3600
+          }
+          protocol   = "IKEv2"
+          shared_key = "VeryStrongSecretKeyForPrimaryLink"
+        },
+        {
+          name           = "site1-secondary-link"
+          bandwidth_mbps = 200
+          bgp_enabled    = true
+          ipsec_policy = {
+            dh_group                 = "DHGroup14"
+            ike_encryption_algorithm = "AES256"
+            ike_integrity_algorithm  = "SHA256"
+            encryption_algorithm     = "AES256"
+            integrity_algorithm      = "SHA256"
+            pfs_group                = "PFS14"
+            sa_data_size_kb          = 102400000
+            sa_lifetime_sec          = 3600
+          }
+          protocol   = "IKEv2"
+          shared_key = "VeryStrongSecretKeyForSecondaryLink"
+        }
+      ]
+    }
+  ]
 }
 
 module "azure_virtual_network" {
@@ -173,27 +255,23 @@ module "logs" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | >= 2.74.0 |
+| azurerm | ~> 2.90 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics\_settings | claranet/diagnostic-settings/azurerm | 4.0.3 |
+| express\_route | ./modules/express-route | n/a |
+| firewall | ./modules/firewall | n/a |
+| vhub | ./modules/virtual-hub | n/a |
+| vpn | ./modules/vpn | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurecaf_name.caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
-| [azurerm_express_route_circuit.erc](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit) | resource |
-| [azurerm_express_route_circuit_peering.ercprivatepeer](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit_peering) | resource |
-| [azurerm_express_route_gateway.ergw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_gateway) | resource |
-| [azurerm_firewall.azfw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/firewall) | resource |
-| [azurerm_virtual_hub.vhub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub) | resource |
-| [azurerm_virtual_hub_connection.peer_vnets_to_hub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_connection) | resource |
+| [azurecaf_name.virtual_wan_caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurerm_virtual_wan.vwan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
-| [azurerm_resources.resources](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resources) | data source |
 
 ## Inputs
 
@@ -201,25 +279,27 @@ module "logs" {
 |------|-------------|------|---------|:--------:|
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
-| custom\_express\_route\_circuit\_name | Custom Express Route Circuit name | `string` | `null` | no |
-| custom\_express\_route\_gateway\_name | Custom Express Route Gateway name | `string` | `null` | no |
+| custom\_express\_route\_circuit\_name | Custom ExpressRoute Circuit name | `string` | `null` | no |
+| custom\_express\_route\_gateway\_name | Custom ExpressRoute Gateway name | `string` | `null` | no |
 | custom\_firewall\_name | Custom Firewall's name | `string` | `null` | no |
 | custom\_virtual\_hub\_name | Custom Virtual Hub's name | `string` | `null` | no |
+| custom\_vpn\_gateway\_name | Custom name for the VPN Gateway | `string` | `null` | no |
 | custom\_vwan\_name | Custom Virtual Wan's name. | `string` | `null` | no |
+| default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
-| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the Express Route Circuit being created on the Service Provider | `number` | `null` | no |
-| express\_route\_circuit\_peering\_location | Express Route Circuit peering location. | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for Express Route Circuit Private Peering | `number` | `null` | no |
-| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for Express Route Circuit private peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for Express Route Circuit Private Peering | `string` | `null` | no |
-| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for Express Route Circuit | `number` | `null` | no |
-| express\_route\_circuit\_service\_provider | The name of the Express Route Circuit Service Provider. | `string` | `null` | no |
-| express\_route\_enabled | Enable or not Express Route configuration | `bool` | `false` | no |
-| express\_route\_gateway\_exta\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
-| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the Express Route Gateway. | `number` | `1` | no |
-| express\_route\_private\_peering\_enabled | Enable Express Route Circuit Private Peering | `bool` | `false` | no |
-| express\_route\_sku | Express Route SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
+| express\_route\_circuit\_bandwidth\_in\_mbps | The bandwith in Mbps of the ExpressRoute Circuit being created on the Service Provider | `number` | `null` | no |
+| express\_route\_circuit\_peering\_location | ExpressRoute Circuit peering location. | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_peer\_asn | Peer BGP ASN for ExpressRoute Circuit Private Peering | `number` | `null` | no |
+| express\_route\_circuit\_private\_peering\_primary\_peer\_address\_prefix | Primary peer address prefix for ExpressRoute Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_secondary\_peer\_address\_prefix | Secondary peer address prefix for ExpressRoute Circuit private peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for ExpressRoute Circuit Private Peering | `string` | `null` | no |
+| express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for ExpressRoute Circuit | `number` | `null` | no |
+| express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
+| express\_route\_enabled | Enable or not ExpressRoute configuration | `bool` | `false` | no |
+| express\_route\_gateway\_extra\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
+| express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
+| express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
+| express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `{}` | no |
 | firewall\_availibility\_zones | Availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
 | firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
@@ -245,21 +325,36 @@ module "logs" {
 | virtual\_hub\_sku | The SKU of the Virtual Hub. Possible values are `Basic` and `Standard` | `string` | `"Standard"` | no |
 | virtual\_wan\_extra\_tags | Extra tags for this Virtual Wan | `map(string)` | `{}` | no |
 | virtual\_wan\_type | Specifies the Virtual Wan type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
+| vpn\_connections | VPN Connections configuration | <pre>list(object({<br>    name                      = string<br>    site_name                 = string<br>    internet_security_enabled = optional(string)<br>    links = list(object({<br>      name                 = string,<br>      egress_nat_rule_ids  = optional(list(string))<br>      ingress_nat_rule_ids = optional(list(string))<br>      bandwidth_mbps       = optional(number)<br>      bgp_enabled          = optional(bool)<br>      connection_mode      = optional(string)<br>      ipsec_policy = optional(object({<br>        dh_group                 = string<br>        ike_encryption_algorithm = string<br>        ike_integrity_algorithm  = string<br>        encryption_algorithm     = string<br>        integrity_algorithm      = string<br>        pfs_group                = string<br>        sa_data_size_kb          = number<br>        sa_lifetime_sec          = number<br>      }))<br>      protocol                              = optional(string)<br>      ratelimit_enabled                     = optional(bool)<br>      route_weight                          = optional(number)<br>      shared_key                            = optional(string)<br>      local_azure_ip_address_enabled        = optional(bool)<br>      policy_based_traffic_selector_enabled = optional(bool)<br>    }))<br>  }))</pre> | `[]` | no |
 | vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled | `bool` | `true` | no |
+| vpn\_gateway\_enabled | Enable or not the deployment of a VPN Gateway and its Connections | `bool` | `false` | no |
+| vpn\_gateway\_extra\_tags | Extra tags for the VPN Gateway | `map(string)` | `null` | no |
+| vpn\_gateway\_instance\_0\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the first instance | `list(string)` | `[]` | no |
+| vpn\_gateway\_instance\_1\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the second instance | `list(string)` | `[]` | no |
+| vpn\_gateway\_routing\_preference | Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet` | `string` | `"Microsoft Network"` | no |
+| vpn\_gateway\_scale\_unit | The scale unit for this VPN Gateway | `number` | `1` | no |
+| vpn\_sites | VPN Site configuration | <pre>list(object({<br>    name          = string,<br>    address_cidrs = optional(list(string))<br>    links = list(object({<br>      name       = string<br>      fqdn       = optional(string)<br>      ip_address = optional(string)<br>      bgp = optional(list(object({<br>        asn             = string<br>        peering_address = string<br>      })))<br>      provider_name = optional(string)<br>      speed_in_mbps = optional(string)<br>    }))<br>    device_model  = optional(string)<br>    device_vendor = optional(string)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | express\_route\_circuit\_id | The ID of the ExpressRoute circuit |
-| express\_route\_circuit\_service\_key | The string needed by the service provider to provision the ExressRoute circuit |
+| express\_route\_circuit\_service\_key | The string needed by the service provider to provision the ExpressRoute circuit |
 | express\_route\_circuit\_service\_provider\_provisioning\_state | The ExpressRoute circuit provisioning state from your chosen service provider |
-| express\_route\_gateway\_id | Id of the ExpressRoute gateway |
+| express\_route\_gateway\_id | ID of the ExpressRoute gateway |
 | express\_route\_peering\_azure\_asn | ASN (Autonomous System Number) Used by Azure for BGP Peering |
-| firewall\_id | Id of the firewall |
+| firewall\_id | ID of the firewall |
+| firewall\_ip\_configuration | IP configuration of the created firewall |
+| firewall\_management\_ip\_configuration | Management IP configuration of the created firewall |
 | firewall\_private\_ip\_address | Private IP address of the firewall |
 | firewall\_public\_ip | Public IP address of the Firewall |
-| virtual\_hub\_id | Id of the virtual hub |
+| virtual\_hub\_default\_route\_table\_id | ID of the default route table in the Virtual Hub |
+| virtual\_hub\_id | ID of the virtual hub |
+| virtual\_wan\_id | ID of the Virtual Wan |
+| vpn\_gateway\_bgp\_settings | BGP Settings of the VPN Gateway |
+| vpn\_gateway\_connections\_ids | List of name and IDs of VPN gateway connections |
+| vpn\_gateway\_id | ID of the VPN Gateway |
 <!-- END_TF_DOCS -->
 
 ## Related documentation
