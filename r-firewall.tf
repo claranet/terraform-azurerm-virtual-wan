@@ -26,6 +26,7 @@ module "firewall" {
   firewall_availibility_zones = var.firewall_availibility_zones
   firewall_dns_servers        = var.firewall_dns_servers
   firewall_private_ip_ranges  = var.firewall_private_ip_ranges
+  threat_intel_mode           = var.firewall_threat_intel_mode
 
   extra_tags = merge(local.tags, var.firewall_extra_tags)
 }

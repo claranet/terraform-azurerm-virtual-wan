@@ -9,7 +9,7 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | ~> 2.90 |
+| azurerm | ~> 3.0 |
 
 ## Modules
 
@@ -51,6 +51,7 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
+| threat\_intel\_mode | The operation mode for threat intelligence-based filtering. Possible values are `Off`, `Alert`, `Deny` | `string` | `"Off"` | no |
 | virtual\_hub\_id | ID of the Virtual Hub in which to deploy the Firewall | `string` | n/a | yes |
 
 ## Outputs
