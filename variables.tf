@@ -199,12 +199,6 @@ variable "firewall_private_ip_ranges" {
   default     = null
 }
 
-variable "firewall_threat_intel_mode" {
-  description = "The operation mode for threat intelligence-based filtering. Possible values are `Off`, `Alert`, `Deny`"
-  type        = string
-  default     = "Off"
-}
-
 variable "peered_virtual_networks" {
   description = "List of Virtual Networks IDs to peer with the Virtual Hub."
   type        = list(string)

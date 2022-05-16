@@ -69,8 +69,3 @@ variable "virtual_hub_id" {
   type        = string
 }
 
-variable "threat_intel_mode" {
-  description = "The operation mode for threat intelligence-based filtering. Possible values are `Off`, `Alert`, `Deny`"
-  type        = string
-  default     = "Off"
-}
