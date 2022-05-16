@@ -38,11 +38,11 @@ locals {
   vnets = [
     {
       vnet_name = "MyVnet1"
-      vnet_cidr = "10.10.0.0/16"
+      vnet_cidr = ["10.10.0.0/16"]
     },
     {
       vnet_name = "MyVnet2"
-      vnet_cidr = "10.100.0.0/16"
+      vnet_cidr = ["10.100.0.0/16"]
     }
   ]
   subnets = [
@@ -231,7 +231,7 @@ module "azure_network_subnet" {
 
   resource_group_name  = module.rg.resource_group_name
   virtual_network_name = each.value.vnet_name
-  subnet_cidr_list     = each.value
+  subnet_cidr_list     = each.value.cidr
 
 }
 
@@ -255,7 +255,7 @@ module "logs" {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | ~> 2.90 |
+| azurerm | ~> 3.0 |
 
 ## Modules
 

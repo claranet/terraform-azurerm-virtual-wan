@@ -6,7 +6,7 @@
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.1 |
-| azurerm | ~> 2.90 |
+| azurerm | ~> 3.0 |
 
 ## Modules
 

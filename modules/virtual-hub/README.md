@@ -6,7 +6,7 @@ This module creates a Virtual Hub and attach it to an existing [Virtual Wan](htt
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 2.90 |
+| azurerm | ~> 3.0 |
 
 ## Modules
 

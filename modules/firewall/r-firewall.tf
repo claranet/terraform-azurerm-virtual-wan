@@ -7,7 +7,6 @@ resource "azurerm_firewall" "azfw" {
   sku_tier = var.firewall_sku_tier
 
   firewall_policy_id = var.firewall_policy_id
-  threat_intel_mode  = ""
 
   virtual_hub {
     virtual_hub_id  = var.virtual_hub_id
