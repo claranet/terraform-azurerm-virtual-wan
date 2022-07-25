@@ -5,12 +5,12 @@ output "express_route_circuit_id" {
 
 output "express_route_circuit_service_provider_provisioning_state" {
   description = "The ExpressRoute circuit provisioning state from your chosen service provider"
-  value       = azurerm_express_route_circuit.erc.service_provider_provisioning_state
+  value       = try(azurerm_express_route_circuit.erc.service_provider_provisioning_state, null)
 }
 
 output "express_route_circuit_service_key" {
   description = "The string needed by the service provider to provision the ExpressRoute circuit"
-  value       = azurerm_express_route_circuit.erc.service_key
+  value       = try(azurerm_express_route_circuit.erc.service_key, null)
   sensitive   = true
 }
 
@@ -21,5 +21,5 @@ output "express_route_gateway_id" {
 
 output "express_route_peering_azure_asn" {
   description = "ASN (Autonomous System Number) Used by Azure for BGP Peering"
-  value       = azurerm_express_route_circuit_peering.ercprivatepeer["express_route"].azure_asn
+  value       = try(azurerm_express_route_circuit_peering.ercprivatepeer["express_route"].azure_asn, null)
 }
