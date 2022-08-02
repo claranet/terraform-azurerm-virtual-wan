@@ -1,4 +1,4 @@
-# v6.0.1 - Unreleased
+# Unreleased
 
 Fixed
   * AZ-803 Fix crash when ExpressRoute is created without a Circuit.
