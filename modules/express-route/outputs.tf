@@ -5,12 +5,12 @@ output "express_route_circuit_id" {
 
 output "express_route_circuit_service_provider_provisioning_state" {
   description = "The ExpressRoute circuit provisioning state from your chosen service provider"
-  value       = try(azurerm_express_route_circuit.erc.service_provider_provisioning_state, null)
+  value       = azurerm_express_route_circuit.erc.service_provider_provisioning_state
 }
 
 output "express_route_circuit_service_key" {
   description = "The string needed by the service provider to provision the ExpressRoute circuit"
-  value       = try(azurerm_express_route_circuit.erc.service_key, null)
+  value       = azurerm_express_route_circuit.erc.service_key
   sensitive   = true
 }
 
