@@ -3,6 +3,9 @@
 Fixed
   * AZ-803 Fix crash when ExpressRoute is created without a Circuit.
 
+Added
+  * AZ-824: Add `internet_security_enabled` new parameter option
+
 # v6.0.0 - 2022-05-16
 
 Breaking

@@ -33,6 +33,7 @@
 | default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
 | extra\_tags | Extra tags for the VPN Gateway | `map(string)` | `null` | no |
+| internet\_security\_enabled | Define internet security parameter in VPN Connections if set | `bool` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |

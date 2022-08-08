@@ -29,5 +29,7 @@ module "vpn" {
 
   vpn_connections = var.vpn_connections
 
+  internet_security_enabled = var.internet_security_enabled
+
   extra_tags = merge(local.tags, var.vpn_gateway_extra_tags)
 }

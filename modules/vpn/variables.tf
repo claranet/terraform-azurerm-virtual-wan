@@ -131,3 +131,9 @@ variable "vpn_connections" {
   }))
   default = []
 }
+
+variable "internet_security_enabled" {
+  description = "Define internet security parameter in VPN Connections if set"
+  type        = bool
+  default     = null
+}

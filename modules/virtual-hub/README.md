@@ -28,6 +28,7 @@ No modules.
 | default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
 | environment | Name of application's environment. | `string` | n/a | yes |
 | extra\_tags | Tags for this Virtual Hub | `map(string)` | `{}` | no |
+| internet\_security\_enabled | Define internet security parameter in Virtual Hub Connections if set | `bool` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | name\_prefix | Prefix for generated resources names. | `string` | `""` | no |

@@ -291,3 +291,9 @@ variable "vpn_connections" {
   }))
   default = []
 }
+
+variable "internet_security_enabled" {
+  description = "Define internet security parameter in both VPN Connections and Virtual Hub Connections if set"
+  type        = bool
+  default     = null
+}

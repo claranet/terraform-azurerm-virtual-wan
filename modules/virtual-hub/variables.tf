@@ -62,3 +62,9 @@ variable "peered_virtual_networks" {
   type        = list(string)
   default     = []
 }
+
+variable "internet_security_enabled" {
+  description = "Define internet security parameter in Virtual Hub Connections if set"
+  type        = bool
+  default     = null
+}
