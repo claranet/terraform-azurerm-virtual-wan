@@ -21,7 +21,8 @@ module "vhub" {
   virtual_hub_sku    = var.virtual_hub_sku
   virtual_hub_routes = var.virtual_hub_routes
 
-  peered_virtual_networks = var.peered_virtual_networks
+  peered_virtual_networks   = var.peered_virtual_networks
+  internet_security_enabled = var.internet_security_enabled
 
   extra_tags = merge(local.tags, var.virtual_hub_extra_tags)
 }

@@ -68,7 +68,7 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
   name                      = each.key
   remote_vpn_site_id        = azurerm_vpn_site.vpn_site[each.value.site_name].id
   vpn_gateway_id            = azurerm_vpn_gateway.vpn.id
-  internet_security_enabled = lookup(each.value, "internet_security_enabled", coalesce(var.internet_security_enabled, false))
+  internet_security_enabled = lookup(each.value, "internet_security_enabled") != null ? lookup(each.value, "internet_security_enabled") : coalesce(var.internet_security_enabled, false)
 
   dynamic "vpn_link" {
     for_each = { for lnk in each.value.links : lnk.name => lnk }
