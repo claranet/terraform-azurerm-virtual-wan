@@ -24,4 +24,5 @@ resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
   name                      = "peer_${split("/", each.value)[8]}_to_${local.vhub_name}"
   remote_virtual_network_id = each.value
   virtual_hub_id            = azurerm_virtual_hub.vhub.id
+  internet_security_enabled = var.internet_security_enabled
 }

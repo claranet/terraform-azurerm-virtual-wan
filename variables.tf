@@ -263,7 +263,7 @@ variable "vpn_connections" {
   type = list(object({
     name                      = string
     site_name                 = string
-    internet_security_enabled = optional(string)
+    internet_security_enabled = optional(bool)
     links = list(object({
       name                 = string,
       egress_nat_rule_ids  = optional(list(string))
@@ -290,4 +290,10 @@ variable "vpn_connections" {
     }))
   }))
   default = []
+}
+
+variable "internet_security_enabled" {
+  description = "Define internet security parameter in both VPN Connections and Virtual Hub Connections if set"
+  type        = bool
+  default     = null
 }
