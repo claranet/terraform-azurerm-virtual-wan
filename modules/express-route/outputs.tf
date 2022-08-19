@@ -21,5 +21,5 @@ output "express_route_gateway_id" {
 
 output "express_route_peering_azure_asn" {
   description = "ASN (Autonomous System Number) Used by Azure for BGP Peering"
-  value       = azurerm_express_route_circuit_peering.ercprivatepeer["express_route"].azure_asn
+  value       = try(azurerm_express_route_circuit_peering.ercprivatepeer["express_route"].azure_asn, null)
 }
