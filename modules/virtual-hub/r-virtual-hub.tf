@@ -20,9 +20,20 @@ resource "azurerm_virtual_hub" "vhub" {
 }
 
 resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
-  for_each                  = toset(var.peered_virtual_networks)
-  name                      = "peer_${split("/", each.value)[8]}_to_${local.vhub_name}"
-  remote_virtual_network_id = each.value
+  for_each = var.peered_virtual_networks
+
+  remote_virtual_network_id = each.value.vnet_id
   virtual_hub_id            = azurerm_virtual_hub.vhub.id
-  internet_security_enabled = var.internet_security_enabled
+
+  name                      = coalesce(each.value.peering_name, "peer_${split("/", each.value.vnet_id)[8]}_to_${local.vhub_name}")
+  internet_security_enabled = coalesce(each.value.nternet_security_enabled, var.internet_security_enabled)
+
+  dynamic "routing" {
+    for_each = each.value.routing != null ? ["routing"] : []
+    content {
+      associated_route_table_id = each.value.routing.associated_route_table_id
+      propagated_route_table    = each.value.routing.propagated_route_table
+      static_vnet_route         = each.value.routing.static_vnet_route
+    }
+  }
 }

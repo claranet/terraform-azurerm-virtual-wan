@@ -38,12 +38,14 @@ More details about variables set by the `terraform-wrapper` available in the [do
 locals {
   vnets = [
     {
-      vnet_name = "MyVnet1"
-      vnet_cidr = ["10.10.0.0/16"]
+      vnet_name                 = "MyVnet1"
+      vnet_cidr                 = ["10.10.0.0/16"]
+      internet_security_enabled = true
     },
     {
-      vnet_name = "MyVnet2"
-      vnet_cidr = ["10.100.0.0/16"]
+      vnet_name                 = "MyVnet2"
+      vnet_cidr                 = ["10.100.0.0/16"]
+      internet_security_enabled = false
     }
   ]
   subnets = [
@@ -120,7 +122,13 @@ module "virtual_wan" {
     module.logs.logs_storage_account_id
   ]
 
-  peered_virtual_networks = [for vnet in local.vnets : module.azure_virtual_network[vnet.vnet_name].virtual_network_id]
+  peered_virtual_networks = {
+    for vnet in local.vnets : vnet.vnet_name => {
+      vnet_id                   = module.azure_virtual_network[vnet.vnet_name].virtual_network_id
+      internet_security_enabled = vnet.internet_security_enabled
+      # routing = {}
+    }
+  }
 
   vpn_gateway_instance_0_bgp_peering_address = ["169.254.21.1"]
   vpn_gateway_instance_1_bgp_peering_address = ["169.254.22.1"]
@@ -318,7 +326,7 @@ module "logs" {
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
-| peered\_virtual\_networks | List of Virtual Networks IDs to peer with the Virtual Hub. | `list(string)` | `[]` | no |
+| peered\_virtual\_networks | Virtual Networks to peer with the Virtual Hub. | <pre>map(object({<br>    vnet_id                   = string<br>    peering_name              = optional(string)<br>    internet_security_enabled = optional(bool)<br><br>    routing = optional(object({<br>      associated_route_table_id = optional(string)<br><br>      propagated_route_table = optional(object({<br>        labels          = optional(list(string))<br>        route_table_ids = optional(list(string))<br>      }))<br><br>      static_vnet_route = optional(object({<br>        name                = optional(string)<br>        address_prefixes    = optional(list(string))<br>        next_hop_ip_address = optional(string)<br>      }))<br>    }))<br>  }))</pre> | `{}` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | stack | Name of application's stack. | `string` | n/a | yes |
 | virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
