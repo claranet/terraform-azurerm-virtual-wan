@@ -29,11 +29,26 @@ resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
   internet_security_enabled = coalesce(each.value.nternet_security_enabled, var.internet_security_enabled)
 
   dynamic "routing" {
-    for_each = each.value.routing != null ? ["routing"] : []
+    for_each = each.value.routing != null ? ["enabled"] : []
     content {
       associated_route_table_id = each.value.routing.associated_route_table_id
-      propagated_route_table    = each.value.routing.propagated_route_table
-      static_vnet_route         = each.value.routing.static_vnet_route
+
+      dynamic "propagated_route_table" {
+        for_each = each.value.routing.propagated_route_table != null ? ["enabled"] : []
+        content {
+          labels          = each.value.routing.propagated_route_table.labels
+          route_table_ids = each.value.routing.propagated_route_table.route_table_ids
+        }
+      }
+
+      dynamic "static_vnet_route" {
+        for_each = each.value.routing.static_vnet_route != null ? ["enabled"] : []
+        content {
+          name                = each.value.routing.static_vnet_route.name
+          address_prefixes    = each.value.routing.static_vnet_route.address_prefixes
+          next_hop_ip_address = each.value.routing.static_vnet_route.next_hop_ip_address
+        }
+      }
     }
   }
 }
