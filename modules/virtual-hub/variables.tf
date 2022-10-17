@@ -62,7 +62,7 @@ variable "peered_virtual_networks" {
   type = map(object({
     vnet_id                   = string
     peering_name              = optional(string)
-    internet_security_enabled = optional(bool)
+    internet_security_enabled = optional(bool, true)
 
     routing = optional(object({
       associated_route_table_id = optional(string)

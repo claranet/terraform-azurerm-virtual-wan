@@ -26,7 +26,7 @@ resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
   virtual_hub_id            = azurerm_virtual_hub.vhub.id
 
   name                      = coalesce(each.value.peering_name, "peer_${split("/", each.value.vnet_id)[8]}_to_${local.vhub_name}")
-  internet_security_enabled = coalesce(each.value.nternet_security_enabled, var.internet_security_enabled)
+  internet_security_enabled = coalesce(each.value.internet_security_enabled, var.internet_security_enabled)
 
   dynamic "routing" {
     for_each = each.value.routing != null ? ["enabled"] : []
