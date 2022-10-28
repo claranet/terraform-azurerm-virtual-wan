@@ -85,13 +85,13 @@ module "virtual_wan" {
     module.logs.logs_storage_account_id
   ]
 
-  peered_virtual_networks = {
-    for vnet in local.vnets : vnet.vnet_name => {
+  peered_virtual_networks = [
+    for vnet in local.vnets : {
       vnet_id                   = module.azure_virtual_network[vnet.vnet_name].virtual_network_id
       internet_security_enabled = vnet.internet_security_enabled
       # routing = {}
     }
-  }
+  ]
 
   vpn_gateway_instance_0_bgp_peering_address = ["169.254.21.1"]
   vpn_gateway_instance_1_bgp_peering_address = ["169.254.22.1"]

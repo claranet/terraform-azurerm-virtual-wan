@@ -201,7 +201,7 @@ variable "firewall_private_ip_ranges" {
 
 variable "peered_virtual_networks" {
   description = "Virtual Networks to peer with the Virtual Hub."
-  type = map(object({
+  type = list(object({
     vnet_id                   = string
     peering_name              = optional(string)
     internet_security_enabled = optional(bool, true)
@@ -221,7 +221,7 @@ variable "peered_virtual_networks" {
       }))
     }))
   }))
-  default = {}
+  default = []
 }
 
 # VPN Gateway Specific variables

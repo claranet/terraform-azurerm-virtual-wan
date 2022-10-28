@@ -20,12 +20,12 @@ resource "azurerm_virtual_hub" "vhub" {
 }
 
 resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
-  for_each = var.peered_virtual_networks
+  for_each = var.peered_virtual_networks != null ? { for p in var.peered_virtual_networks : p.vnet_id => p } : {}
 
   remote_virtual_network_id = each.value.vnet_id
   virtual_hub_id            = azurerm_virtual_hub.vhub.id
 
-  name                      = coalesce(each.value.peering_name, "peer_${split("/", each.value.vnet_id)[8]}_to_${local.vhub_name}")
+  name                      = coalesce(each.value.peering_name, format("peer_%s_to_%s", split("/", each.value.vnet_id)[8], local.vhub_name))
   internet_security_enabled = coalesce(each.value.internet_security_enabled, var.internet_security_enabled)
 
   dynamic "routing" {
