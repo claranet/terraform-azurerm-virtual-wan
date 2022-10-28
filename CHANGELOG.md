@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.0 - 2022-10-28
 
 Changed
   * AZ-871: Implement all available options for VHub <> VNet peering, `peered_virtual_networks` is now a typed list(object)
