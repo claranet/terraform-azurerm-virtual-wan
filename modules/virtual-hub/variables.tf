@@ -58,9 +58,28 @@ variable "virtual_hub_routes" {
 }
 
 variable "peered_virtual_networks" {
-  description = "List of Virtual Networks IDs to peer with the Virtual Hub."
-  type        = list(string)
-  default     = []
+  description = "Virtual Networks to peer with the Virtual Hub."
+  type = list(object({
+    vnet_id                   = string
+    peering_name              = optional(string)
+    internet_security_enabled = optional(bool, true)
+
+    routing = optional(object({
+      associated_route_table_id = optional(string)
+
+      propagated_route_table = optional(object({
+        labels          = optional(list(string))
+        route_table_ids = optional(list(string))
+      }))
+
+      static_vnet_route = optional(object({
+        name                = optional(string)
+        address_prefixes    = optional(list(string))
+        next_hop_ip_address = optional(string)
+      }))
+    }))
+  }))
+  default = []
 }
 
 variable "internet_security_enabled" {
