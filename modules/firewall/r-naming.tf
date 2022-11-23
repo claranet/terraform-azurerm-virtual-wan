@@ -1,4 +1,4 @@
-resource "azurecaf_name" "azure_firewall_caf" {
+data "azurecaf_name" "azure_firewall_caf" {
   name          = var.stack
   resource_type = "azurerm_firewall"
   prefixes      = var.name_prefix == "" ? null : [local.name_prefix]

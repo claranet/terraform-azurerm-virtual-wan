@@ -8,8 +8,8 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 
 | Name | Version |
 |------|---------|
-| azurecaf | ~> 1.1 |
-| azurerm | ~> 3.0 |
+| azurecaf | ~> 1.2, >= 1.2.22 |
+| azurerm | ~> 3.22 |
 
 ## Modules
 
@@ -21,8 +21,8 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 
 | Name | Type |
 |------|------|
-| [azurecaf_name.azure_firewall_caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurerm_firewall.azfw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/firewall) | resource |
+| [azurecaf_name.azure_firewall_caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
