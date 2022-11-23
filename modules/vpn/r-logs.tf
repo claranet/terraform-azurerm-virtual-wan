@@ -1,6 +1,6 @@
 module "vpn_gateway_diagnostic_settings" {
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "5.0.0"
+  version = "6.2.0"
 
   resource_id           = azurerm_vpn_gateway.vpn.id
   logs_destinations_ids = var.logs_destinations_ids
