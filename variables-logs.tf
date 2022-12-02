@@ -9,25 +9,62 @@ If you want to specify an Azure EventHub to send logs and metrics to, you need t
 EOD
 }
 
-variable "logs_categories" {
-  type        = list(string)
-  description = "Log categories to send to destinations."
-  default     = null
-}
-
-variable "logs_metrics_categories" {
-  type        = list(string)
-  description = "Metrics categories to send to destinations."
-  default     = null
-}
-
 variable "logs_retention_days" {
   type        = number
   description = "Number of days to keep logs on storage account."
   default     = 30
 }
 
-variable "custom_diagnostic_settings_name" {
+# Variable per module
+variable "express_route_logs_categories" {
+  type        = list(string)
+  description = "Log categories to send to destinations."
+  default     = null
+}
+
+variable "express_route_logs_metrics_categories" {
+  type        = list(string)
+  description = "Metrics categories to send to destinations."
+  default     = null
+}
+
+variable "express_route_custom_diagnostic_settings_name" {
+  description = "Custom name of the diagnostics settings, name will be 'default' if not set."
+  type        = string
+  default     = "default"
+}
+
+variable "firewall_logs_categories" {
+  type        = list(string)
+  description = "Log categories to send to destinations."
+  default     = null
+}
+
+variable "firewall_logs_metrics_categories" {
+  type        = list(string)
+  description = "Metrics categories to send to destinations."
+  default     = null
+}
+
+variable "firewall_custom_diagnostic_settings_name" {
+  description = "Custom name of the diagnostics settings, name will be 'default' if not set."
+  type        = string
+  default     = "default"
+}
+
+variable "vpn_gateway_logs_categories" {
+  type        = list(string)
+  description = "Log categories to send to destinations."
+  default     = null
+}
+
+variable "vpn_gateway_logs_metrics_categories" {
+  type        = list(string)
+  description = "Metrics categories to send to destinations."
+  default     = null
+}
+
+variable "vpn_gateway_custom_diagnostic_settings_name" {
   description = "Custom name of the diagnostics settings, name will be 'default' if not set."
   type        = string
   default     = "default"

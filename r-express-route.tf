@@ -15,11 +15,11 @@ module "express_route" {
   name_suffix = var.name_suffix
 
   logs_destinations_ids   = var.logs_destinations_ids
-  logs_categories         = var.logs_categories
-  logs_metrics_categories = var.logs_metrics_categories
+  logs_categories         = var.express_route_logs_categories
+  logs_metrics_categories = var.express_route_logs_metrics_categories
   logs_retention_days     = var.logs_retention_days
 
-  custom_diagnostic_settings_name = var.custom_diagnostic_settings_name
+  custom_diagnostic_settings_name = var.express_route_custom_diagnostic_settings_name
 
   virtual_hub_id = module.vhub.virtual_hub_id
 

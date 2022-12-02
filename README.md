@@ -288,7 +288,6 @@ module "logs" {
 |------|-------------|------|---------|:--------:|
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
-| custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | custom\_express\_route\_circuit\_name | Custom ExpressRoute Circuit name | `string` | `null` | no |
 | custom\_express\_route\_gateway\_name | Custom ExpressRoute Gateway name | `string` | `null` | no |
 | custom\_firewall\_name | Custom Firewall's name | `string` | `null` | no |
@@ -305,16 +304,22 @@ module "logs" {
 | express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for ExpressRoute Circuit Private Peering | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_vlan\_id | VLAN Id for ExpressRoute Circuit | `number` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
+| express\_route\_custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | express\_route\_enabled | Enable or not ExpressRoute configuration | `bool` | `false` | no |
 | express\_route\_gateway\_extra\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
+| express\_route\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| express\_route\_logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
 | express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `{}` | no |
 | firewall\_availibility\_zones | Availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br>  1,<br>  2,<br>  3<br>]</pre> | no |
+| firewall\_custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
 | firewall\_enabled | Enable or not Azure Firewall in the Virtual Hub | `bool` | `true` | no |
 | firewall\_extra\_tags | Extra tags for Firewall resource | `map(string)` | `{}` | no |
+| firewall\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| firewall\_logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | firewall\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
 | firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
 | firewall\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
@@ -322,9 +327,7 @@ module "logs" {
 | internet\_security\_enabled | Define internet security parameter in both VPN Connections and Virtual Hub Connections if set | `bool` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
-| logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
 | logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | n/a | yes |
-| logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | logs\_retention\_days | Number of days to keep logs on storage account. | `number` | `30` | no |
 | name\_prefix | Prefix for generated resources names. | `string` | `""` | no |
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
@@ -341,10 +344,13 @@ module "logs" {
 | virtual\_wan\_type | Specifies the Virtual Wan type. Possible Values include: `Basic` and `Standard` | `string` | `"Standard"` | no |
 | vpn\_connections | VPN Connections configuration | <pre>list(object({<br>    name                      = string<br>    site_name                 = string<br>    internet_security_enabled = optional(bool)<br>    links = list(object({<br>      name                 = string,<br>      egress_nat_rule_ids  = optional(list(string))<br>      ingress_nat_rule_ids = optional(list(string))<br>      bandwidth_mbps       = optional(number)<br>      bgp_enabled          = optional(bool)<br>      connection_mode      = optional(string)<br>      ipsec_policy = optional(object({<br>        dh_group                 = string<br>        ike_encryption_algorithm = string<br>        ike_integrity_algorithm  = string<br>        encryption_algorithm     = string<br>        integrity_algorithm      = string<br>        pfs_group                = string<br>        sa_data_size_kb          = number<br>        sa_lifetime_sec          = number<br>      }))<br>      protocol                              = optional(string)<br>      ratelimit_enabled                     = optional(bool)<br>      route_weight                          = optional(number)<br>      shared_key                            = optional(string)<br>      local_azure_ip_address_enabled        = optional(bool)<br>      policy_based_traffic_selector_enabled = optional(bool)<br>    }))<br>  }))</pre> | `[]` | no |
 | vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled | `bool` | `true` | no |
+| vpn\_gateway\_custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | vpn\_gateway\_enabled | Enable or not the deployment of a VPN Gateway and its Connections | `bool` | `false` | no |
 | vpn\_gateway\_extra\_tags | Extra tags for the VPN Gateway | `map(string)` | `null` | no |
 | vpn\_gateway\_instance\_0\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the first instance | `list(string)` | `[]` | no |
 | vpn\_gateway\_instance\_1\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the second instance | `list(string)` | `[]` | no |
+| vpn\_gateway\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| vpn\_gateway\_logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | vpn\_gateway\_routing\_preference | Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet` | `string` | `"Microsoft Network"` | no |
 | vpn\_gateway\_scale\_unit | The scale unit for this VPN Gateway | `number` | `1` | no |
 | vpn\_sites | VPN Site configuration | <pre>list(object({<br>    name          = string,<br>    address_cidrs = optional(list(string))<br>    links = list(object({<br>      name       = string<br>      fqdn       = optional(string)<br>      ip_address = optional(string)<br>      bgp = optional(list(object({<br>        asn             = string<br>        peering_address = string<br>      })))<br>      provider_name = optional(string)<br>      speed_in_mbps = optional(string)<br>    }))<br>    device_model  = optional(string)<br>    device_vendor = optional(string)<br>  }))</pre> | `[]` | no |
