@@ -1,4 +1,4 @@
-resource "azurecaf_name" "azure_vpngw_caf" {
+data "azurecaf_name" "azure_vpngw_caf" {
   name          = var.stack
   resource_type = "azurerm_point_to_site_vpn_gateway"
   prefixes      = var.name_prefix == "" ? null : [local.name_prefix]
@@ -7,4 +7,3 @@ resource "azurecaf_name" "azure_vpngw_caf" {
   clean_input   = true
   separator     = "-"
 }
-

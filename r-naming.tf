@@ -1,4 +1,4 @@
-resource "azurecaf_name" "virtual_wan_caf" {
+data "azurecaf_name" "virtual_wan_caf" {
   name          = var.stack
   resource_type = "azurerm_virtual_wan"
   prefixes      = var.name_prefix == "" ? null : [local.name_prefix]

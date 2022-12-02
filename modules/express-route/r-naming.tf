@@ -1,4 +1,4 @@
-resource "azurecaf_name" "azure_express_route_gateway_caf" {
+data "azurecaf_name" "azure_express_route_gateway_caf" {
   name          = var.stack
   resource_type = "azurerm_express_route_gateway"
   prefixes      = var.name_prefix == "" ? null : [local.name_prefix]
@@ -8,7 +8,7 @@ resource "azurecaf_name" "azure_express_route_gateway_caf" {
   separator     = "-"
 }
 
-resource "azurecaf_name" "azure_express_route_circuit_caf" {
+data "azurecaf_name" "azure_express_route_circuit_caf" {
   name          = var.stack
   resource_type = "azurerm_express_route_circuit"
   prefixes      = var.name_prefix == "" ? null : [local.name_prefix]

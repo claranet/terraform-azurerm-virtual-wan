@@ -1,3 +1,11 @@
+# Unreleased
+
+Changed
+  * AZ-908: Use the new data source for CAF naming (instead of resource)
+
+Added
+  * AZ-908: Implement CAF naming for Virtual Hub module
+
 # v7.1.0 - 2022-10-28
 
 Changed

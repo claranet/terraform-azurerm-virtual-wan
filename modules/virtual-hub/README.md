@@ -6,7 +6,8 @@ This module creates a Virtual Hub and attach it to an existing [Virtual Wan](htt
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 3.0 |
+| azurecaf | ~> 1.2, >= 1.2.22 |
+| azurerm | ~> 3.22 |
 
 ## Modules
 
@@ -18,6 +19,7 @@ No modules.
 |------|------|
 | [azurerm_virtual_hub.vhub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub) | resource |
 | [azurerm_virtual_hub_connection.peer_vnets_to_hub](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_connection) | resource |
+| [azurecaf_name.virtual_hub](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
