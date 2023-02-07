@@ -309,6 +309,7 @@ module "logs" {
 | express\_route\_gateway\_extra\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
 | express\_route\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| express\_route\_logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination for `Express Route` resource.<br>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | `null` | no |
 | express\_route\_logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
 | express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |
@@ -319,6 +320,7 @@ module "logs" {
 | firewall\_enabled | Enable or not Azure Firewall in the Virtual Hub | `bool` | `true` | no |
 | firewall\_extra\_tags | Extra tags for Firewall resource | `map(string)` | `{}` | no |
 | firewall\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| firewall\_logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination for `Azure Firewall` resource.<br>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | `null` | no |
 | firewall\_logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | firewall\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
 | firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
@@ -350,6 +352,7 @@ module "logs" {
 | vpn\_gateway\_instance\_0\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the first instance | `list(string)` | `[]` | no |
 | vpn\_gateway\_instance\_1\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the second instance | `list(string)` | `[]` | no |
 | vpn\_gateway\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
+| vpn\_gateway\_logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination for `VPN Gateway` resource.<br>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | `null` | no |
 | vpn\_gateway\_logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | vpn\_gateway\_routing\_preference | Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet` | `string` | `"Microsoft Network"` | no |
 | vpn\_gateway\_scale\_unit | The scale unit for this VPN Gateway | `number` | `1` | no |
