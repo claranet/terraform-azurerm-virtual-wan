@@ -1,3 +1,11 @@
+# Unreleased
+
+Added
+  * AZ-994: Add `logs_destinations_ids` per resource
+
+Changed
+  * AZ-994: Bump `diagnostic-settings` to `~> 6.3.0`
+
 # v7.2.0 - 2022-12-02
 
 Changed

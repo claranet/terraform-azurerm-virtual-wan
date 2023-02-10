@@ -15,7 +15,7 @@ module "vpn" {
   location_short      = var.location_short
   resource_group_name = var.resource_group_name
 
-  logs_destinations_ids   = var.logs_destinations_ids
+  logs_destinations_ids   = coalesce(var.vpn_gateway_logs_destinations_ids, var.logs_destinations_ids)
   logs_categories         = var.vpn_gateway_logs_categories
   logs_metrics_categories = var.vpn_gateway_logs_metrics_categories
   logs_retention_days     = var.logs_retention_days

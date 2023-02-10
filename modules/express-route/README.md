@@ -15,7 +15,7 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 
 | Name | Source | Version |
 |------|--------|---------|
-| express\_route\_circuit\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | 6.2.0 |
+| express\_route\_circuit\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 6.3.0 |
 
 ## Resources
 
