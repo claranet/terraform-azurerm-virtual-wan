@@ -1,4 +1,4 @@
-# Unreleased
+# v7.3.0 - 2023-02-10
 
 Added
   * AZ-994: Add `logs_destinations_ids` per resource
