@@ -103,4 +103,12 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
       policy_based_traffic_selector_enabled = lookup(vpn_link.value, "policy_based_traffic_selector_enabled", null)
     }
   }
+
+  dynamic "traffic_selector_policy" {
+    for_each = vpn_connections.value.traffic_selector_policy != null ? ["fake"] : []
+    content {
+      local_address_ranges  = lookup(vpn_connections.value.traffic_selector_policy, "local_address_ranges")
+      remote_address_ranges = lookup(vpn_connections.value.traffic_selector_policy, "remote_address_ranges")
+    }
+  }
 }

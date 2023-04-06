@@ -307,6 +307,10 @@ variable "vpn_connections" {
       local_azure_ip_address_enabled        = optional(bool)
       policy_based_traffic_selector_enabled = optional(bool)
     }))
+    traffic_selector_policy = optional(object({
+      local_address_ranges  = list(string)
+      remote_address_ranges = list(string)
+    }))
   }))
   default = []
 }
