@@ -66,6 +66,16 @@ module "express_route" {
   resource_group_name = module.rg.resource_group_name
   stack               = var.stack
   virtual_hub_id      = module.virtual_hub.virtual_hub_id
+
+  express_route_circuit_service_provider  = "Equinix"
+  express_route_circuit_peering_location  = "Paris"
+  express_route_circuit_bandwidth_in_mbps = 100
+
+  express_route_circuit_private_peering_primary_peer_address_prefix   = "169.254.254.0/30"
+  express_route_circuit_private_peering_secondary_peer_address_prefix = "169.254.254.4/30"
+  express_route_circuit_private_peering_vlan_id                       = 1234
+  express_route_circuit_private_peering_peer_asn                      = 4321
+  express_route_circuit_private_peering_shared_key                    = "MySuperSecretSharedKey"
 }
 
 locals {
