@@ -15,7 +15,7 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 
 | Name | Source | Version |
 |------|--------|---------|
-| firewall\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 6.3.0 |
+| firewall\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 6.4.1 |
 
 ## Resources
 
