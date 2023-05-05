@@ -1,4 +1,4 @@
-# Unreleased
+# v7.3.1 - 2023-05-05
 
 Fixed
   * AZ-1075: Fix mandatory variables
