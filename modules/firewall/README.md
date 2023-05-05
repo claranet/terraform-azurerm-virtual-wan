@@ -9,7 +9,7 @@ Using this module outside the Virtual Wan module need an existing Virtual Hub.
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.22 |
+| azurerm | ~> 3.39 |
 
 ## Modules
 

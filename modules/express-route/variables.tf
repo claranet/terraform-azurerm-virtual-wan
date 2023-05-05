@@ -36,19 +36,19 @@ variable "express_route_gateway_scale_unit" {
 variable "express_route_circuit_peering_location" {
   description = "ExpressRoute Circuit peering location."
   type        = string
-  default     = null
+  nullable    = false
 }
 
 variable "express_route_circuit_bandwidth_in_mbps" {
-  description = "The bandwith in Mbps of the ExpressRoute Circuit being created on the Service Provider"
+  description = "The bandwidth in Mbps of the ExpressRoute Circuit being created on the Service Provider"
   type        = number
-  default     = null
+  nullable    = false
 }
 
 variable "express_route_circuit_service_provider" {
   description = "The name of the ExpressRoute Circuit Service Provider."
   type        = string
-  default     = null
+  nullable    = false
 }
 
 variable "express_route_sku" {
