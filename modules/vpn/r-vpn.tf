@@ -104,11 +104,16 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
     }
   }
 
+  policy_based_traffic_selector_enabled = each.value.policy_based_traffic_selector_enabled
+
   dynamic "traffic_selector_policy" {
-    for_each = vpn_connections.value.traffic_selector_policy != null ? ["fake"] : []
+    for_each = each.value.traffic_selector_policy
     content {
-      local_address_ranges  = lookup(vpn_connections.value.traffic_selector_policy, "local_address_ranges")
-      remote_address_ranges = lookup(vpn_connections.value.traffic_selector_policy, "remote_address_ranges")
+      local_address_cidrs  = traffic_selector_policy.value.local_address_ranges
+      remote_address_cidrs = traffic_selector_policy.value.remote_address_ranges
     }
   }
+
+  tags = merge(local.default_tags, var.extra_tags, each.value.extra_tags)
+
 }

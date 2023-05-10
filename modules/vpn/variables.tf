@@ -126,12 +126,12 @@ variable "vpn_connections" {
       route_weight                          = optional(number)
       shared_key                            = optional(string)
       local_azure_ip_address_enabled        = optional(bool)
-      policy_based_traffic_selector_enabled = optional(bool)
+      policy_based_traffic_selector_enabled = optional(bool, false)
     }))
-    traffic_selector_policy = optional(object({
+    traffic_selector_policy = optional(list(object({
       local_address_ranges  = list(string)
       remote_address_ranges = list(string)
-    }))
+    })), [])
   }))
   default = []
 }
