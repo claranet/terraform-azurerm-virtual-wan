@@ -140,14 +140,10 @@ module "vpn" {
           shared_key = "VeryStrongSecretKeyForSecondaryLink"
         }
       ]
-      traffic_selector_policy = {
-        local_address_ranges = [
-          "10.0.0.0/16"
-        ]
-        remote_address_ranges = [
-          "10.92.34.50/32"
-        ]
-      }
+      traffic_selector_policy = [{
+        local_address_ranges  = ["10.0.0.0/16"]
+        remote_address_ranges = ["10.92.34.50/32"]
+      }]
     }
   ]
   extra_tags = local.tags
