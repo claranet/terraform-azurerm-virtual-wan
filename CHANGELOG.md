@@ -1,7 +1,7 @@
 # Unreleased
 
 Added
-  * AZ-1041: Add `traffic_selector_policy` option for vpn connection
+  * AZ-1041: Add `traffic_selector_policy` option for VPN connections
 
 # v7.3.1 - 2023-05-05
 
