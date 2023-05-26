@@ -136,8 +136,15 @@ module "vpn" {
             sa_data_size_kb          = 102400000
             sa_lifetime_sec          = 3600
           }
-          protocol   = "IKEv2"
-          shared_key = "VeryStrongSecretKeyForSecondaryLink"
+          protocol                              = "IKEv2"
+          shared_key                            = "VeryStrongSecretKeyForSecondaryLink"
+          policy_based_traffic_selector_enabled = true
+        }
+      ]
+      traffic_selector_policy = [
+        {
+          local_address_ranges  = ["10.0.0.0/16"],
+          remote_address_ranges = ["10.92.34.50/32"]
         }
       ]
     }
