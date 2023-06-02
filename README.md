@@ -272,6 +272,7 @@ module "logs" {
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
 | azurerm | ~> 3.39 |
+| null | ~> 3.0 |
 
 ## Modules
 
@@ -279,6 +280,7 @@ module "logs" {
 |------|--------|---------|
 | express\_route | ./modules/express-route | n/a |
 | firewall | ./modules/firewall | n/a |
+| routing | ./modules/routing-intent | n/a |
 | vhub | ./modules/virtual-hub | n/a |
 | vpn | ./modules/vpn | n/a |
 
@@ -287,12 +289,14 @@ module "logs" {
 | Name | Type |
 |------|------|
 | [azurerm_virtual_wan.vwan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
+| [null_resource.routing_precondition](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [azurecaf_name.virtual_wan_caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| azure\_firewall\_as\_next\_hop\_enabled | Whether use Azure Firewall as Next Hop or a NVA. | `bool` | `true` | no |
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
 | custom\_express\_route\_circuit\_name | Custom ExpressRoute Circuit name | `string` | `null` | no |
@@ -333,6 +337,7 @@ module "logs" {
 | firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
 | firewall\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
 | firewall\_sku\_tier | SKU tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
+| internet\_routing\_enabled | Whether force the internet routing through Azure Firewall or the NVA. | `bool` | `true` | no |
 | internet\_security\_enabled | Define internet security parameter in both VPN Connections and Virtual Hub Connections if set | `bool` | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
@@ -341,9 +346,12 @@ module "logs" {
 | name\_prefix | Prefix for generated resources names. | `string` | `""` | no |
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
+| nexthop\_nva\_id | ID of the NVA used as Next Hop. | `string` | `null` | no |
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
 | peered\_virtual\_networks | Virtual Networks to peer with the Virtual Hub. | <pre>list(object({<br>    vnet_id                   = string<br>    peering_name              = optional(string)<br>    internet_security_enabled = optional(bool, true)<br><br>    routing = optional(object({<br>      associated_route_table_id = optional(string)<br><br>      propagated_route_table = optional(object({<br>        labels          = optional(list(string))<br>        route_table_ids = optional(list(string))<br>      }))<br><br>      static_vnet_route = optional(object({<br>        name                = optional(string)<br>        address_prefixes    = optional(list(string))<br>        next_hop_ip_address = optional(string)<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
+| private\_routing\_enabled | Whether force the internet routing through Azure Firewall or the NVA. | `bool` | `true` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
+| routing\_intent\_enabled | Whether enable or not the routing intent. | `bool` | `false` | no |
 | stack | Name of application's stack. | `string` | n/a | yes |
 | virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure | `string` | n/a | yes |
 | virtual\_hub\_extra\_tags | Extra tags for this Virtual Hub | `map(string)` | `{}` | no |
