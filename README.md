@@ -296,7 +296,7 @@ module "logs" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| azure\_firewall\_as\_next\_hop\_enabled | Whether use Azure Firewall as Next Hop or a NVA. | `bool` | `true` | no |
+| azure\_firewall\_as\_next\_hop\_enabled | Whether use Azure Firewall as next hop or a NVA. | `bool` | `true` | no |
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed | `bool` | `true` | no |
 | client\_name | Name of client. | `string` | n/a | yes |
 | custom\_express\_route\_circuit\_name | Custom ExpressRoute Circuit name | `string` | `null` | no |
@@ -346,10 +346,10 @@ module "logs" {
 | name\_prefix | Prefix for generated resources names. | `string` | `""` | no |
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
-| nexthop\_nva\_id | ID of the NVA used as Next Hop. | `string` | `null` | no |
+| next\_hop\_nva\_id | ID of the NVA used as next hop. | `string` | `null` | no |
 | office365\_local\_breakout\_category | Specifies the Office365 local breakout category. Possible values include: `Optimize`, `OptimizeAndAllow`, `All`, `None` | `string` | `"None"` | no |
 | peered\_virtual\_networks | Virtual Networks to peer with the Virtual Hub. | <pre>list(object({<br>    vnet_id                   = string<br>    peering_name              = optional(string)<br>    internet_security_enabled = optional(bool, true)<br><br>    routing = optional(object({<br>      associated_route_table_id = optional(string)<br><br>      propagated_route_table = optional(object({<br>        labels          = optional(list(string))<br>        route_table_ids = optional(list(string))<br>      }))<br><br>      static_vnet_route = optional(object({<br>        name                = optional(string)<br>        address_prefixes    = optional(list(string))<br>        next_hop_ip_address = optional(string)<br>      }))<br>    }))<br>  }))</pre> | `[]` | no |
-| private\_routing\_enabled | Whether force the internet routing through Azure Firewall or the NVA. | `bool` | `true` | no |
+| private\_routing\_enabled | Whether force the private routing through Azure Firewall or the NVA. | `bool` | `true` | no |
 | resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
 | routing\_intent\_enabled | Whether enable or not the routing intent. | `bool` | `false` | no |
 | stack | Name of application's stack. | `string` | n/a | yes |
