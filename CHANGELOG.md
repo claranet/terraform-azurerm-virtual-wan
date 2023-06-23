@@ -1,3 +1,8 @@
+# v7.5.0 - 2023-06-23
+
+Added
+  * AZ-1091: Add routing intent configuration
+
 # v7.4.0 - 2023-05-26
 
 Added
