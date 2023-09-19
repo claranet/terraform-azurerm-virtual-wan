@@ -1,0 +1,2 @@
+virtual_hub_id       = "/subscription/aaaaaa-bbbbbb-cccccc/vhub/id"
+next_hop_resource_id = "/subscription/aaaaaa-bbbbbb-cccccc/firewall/id"
