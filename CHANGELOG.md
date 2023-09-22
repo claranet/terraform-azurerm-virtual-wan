@@ -1,4 +1,4 @@
-# Unreleased
+# v7.6.0 - 2023-09-22
 
 Changed
   * AZ-1177: Use new resource `azurerm_virtual_hub_routing_intent` in submodule
