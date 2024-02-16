@@ -241,7 +241,7 @@ locals {
 | vpn\_gateway\_instance\_1\_bgp\_peering\_address | List of custom BGP IP Addresses to assign to the second instance | `list(string)` | `null` | no |
 | vpn\_gateway\_routing\_preference | Azure routing preference. Tou can choose to route traffic either via `Microsoft network` or via the ISP network through public `Internet` | `string` | `"Microsoft Network"` | no |
 | vpn\_gateway\_scale\_unit | The scale unit for this VPN Gateway | `number` | `1` | no |
-| vpn\_sites | VPN Site configuration | <pre>list(object({<br>    name          = string,<br>    address_cidrs = optional(list(string))<br>    links = list(object({<br>      name       = string<br>      fqdn       = optional(string)<br>      ip_address = optional(string)<br>      bgp = optional(list(object({<br>        asn             = string<br>        peering_address = string<br>      })))<br>      provider_name = optional(string)<br>      speed_in_mbps = optional(string)<br>    }))<br>    device_model  = optional(string)<br>    device_vendor = optional(string)<br>  }))</pre> | `[]` | no |
+| vpn\_sites | VPN Site configuration | <pre>list(object({<br>    name          = string,<br>    address_cidrs = optional(list(string), [])<br>    links = list(object({<br>      name       = string<br>      fqdn       = optional(string)<br>      ip_address = optional(string)<br>      bgp = optional(list(object({<br>        asn             = string<br>        peering_address = string<br>      })), [])<br>      provider_name = optional(string)<br>      speed_in_mbps = optional(string)<br>    }))<br>    device_model  = optional(string)<br>    device_vendor = optional(string)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 

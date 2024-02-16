@@ -13,14 +13,14 @@ resource "azurerm_vpn_gateway" "vpn" {
     peer_weight = var.vpn_gateway_bgp_peer_weight
 
     dynamic "instance_0_bgp_peering_address" {
-      for_each = var.vpn_gateway_instance_0_bgp_peering_address != null ? ["fake"] : []
+      for_each = var.vpn_gateway_instance_0_bgp_peering_address != null ? [1] : []
       content {
         custom_ips = var.vpn_gateway_instance_0_bgp_peering_address
       }
     }
 
     dynamic "instance_1_bgp_peering_address" {
-      for_each = var.vpn_gateway_instance_1_bgp_peering_address != null ? ["fake"] : []
+      for_each = var.vpn_gateway_instance_1_bgp_peering_address != null ? [1] : []
       content {
         custom_ips = var.vpn_gateway_instance_1_bgp_peering_address
       }
@@ -36,7 +36,7 @@ resource "azurerm_vpn_site" "vpn_site" {
   location            = var.location
   resource_group_name = var.resource_group_name
   virtual_wan_id      = var.virtual_wan_id
-  address_cidrs       = lookup(each.value, "address_cidrs", [])
+  address_cidrs       = each.value.address_cidrs
 
   dynamic "link" {
     for_each = toset(each.value.links)
@@ -46,19 +46,19 @@ resource "azurerm_vpn_site" "vpn_site" {
       ip_address = link.value.ip_address
 
       dynamic "bgp" {
-        for_each = link.value.bgp != null ? ["fake"] : []
+        for_each = link.value.bgp
         content {
           asn             = bgp.value.asn
           peering_address = bgp.value.peering_address
         }
       }
-      provider_name = lookup(link.value, "provider_name", null)
-      speed_in_mbps = lookup(link.value, "speed_in_mbps", null)
+      provider_name = link.value.provider_name
+      speed_in_mbps = link.value.speed_in_mbps
     }
   }
 
-  device_model  = lookup(each.value, "device_model", null)
-  device_vendor = lookup(each.value, "device_vendor", null)
+  device_model  = each.value.device_model
+  device_vendor = each.value.device_vendor
 
   tags = merge(local.default_tags, var.extra_tags)
 }
