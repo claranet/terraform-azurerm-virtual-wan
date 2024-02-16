@@ -46,7 +46,7 @@ resource "azurerm_vpn_site" "vpn_site" {
       ip_address = link.value.ip_address
 
       dynamic "bgp" {
-        for_each = link.value.bgp
+        for_each = link.value.bgp  != null ? ["fake"] : []
         content {
           asn             = bgp.value.asn
           peering_address = bgp.value.peering_address
