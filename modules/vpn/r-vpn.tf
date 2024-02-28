@@ -13,14 +13,14 @@ resource "azurerm_vpn_gateway" "vpn" {
     peer_weight = var.vpn_gateway_bgp_peer_weight
 
     dynamic "instance_0_bgp_peering_address" {
-      for_each = var.vpn_gateway_instance_0_bgp_peering_address != null ? [1] : []
+      for_each = var.vpn_gateway_instance_0_bgp_peering_address[*]
       content {
         custom_ips = var.vpn_gateway_instance_0_bgp_peering_address
       }
     }
 
     dynamic "instance_1_bgp_peering_address" {
-      for_each = var.vpn_gateway_instance_1_bgp_peering_address != null ? [1] : []
+      for_each = var.vpn_gateway_instance_1_bgp_peering_address[*]
       content {
         custom_ips = var.vpn_gateway_instance_1_bgp_peering_address
       }
