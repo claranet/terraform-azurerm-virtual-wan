@@ -1,4 +1,4 @@
-# Unreleased
+# v7.6.1 - 2024-03-01
 
 Fixed
   * AZ-1352: Fixed a `null` error when BGP was not used
