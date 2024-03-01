@@ -70,7 +70,7 @@ variable "vpn_sites" {
   description = "VPN Site configuration"
   type = list(object({
     name          = string,
-    address_cidrs = optional(list(string))
+    address_cidrs = optional(list(string), [])
     links = list(object({
       name       = string
       fqdn       = optional(string)
@@ -78,7 +78,7 @@ variable "vpn_sites" {
       bgp = optional(list(object({
         asn             = string
         peering_address = string
-      })))
+      })), [])
       provider_name = optional(string)
       speed_in_mbps = optional(string)
     }))
