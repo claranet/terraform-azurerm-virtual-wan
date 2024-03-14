@@ -18,7 +18,6 @@ module "firewall" {
   logs_destinations_ids   = coalesce(var.firewall_logs_destinations_ids, var.logs_destinations_ids)
   logs_categories         = var.firewall_logs_categories
   logs_metrics_categories = var.firewall_logs_metrics_categories
-  logs_retention_days     = var.logs_retention_days
 
   custom_diagnostic_settings_name = var.firewall_custom_diagnostic_settings_name
 

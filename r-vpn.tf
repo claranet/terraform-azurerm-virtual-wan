@@ -18,7 +18,6 @@ module "vpn" {
   logs_destinations_ids   = coalesce(var.vpn_gateway_logs_destinations_ids, var.logs_destinations_ids)
   logs_categories         = var.vpn_gateway_logs_categories
   logs_metrics_categories = var.vpn_gateway_logs_metrics_categories
-  logs_retention_days     = var.logs_retention_days
 
   custom_diagnostic_settings_name = var.vpn_gateway_custom_diagnostic_settings_name
 

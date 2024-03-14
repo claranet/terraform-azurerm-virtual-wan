@@ -10,12 +10,6 @@ EOD
   nullable    = false
 }
 
-variable "logs_retention_days" {
-  type        = number
-  description = "Number of days to keep logs on storage account."
-  default     = 30
-}
-
 # Variable per module
 variable "express_route_logs_categories" {
   type        = list(string)
