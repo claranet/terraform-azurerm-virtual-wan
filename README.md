@@ -317,6 +317,7 @@ module "logs" {
 | express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | `null` | no |
 | express\_route\_custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | express\_route\_enabled | Enable or not ExpressRoute configuration | `bool` | `false` | no |
+| express\_route\_gateway\_allow\_non\_virtual\_wan\_traffic | Whether the gateway accept traffic from non-Virtual WAN networks. | `bool` | `false` | no |
 | express\_route\_gateway\_extra\_tags | Extra tags for Express Route Gateway | `map(string)` | `{}` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
 | express\_route\_logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |

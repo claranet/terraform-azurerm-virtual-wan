@@ -93,7 +93,7 @@ variable "express_route_gateway_scale_unit" {
 
 variable "express_route_gateway_allow_non_virtual_wan_traffic" {
   type        = bool
-  description = "Specified whether this gateway accept traffic from non-Virtual WAN networks."
+  description = "Whether the gateway accept traffic from non-Virtual WAN networks."
   default     = false
 }
 
