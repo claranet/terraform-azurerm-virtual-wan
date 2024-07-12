@@ -1,3 +1,52 @@
+## 7.7.0 (2024-07-12)
+
+
+### Features
+
+* add in `express_route` module, `allow_non_virtual_wan_traffic` parameter 27ae368
+
+
+### Documentation
+
+* update variable descriptions c309f5c
+
+
+### Continuous Integration
+
+* **AZ-1391:** enable semantic-release [skip ci] a75b1b2
+* **AZ-1391:** update semantic-release config [skip ci] 8a70548
+
+
+### Miscellaneous Chores
+
+* **deps:** add renovate.json 7890152
+* **deps:** enable automerge on renovate 027ecf2
+* **deps:** update dependency opentofu to v1.7.0 9c2166b
+* **deps:** update dependency opentofu to v1.7.1 94e334b
+* **deps:** update dependency opentofu to v1.7.2 872b093
+* **deps:** update dependency opentofu to v1.7.3 99762ec
+* **deps:** update dependency pre-commit to v3.7.1 e1fedc1
+* **deps:** update dependency terraform-docs to v0.18.0 080e517
+* **deps:** update dependency tflint to v0.51.0 448bd26
+* **deps:** update dependency tflint to v0.51.1 06cac5c
+* **deps:** update dependency tflint to v0.51.2 17e83e0
+* **deps:** update dependency tflint to v0.52.0 9f11f2d
+* **deps:** update dependency trivy to v0.50.2 518a8d3
+* **deps:** update dependency trivy to v0.50.4 0e4b7f2
+* **deps:** update dependency trivy to v0.51.0 4e96fd1
+* **deps:** update dependency trivy to v0.51.1 956343d
+* **deps:** update dependency trivy to v0.51.2 d7539fd
+* **deps:** update dependency trivy to v0.51.4 8cf51f2
+* **deps:** update dependency trivy to v0.52.0 8b8e40a
+* **deps:** update dependency trivy to v0.52.1 ed3d50f
+* **deps:** update dependency trivy to v0.52.2 ab03eeb
+* **deps:** update dependency trivy to v0.53.0 08fe81d
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.0 8087b49
+* **deps:** update renovate.json 666d867
+* **deps:** update terraform claranet/diagnostic-settings/azurerm to ~> 6.5.0 3a7c8b2
+* **pre-commit:** update commitlint hook df269a7
+* **release:** remove legacy `VERSION` file a4dd8e4
+
 # v7.6.1 - 2024-03-01
 
 Fixed
