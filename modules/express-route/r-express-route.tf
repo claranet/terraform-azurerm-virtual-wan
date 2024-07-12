@@ -1,9 +1,10 @@
 resource "azurerm_express_route_gateway" "ergw" {
-  name                = local.ergw_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  scale_units         = var.express_route_gateway_scale_unit
-  virtual_hub_id      = var.virtual_hub_id
+  name                          = local.ergw_name
+  resource_group_name           = var.resource_group_name
+  location                      = var.location
+  scale_units                   = var.express_route_gateway_scale_unit
+  virtual_hub_id                = var.virtual_hub_id
+  allow_non_virtual_wan_traffic = var.express_route_gateway_allow_non_virtual_wan_traffic
 
   tags = merge(local.default_tags, var.extra_tags)
 }

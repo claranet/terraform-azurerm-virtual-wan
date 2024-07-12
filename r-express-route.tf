@@ -22,8 +22,9 @@ module "express_route" {
 
   virtual_hub_id = module.vhub.virtual_hub_id
 
-  express_route_gateway_scale_unit  = var.express_route_gateway_scale_unit
-  custom_express_route_gateway_name = var.custom_express_route_gateway_name
+  express_route_gateway_scale_unit                    = var.express_route_gateway_scale_unit
+  express_route_gateway_allow_non_virtual_wan_traffic = var.express_route_gateway_allow_non_virtual_wan_traffic
+  custom_express_route_gateway_name                   = var.custom_express_route_gateway_name
 
   express_route_circuit_bandwidth_in_mbps = var.express_route_circuit_bandwidth_in_mbps
   express_route_circuit_peering_location  = var.express_route_circuit_peering_location

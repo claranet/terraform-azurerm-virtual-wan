@@ -123,7 +123,7 @@ locals {
 | Name | Version |
 |------|---------|
 | azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.39 |
+| azurerm | ~> 3.48 |
 
 ## Modules
 
@@ -159,6 +159,7 @@ locals {
 | express\_route\_circuit\_private\_peering\_shared\_key | Shared secret key for ExpressRoute Circuit Private Peering | `string` | `null` | no |
 | express\_route\_circuit\_private\_peering\_vlan\_id | VLAN ID for ExpressRoute Circuit | `number` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the ExpressRoute Circuit Service Provider. | `string` | n/a | yes |
+| express\_route\_gateway\_allow\_non\_virtual\_wan\_traffic | Whether the gateway accept traffic from non-Virtual WAN networks. | `bool` | `false` | no |
 | express\_route\_gateway\_scale\_unit | The number of scale unit with which to provision the ExpressRoute Gateway. | `number` | `1` | no |
 | express\_route\_private\_peering\_enabled | Enable ExpressRoute Circuit Private Peering | `bool` | `false` | no |
 | express\_route\_sku | ExpressRoute SKU | <pre>object({<br>    tier   = string,<br>    family = string<br>  })</pre> | <pre>{<br>  "family": "MeteredData",<br>  "tier": "Premium"<br>}</pre> | no |

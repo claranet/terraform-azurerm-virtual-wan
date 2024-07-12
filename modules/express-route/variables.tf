@@ -33,6 +33,13 @@ variable "express_route_gateway_scale_unit" {
   type        = number
   default     = 1
 }
+
+variable "express_route_gateway_allow_non_virtual_wan_traffic" {
+  description = "Whether the gateway accept traffic from non-Virtual WAN networks."
+  type        = bool
+  default     = false
+}
+
 variable "express_route_circuit_peering_location" {
   description = "ExpressRoute Circuit peering location."
   type        = string
