@@ -9,4 +9,3 @@ To deploy an Express Route over a Virtual Hub:
 3. Run `terraform init` (or `tfwrapper init` using Claranet's wrapper).
 4. Run `terraform apply` (or `tfwrapper apply` using Claranet's wrapper).
 5. Use the generated Express Route
-

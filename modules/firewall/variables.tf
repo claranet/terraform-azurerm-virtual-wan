@@ -68,4 +68,3 @@ variable "virtual_hub_id" {
   description = "ID of the Virtual Hub in which to deploy the Firewall"
   type        = string
 }
-

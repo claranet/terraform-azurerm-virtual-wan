@@ -103,14 +103,14 @@ variable "vpn_connections" {
   type = list(object({
     name                      = string
     site_name                 = string
-    internet_security_enabled = optional(bool)
+    internet_security_enabled = optional(bool, false)
     links = list(object({
-      name                 = string,
-      egress_nat_rule_ids  = optional(list(string))
-      ingress_nat_rule_ids = optional(list(string))
-      bandwidth_mbps       = optional(number)
-      bgp_enabled          = optional(bool)
-      connection_mode      = optional(string)
+      name                 = string
+      egress_nat_rule_ids  = optional(list(string), [])
+      ingress_nat_rule_ids = optional(list(string), [])
+      bandwidth_mbps       = optional(number, 10)
+      bgp_enabled          = optional(bool, false)
+      connection_mode      = optional(string, "Default")
       ipsec_policy = optional(object({
         dh_group                 = string
         ike_encryption_algorithm = string
@@ -121,11 +121,11 @@ variable "vpn_connections" {
         sa_data_size_kb          = number
         sa_lifetime_sec          = number
       }))
-      protocol                              = optional(string)
-      ratelimit_enabled                     = optional(bool)
-      route_weight                          = optional(number)
-      shared_key                            = optional(string)
-      local_azure_ip_address_enabled        = optional(bool)
+      protocol                              = optional(string, "IKEv2")
+      ratelimit_enabled                     = optional(bool, false)
+      route_weight                          = optional(number, 0)
+      shared_key                            = optional(string, null)
+      local_azure_ip_address_enabled        = optional(bool, false)
       policy_based_traffic_selector_enabled = optional(bool, false)
     }))
     traffic_selector_policy = optional(list(object({

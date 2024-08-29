@@ -75,32 +75,32 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
     content {
       name                 = vpn_link.key
       vpn_site_link_id     = format("%s/vpnSiteLinks/%s", azurerm_vpn_site.vpn_site[each.value.site_name].id, vpn_link.key)
-      egress_nat_rule_ids  = lookup(vpn_link.value, "egress_nat_rule_ids", null)
-      ingress_nat_rule_ids = lookup(vpn_link.value, "ingress_nat_rule_ids", null)
-      bandwidth_mbps       = lookup(vpn_link.value, "bandwidth_mbps", null)
-      bgp_enabled          = lookup(vpn_link.value, "bgp_enabled", null)
-      connection_mode      = lookup(vpn_link.value, "connection_mode", null)
+      egress_nat_rule_ids  = vpn_link.value.egress_nat_rule_ids
+      ingress_nat_rule_ids = vpn_link.value.ingress_nat_rule_ids
+      bandwidth_mbps       = vpn_link.value.bandwidth_mbps
+      bgp_enabled          = vpn_link.value.bgp_enabled
+      connection_mode      = vpn_link.value.connection_mode
 
       dynamic "ipsec_policy" {
-        for_each = vpn_link.value.ipsec_policy != null ? ["fake"] : []
+        for_each = vpn_link.value.ipsec_policy[*]
         content {
-          dh_group                 = lookup(vpn_link.value.ipsec_policy, "dh_group")
-          encryption_algorithm     = lookup(vpn_link.value.ipsec_policy, "encryption_algorithm")
-          ike_encryption_algorithm = lookup(vpn_link.value.ipsec_policy, "ike_encryption_algorithm")
-          ike_integrity_algorithm  = lookup(vpn_link.value.ipsec_policy, "ike_integrity_algorithm")
-          integrity_algorithm      = lookup(vpn_link.value.ipsec_policy, "integrity_algorithm")
-          pfs_group                = lookup(vpn_link.value.ipsec_policy, "pfs_group")
-          sa_data_size_kb          = lookup(vpn_link.value.ipsec_policy, "sa_data_size_kb")
-          sa_lifetime_sec          = lookup(vpn_link.value.ipsec_policy, "sa_lifetime_sec")
+          dh_group                 = vpn_link.value.ipsec_policy.dh_group
+          encryption_algorithm     = vpn_link.value.ipsec_policy.encryption_algorithm
+          ike_encryption_algorithm = vpn_link.value.ipsec_policy.ike_encryption_algorithm
+          ike_integrity_algorithm  = vpn_link.value.ipsec_policy.ike_integrity_algorithm
+          integrity_algorithm      = vpn_link.value.ipsec_policy.integrity_algorithm
+          pfs_group                = vpn_link.value.ipsec_policy.pfs_group
+          sa_data_size_kb          = vpn_link.value.ipsec_policy.sa_data_size_kb
+          sa_lifetime_sec          = vpn_link.value.ipsec_policy.sa_lifetime_sec
         }
       }
 
-      protocol                              = lookup(vpn_link.value, "protocol", null)
-      ratelimit_enabled                     = lookup(vpn_link.value, "ratelimit_enabled", null)
-      route_weight                          = lookup(vpn_link.value, "route_weight", null)
-      shared_key                            = lookup(vpn_link.value, "shared_key", null)
-      local_azure_ip_address_enabled        = lookup(vpn_link.value, "local_azure_ip_address_enabled", null)
-      policy_based_traffic_selector_enabled = lookup(vpn_link.value, "policy_based_traffic_selector_enabled", null)
+      protocol                              = vpn_link.value.protocol
+      ratelimit_enabled                     = vpn_link.value.ratelimit_enabled
+      route_weight                          = vpn_link.value.route_weight
+      shared_key                            = vpn_link.value.shared_key
+      local_azure_ip_address_enabled        = vpn_link.value.local_azure_ip_address_enabled
+      policy_based_traffic_selector_enabled = vpn_link.value.policy_based_traffic_selector_enabled
     }
   }
 
