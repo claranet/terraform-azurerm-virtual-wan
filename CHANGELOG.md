@@ -1,3 +1,20 @@
+## 7.7.1 (2024-08-30)
+
+### Bug Fixes
+
+* remove lookup in VPN module and fix lint 75844fd
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.1 525835c
+* **deps:** update dependency pre-commit to v3.8.0 4867750
+* **deps:** update dependency trivy to v0.54.1 d006d49
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.17.0 6983e8b
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.92.1 f6bada9
+* **deps:** update pre-commit hook antonbabenko/pre-commit-terraform to v1.94.0 2793045
+* **deps:** update tools 5131440
+* **deps:** update tools 1b54dfc
+
 ## 7.7.0 (2024-07-12)
 
 
