@@ -129,7 +129,7 @@ locals {
 
 | Name | Source | Version |
 |------|--------|---------|
-| express\_route\_circuit\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 6.5.0 |
+| express\_route\_circuit\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
 
 ## Resources
 

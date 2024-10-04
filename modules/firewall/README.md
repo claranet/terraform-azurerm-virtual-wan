@@ -123,7 +123,7 @@ locals {
 
 | Name | Source | Version |
 |------|--------|---------|
-| firewall\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 6.5.0 |
+| firewall\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
 
 ## Resources
 
