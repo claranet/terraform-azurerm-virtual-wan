@@ -1,3 +1,18 @@
+## 7.8.1 (2024-10-08)
+
+### Documentation
+
+* update submodule README with `terraform-docs` v0.19.0 d9e0d16
+
+### Miscellaneous Chores
+
+* **deps:** update dependency claranet/diagnostic-settings/azurerm to v7 47d7f01
+* **deps:** update dependency opentofu to v1.8.3 23a7fbb
+* **deps:** update dependency pre-commit to v4 52fea66
+* **deps:** update dependency trivy to v0.56.1 45d847a
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v5 d564b32
+* prepare for new examples structure 02084de
+
 ## 7.8.0 (2024-10-03)
 
 ### Features
