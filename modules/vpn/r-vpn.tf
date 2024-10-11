@@ -66,7 +66,7 @@ resource "azurerm_vpn_site" "vpn_site" {
 resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
   for_each                  = { for conn in var.vpn_connections : conn.name => conn }
   name                      = each.key
-  remote_vpn_site_id        = azurerm_vpn_site.vpn_site[each.value.site_name].id
+  remote_vpn_site_id        = each.value.site_id != null ? each.value.site_id : azurerm_vpn_site.vpn_site[each.value.site_name].id
   vpn_gateway_id            = azurerm_vpn_gateway.vpn.id
   internet_security_enabled = coalesce(lookup(each.value, "internet_security_enabled", null), var.internet_security_enabled, false)
 
@@ -74,7 +74,7 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
     for_each = { for lnk in each.value.links : lnk.name => lnk }
     content {
       name                 = vpn_link.key
-      vpn_site_link_id     = format("%s/vpnSiteLinks/%s", azurerm_vpn_site.vpn_site[each.value.site_name].id, vpn_link.key)
+      vpn_site_link_id     = format("%s/vpnSiteLinks/%s", each.value.site_id != null ? each.value.site_id : azurerm_vpn_site.vpn_site[each.value.site_name].id, vpn_link.key)
       egress_nat_rule_ids  = vpn_link.value.egress_nat_rule_ids
       ingress_nat_rule_ids = vpn_link.value.ingress_nat_rule_ids
       bandwidth_mbps       = vpn_link.value.bandwidth_mbps

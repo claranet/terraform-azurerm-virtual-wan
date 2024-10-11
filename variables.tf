@@ -288,7 +288,8 @@ variable "vpn_connections" {
   description = "VPN Connections configuration"
   type = list(object({
     name                      = string
-    site_name                 = string
+    site_name                 = optional(string)
+    site_id                   = optional(string)
     internet_security_enabled = optional(bool, false)
     links = list(object({
       name                 = string
@@ -320,6 +321,13 @@ variable "vpn_connections" {
     })), [])
   }))
   default = []
+
+  validation {
+    condition = alltrue([
+      for v in var.vpn_connections : v.site_id != null || v.site_name != null
+    ])
+    error_message = "`vpn_connections.*.site_name` and `vpn_connections.*.site_id` cannot be both null. Please input either of them."
+  }
 }
 
 variable "internet_security_enabled" {
