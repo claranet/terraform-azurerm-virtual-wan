@@ -1,3 +1,16 @@
+## 7.8.2 (2024-10-17)
+
+### Bug Fixes
+
+* **AZ-1430:** handling case diff in name 2bf3e70
+
+### Miscellaneous Chores
+
+* **deps:** update dependency pre-commit to v4.0.1 10d6b7d
+* **deps:** update dependency trivy to v0.56.2 55d0afd
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.1.0 07cf483
+* update examples structure 7e1b96f
+
 ## 7.8.1 (2024-10-08)
 
 ### Documentation
