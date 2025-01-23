@@ -1,2 +1,11 @@
-virtual_hub_id       = "/subscription/aaaaaa-bbbbbb-cccccc/vhub/id"
-next_hop_resource_id = "/subscription/aaaaaa-bbbbbb-cccccc/firewall/id"
+azure_region                    = "fr-central"
+client_name                     = "test"
+environment                     = "dev"
+stack                           = "ci"
+virtual_wan_name                = "vwan-test"
+virtual_wan_resource_group_name = "rg-test"
+firewall_name                   = "fw-test"
+firewall_resource_group_name    = "rg-test"
+extra_tags = {
+  foo = "bar"
+}

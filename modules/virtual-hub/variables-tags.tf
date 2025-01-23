@@ -1,11 +1,12 @@
 variable "default_tags_enabled" {
-  description = "Option to enabled or disable default tags"
+  description = "Option to enable or disable default tags."
   type        = bool
   default     = true
+  nullable    = false
 }
 
 variable "extra_tags" {
-  description = "Tags for this Virtual Hub"
+  description = "Additional tags to add to the Virtual Hub."
   type        = map(string)
-  default     = {}
+  default     = null
 }

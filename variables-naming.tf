@@ -5,49 +5,49 @@ variable "name_prefix" {
 }
 
 variable "name_suffix" {
-  description = "Suffix for the generated resources names."
+  description = "Suffix for generated resources names."
   type        = string
   default     = ""
 }
 
 variable "name_slug" {
-  description = "Slug to use with the generated resources names."
+  description = "Slug to use with generated resources names."
   type        = string
   default     = ""
 }
 
-variable "custom_vwan_name" {
-  description = "Custom Virtual Wan's name."
+variable "custom_name" {
+  description = "Custom Virtual WAN name."
   type        = string
   default     = null
 }
 
-variable "custom_virtual_hub_name" {
-  description = "Custom Virtual Hub's name"
+variable "virtual_hub_custom_name" {
+  description = "Custom Virtual Hub name."
   type        = string
   default     = null
 }
 
-variable "custom_express_route_gateway_name" {
-  description = "Custom ExpressRoute Gateway name"
+variable "express_route_gateway_custom_name" {
+  description = "Custom Express Route gateway name."
   type        = string
   default     = null
 }
 
-variable "custom_express_route_circuit_name" {
-  description = "Custom ExpressRoute Circuit name"
+variable "express_route_circuit_custom_name" {
+  description = "Custom Express Route circuit name."
   type        = string
   default     = null
 }
 
-variable "custom_firewall_name" {
-  description = "Custom Firewall's name"
+variable "firewall_custom_name" {
+  description = "Custom firewall name."
   type        = string
   default     = null
 }
 
-variable "custom_vpn_gateway_name" {
-  description = "Custom name for the VPN Gateway"
+variable "vpn_gateway_custom_name" {
+  description = "Custom VPN gateway name."
   type        = string
   default     = null
 }

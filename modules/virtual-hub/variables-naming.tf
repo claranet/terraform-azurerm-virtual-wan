@@ -16,9 +16,8 @@ variable "name_slug" {
   default     = ""
 }
 
-# Virtual Hub specific variables
-variable "custom_virtual_hub_name" {
-  description = "Custom Virtual Hub's name"
+variable "custom_name" {
+  description = "Custom Virtual Hub name."
   type        = string
   default     = null
 }

@@ -1,19 +1,19 @@
+variable "azure_region" {
+  description = "Azure region to use."
+  type        = string
+}
+
 variable "client_name" {
-  description = "Name of client."
+  description = "Client name/account used in naming."
   type        = string
 }
 
 variable "environment" {
-  description = "Name of application's environment."
+  description = "Project environment."
   type        = string
 }
 
 variable "stack" {
-  description = "Name of application's stack."
-  type        = string
-}
-
-variable "azure_region" {
-  description = "Name of the Region."
+  description = "Project Stack name."
   type        = string
 }

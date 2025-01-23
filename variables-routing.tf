@@ -1,19 +1,8 @@
 variable "routing_intent_enabled" {
-  description = "Whether enable or not the routing intent."
+  description = "Enable or disable routing intent feature in the Virtual Hub."
   type        = bool
   default     = false
-}
-
-variable "azure_firewall_as_next_hop_enabled" {
-  description = "Whether use Azure Firewall as next hop or a NVA."
-  type        = bool
-  default     = true
-}
-
-variable "next_hop_nva_id" {
-  description = "ID of the NVA used as next hop."
-  type        = string
-  default     = null
+  nullable    = false
 }
 
 variable "internet_routing_enabled" {
@@ -28,4 +17,17 @@ variable "private_routing_enabled" {
   type        = bool
   default     = true
   nullable    = false
+}
+
+variable "azure_firewall_as_next_hop_enabled" {
+  description = "Whether use Azure Firewall as next hop or a NVA."
+  type        = bool
+  default     = true
+  nullable    = false
+}
+
+variable "next_hop_nva_id" {
+  description = "ID of the NVA used as next hop."
+  type        = string
+  default     = null
 }
