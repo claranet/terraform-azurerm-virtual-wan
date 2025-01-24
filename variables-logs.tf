@@ -34,7 +34,7 @@ variable "express_route_logs_metrics_categories" {
 }
 
 variable "express_route_diagnostic_settings_custom_name" {
-  description = "Custom name of the diagnostics settings. Defaults to `default`."
+  description = "Custom name of the diagnostic settings. Defaults to `default`."
   type        = string
   default     = "default"
 }
@@ -62,7 +62,7 @@ variable "firewall_logs_metrics_categories" {
 }
 
 variable "firewall_diagnostic_settings_custom_name" {
-  description = "Custom name of the diagnostics settings. Defaults to `default`."
+  description = "Custom name of the diagnostic settings. Defaults to `default`."
   type        = string
   default     = "default"
 }
@@ -90,7 +90,7 @@ variable "vpn_gateway_logs_metrics_categories" {
 }
 
 variable "vpn_gateway_diagnostic_settings_custom_name" {
-  description = "Custom name of the diagnostics settings. Defaults to `default`."
+  description = "Custom name of the diagnostic settings. Defaults to `default`."
   type        = string
   default     = "default"
 }

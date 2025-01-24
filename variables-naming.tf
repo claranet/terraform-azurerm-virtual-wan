@@ -51,3 +51,9 @@ variable "vpn_gateway_custom_name" {
   type        = string
   default     = null
 }
+
+variable "routing_intent_custom_name" {
+  description = "Custom routing intent name. `hubRoutingIntent` if not set."
+  type        = string
+  default     = null
+}

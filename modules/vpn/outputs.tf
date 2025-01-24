@@ -13,6 +13,11 @@ output "resource_vpn_connection" {
   value       = azurerm_vpn_gateway_connection.main
 }
 
+output "module_diagnostic_settings" {
+  description = "Diagnostic settings module output."
+  value       = module.diagnostic_settings
+}
+
 output "id" {
   description = "ID of the VPN gateway."
   value       = azurerm_vpn_gateway.main.id

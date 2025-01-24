@@ -1,6 +1,6 @@
 # Azure VPN
 
-This module creates a [VPN gateway](https://docs.microsoft.com/en-us/azure/vpn-gateway/) attached to a Virtual Hub.
+This module creates a [VPN gateway](https://learn.microsoft.com/en-us/azure/vpn-gateway/) attached to a Virtual Hub.
 
 Use of this module outside the Virtual WAN module requires an existing Virtual Hub.
 
@@ -160,7 +160,7 @@ module "vpn" {
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_name | Custom VPN gateway name. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
-| diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings. Defaults to `default`. | `string` | `"default"` | no |
+| diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to add to the VPN gateway. | `map(string)` | `null` | no |
 | instance\_0\_bgp\_peering\_address | List of custom BGP IP addresses to assign to the first instance. | `list(string)` | `[]` | no |
@@ -189,6 +189,7 @@ module "vpn" {
 |------|-------------|
 | bgp\_settings | BGP settings of the VPN gateway. |
 | id | ID of the VPN gateway. |
+| module\_diagnostic\_settings | Diagnostic settings module output. |
 | name | Name of the VPN gateway. |
 | resource | VPN gateway resource object. |
 | resource\_vpn\_connection | VPN connection resource object. |

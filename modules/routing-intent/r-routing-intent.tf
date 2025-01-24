@@ -1,10 +1,10 @@
 resource "azurerm_virtual_hub_routing_intent" "main" {
-  name = "hubRoutingIntent"
+  name = coalesce(var.custom_name, "hubRoutingIntent")
 
   virtual_hub_id = var.virtual_hub.id
 
   dynamic "routing_policy" {
-    for_each = var.internet_routing_enabled ? [0] : null
+    for_each = var.internet_routing_enabled ? [0] : []
     content {
       name         = "Internet"
       destinations = ["Internet"]
@@ -13,7 +13,7 @@ resource "azurerm_virtual_hub_routing_intent" "main" {
   }
 
   dynamic "routing_policy" {
-    for_each = var.private_routing_enabled ? [0] : null
+    for_each = var.private_routing_enabled ? [0] : []
     content {
       name         = "PrivateTraffic"
       destinations = ["PrivateTraffic"]

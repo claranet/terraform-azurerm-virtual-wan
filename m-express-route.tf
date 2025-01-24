@@ -24,6 +24,7 @@ module "express_route" {
   gateway_scale_unit                      = var.express_route_gateway_scale_unit
   gateway_non_virtual_wan_traffic_allowed = var.express_route_gateway_non_virtual_wan_traffic_allowed
 
+  circuit_enabled           = var.express_route_circuit_enabled
   circuit_peering_location  = var.express_route_circuit_peering_location
   circuit_bandwidth_in_mbps = var.express_route_circuit_bandwidth_in_mbps
   circuit_service_provider  = var.express_route_circuit_service_provider

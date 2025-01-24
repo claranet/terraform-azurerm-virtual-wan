@@ -1,6 +1,6 @@
 # Azure Firewall
 
-This module creates an [Azure Firewall](https://docs.microsoft.com/en-us/azure/firewall/) attached to a Virtual Hub.
+This module creates an [Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/) attached to a Virtual Hub.
 
 Using this module outside the Virtual WAN module requires an existing Virtual Hub.
 
@@ -85,7 +85,7 @@ module "firewall" {
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_name | Custom firewall name. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
-| diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings. Defaults to `default`. | `string` | `"default"` | no |
+| diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | dns\_servers | List of DNS servers that the firewall will redirect DNS traffic to for the name resolution. | `list(string)` | `null` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to add to the firewall. | `map(string)` | `null` | no |
@@ -113,6 +113,7 @@ module "firewall" {
 | id | ID of the firewall. |
 | ip\_configuration | IP configuration of the firewall. |
 | management\_ip\_configuration | Management IP configuration of the firewall. |
+| module\_diagnostic\_settings | Diagnostic settings module output. |
 | name | Name of the firewall. |
 | private\_ip\_address | Private IP address of the firewall. |
 | public\_ip\_addresses | Public IP addresses of the firewall. |

@@ -5,12 +5,18 @@ output "resource_gateway" {
 
 output "resource_circuit" {
   description = "Express Route circuit resource object."
-  value       = azurerm_express_route_circuit.main
+  value       = one(azurerm_express_route_circuit.main[*])
+  sensitive   = true
 }
 
 output "resource_circuit_peering" {
   description = "Express Route circuit peering resource object."
   value       = one(azurerm_express_route_circuit_peering.main[*])
+}
+
+output "module_diagnostic_settings" {
+  description = "Diagnostic settings module output."
+  value       = one(module.diagnostic_settings[*])
 }
 
 output "gateway_id" {
@@ -25,22 +31,22 @@ output "gateway_name" {
 
 output "circuit_id" {
   description = "The ID of the Express Route circuit."
-  value       = azurerm_express_route_circuit.main.id
+  value       = one(azurerm_express_route_circuit.main[*].id)
 }
 
 output "circuit_name" {
   description = "The name of the Express Route circuit."
-  value       = azurerm_express_route_circuit.main.name
+  value       = one(azurerm_express_route_circuit.main[*].name)
 }
 
 output "circuit_service_provider_provisioning_state" {
   description = "The Express Route circuit provisioning state from your chosen service provider."
-  value       = azurerm_express_route_circuit.main.service_provider_provisioning_state
+  value       = one(azurerm_express_route_circuit.main[*].service_provider_provisioning_state)
 }
 
 output "circuit_service_key" {
   description = "The string needed by the service provider to provision the Express Route circuit."
-  value       = azurerm_express_route_circuit.main.service_key
+  value       = one(azurerm_express_route_circuit.main[*].service_key)
   sensitive   = true
 }
 

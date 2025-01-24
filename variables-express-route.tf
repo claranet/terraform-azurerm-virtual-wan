@@ -19,6 +19,13 @@ variable "express_route_gateway_non_virtual_wan_traffic_allowed" {
   nullable    = false
 }
 
+variable "express_route_circuit_enabled" {
+  description = "Whether or not to create the Express Route circuit."
+  type        = bool
+  default     = true
+  nullable    = false
+}
+
 variable "express_route_circuit_peering_location" {
   description = "Express Route circuit peering location."
   type        = string

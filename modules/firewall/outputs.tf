@@ -3,6 +3,11 @@ output "resource" {
   value       = azurerm_firewall.main
 }
 
+output "module_diagnostic_settings" {
+  description = "Diagnostic settings module output."
+  value       = module.diagnostic_settings
+}
+
 output "id" {
   description = "ID of the firewall."
   value       = azurerm_firewall.main.id

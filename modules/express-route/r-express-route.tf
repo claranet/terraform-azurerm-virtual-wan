@@ -18,6 +18,8 @@ moved {
 }
 
 resource "azurerm_express_route_circuit" "main" {
+  count = var.circuit_enabled ? 1 : 0
+
   name     = local.circuit_name
   location = var.location
 
@@ -37,15 +39,15 @@ resource "azurerm_express_route_circuit" "main" {
 
 moved {
   from = azurerm_express_route_circuit.erc
-  to   = azurerm_express_route_circuit.main
+  to   = azurerm_express_route_circuit.main[0]
 }
 
 resource "azurerm_express_route_circuit_peering" "main" {
-  count = var.private_peering_enabled ? 1 : 0
+  count = var.private_peering_enabled ? length(azurerm_express_route_circuit.main) : 0
 
   resource_group_name = var.resource_group_name
 
-  express_route_circuit_name = azurerm_express_route_circuit.main.name
+  express_route_circuit_name = one(azurerm_express_route_circuit.main[*].name)
 
   peering_type                  = "AzurePrivatePeering"
   primary_peer_address_prefix   = var.private_peering_primary_peer_address_prefix

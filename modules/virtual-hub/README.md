@@ -1,6 +1,6 @@
 # Azure Virtual Hub
 
-This module creates a Virtual Hub and attach it to an existing [Virtual WAN](https://docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about).
+This module creates a Virtual Hub and attach it to an existing [Virtual WAN](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about).
 
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules

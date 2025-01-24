@@ -1,6 +1,6 @@
 # Azure Express Route
 
-This module creates an [Express Route](https://docs.microsoft.com/en-us/azure/expressroute/) attached to a Virtual Hub.
+This module creates an [Express Route](https://learn.microsoft.com/en-us/azure/expressroute/) attached to a Virtual Hub.
 
 Use of this module outside the Virtual WAN module requires an existing Virtual Hub.
 
@@ -98,12 +98,13 @@ module "express_route" {
 |------|-------------|------|---------|:--------:|
 | circuit\_bandwidth\_in\_mbps | The bandwidth in Mbps of the Express Route circuit being created on the service provider. | `number` | n/a | yes |
 | circuit\_custom\_name | Custom Express Route circuit name. | `string` | `null` | no |
+| circuit\_enabled | Whether or not to create the Express Route circuit. | `bool` | `true` | no |
 | circuit\_peering\_location | Express Route circuit peering location. | `string` | n/a | yes |
 | circuit\_service\_provider | The name of the Express Route circuit service provider. | `string` | n/a | yes |
 | circuit\_sku | Express Route circuit SKU. | <pre>object({<br/>    tier   = string<br/>    family = string<br/>  })</pre> | <pre>{<br/>  "family": "MeteredData",<br/>  "tier": "Premium"<br/>}</pre> | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
-| diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings. Defaults to `default`. | `string` | `"default"` | no |
+| diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to add to the Express Route. | `map(string)` | `null` | no |
 | gateway\_custom\_name | Custom Express Route gateway name. | `string` | `null` | no |
@@ -137,6 +138,7 @@ module "express_route" {
 | circuit\_service\_provider\_provisioning\_state | The Express Route circuit provisioning state from your chosen service provider. |
 | gateway\_id | The ID of the Express Route gateway. |
 | gateway\_name | The name of the Express Route gateway. |
+| module\_diagnostic\_settings | Diagnostic settings module output. |
 | private\_peering\_azure\_asn | Autonomous System Number used by Azure for BGP peering. |
 | resource\_circuit | Express Route circuit resource object. |
 | resource\_circuit\_peering | Express Route circuit peering resource object. |

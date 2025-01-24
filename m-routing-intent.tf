@@ -1,4 +1,4 @@
-resource "terraform_data" "routing_precondition" {
+resource "terraform_data" "routing_intent_precondition" {
   count = var.routing_intent_enabled ? 1 : 0
 
   triggers_replace = [
@@ -14,15 +14,22 @@ resource "terraform_data" "routing_precondition" {
   }
 }
 
-module "routing" {
+module "routing_intent" {
   source = "./modules/routing-intent"
 
-  count = length(terraform_data.routing_precondition)
+  count = length(terraform_data.routing_intent_precondition)
 
   virtual_hub = module.virtual_hub
+
+  custom_name = var.routing_intent_custom_name
 
   internet_routing_enabled = var.internet_routing_enabled
   private_routing_enabled  = var.private_routing_enabled
 
   next_hop_resource_id = var.azure_firewall_as_next_hop_enabled ? one(module.firewall[*].id) : var.next_hop_nva_id
+}
+
+moved {
+  from = module.routing["enabled"]
+  to   = module.routing_intent[0]
 }

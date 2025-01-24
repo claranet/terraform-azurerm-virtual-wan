@@ -13,7 +13,7 @@ This module use multiple sub-modules:
 
 ## Naming
 
-Resource naming is based on the [Microsoft CAF naming convention best practices](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). Use the parameter `var.<resource>_custom_name` to override names.
+Resource naming is based on the [Microsoft CAF naming convention best practices](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming). Use the parameter `var.<resource>_custom_name` to override names.
 
 We rely on the [forked Claranet Azure CAF naming Terraform provider](https://search.opentofu.org/provider/claranet/azurecaf/latest) to generate resources names.
 
@@ -170,7 +170,7 @@ module "virtual_wan" {
 |------|--------|---------|
 | express\_route | ./modules/express-route | n/a |
 | firewall | ./modules/firewall | n/a |
-| routing | ./modules/routing-intent | n/a |
+| routing\_intent | ./modules/routing-intent | n/a |
 | virtual\_hub | ./modules/virtual-hub | n/a |
 | vpn | ./modules/vpn | n/a |
 
@@ -179,7 +179,7 @@ module "virtual_wan" {
 | Name | Type |
 |------|------|
 | [azurerm_virtual_wan.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
-| [terraform_data.routing_precondition](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.routing_intent_precondition](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [azurecaf_name.main](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
@@ -194,10 +194,11 @@ module "virtual_wan" {
 | environment | Project environment. | `string` | n/a | yes |
 | express\_route\_circuit\_bandwidth\_in\_mbps | The bandwidth in Mbps of the Express Route circuit being created on the service provider. | `number` | `null` | no |
 | express\_route\_circuit\_custom\_name | Custom Express Route circuit name. | `string` | `null` | no |
+| express\_route\_circuit\_enabled | Whether or not to create the Express Route circuit. | `bool` | `true` | no |
 | express\_route\_circuit\_peering\_location | Express Route circuit peering location. | `string` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the Express Route circuit service provider. | `string` | `null` | no |
 | express\_route\_circuit\_sku | Express Route circuit SKU. | <pre>object({<br/>    tier   = string<br/>    family = string<br/>  })</pre> | <pre>{<br/>  "family": "MeteredData",<br/>  "tier": "Premium"<br/>}</pre> | no |
-| express\_route\_diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings. Defaults to `default`. | `string` | `"default"` | no |
+| express\_route\_diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | express\_route\_enabled | Enable or disable Express Route. | `bool` | `false` | no |
 | express\_route\_extra\_tags | Extra tags for the Express Route. | `map(string)` | `null` | no |
 | express\_route\_gateway\_custom\_name | Custom Express Route gateway name. | `string` | `null` | no |
@@ -214,7 +215,7 @@ module "virtual_wan" {
 | express\_route\_private\_peering\_vlan\_id | VLAN ID for the Express Route circuit. | `number` | `null` | no |
 | extra\_tags | Map of additional tags. | `map(string)` | `null` | no |
 | firewall\_custom\_name | Custom firewall name. | `string` | `null` | no |
-| firewall\_diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings. Defaults to `default`. | `string` | `"default"` | no |
+| firewall\_diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | firewall\_dns\_servers | List of DNS servers that the firewall will redirect DNS traffic to for the name resolution. | `list(string)` | `null` | no |
 | firewall\_enabled | Enable or disable Azure Firewall in the Virtual Hub. | `bool` | `true` | no |
 | firewall\_extra\_tags | Extra tags for the firewall. | `map(string)` | `null` | no |
@@ -239,6 +240,7 @@ module "virtual_wan" {
 | peered\_virtual\_networks | List of Virtual Network objects to peer with the Virtual Hub. | <pre>list(object({<br/>    vnet_id                   = string<br/>    peering_name              = optional(string)<br/>    internet_security_enabled = optional(bool, true)<br/>    routing = optional(object({<br/>      associated_route_table_id = optional(string)<br/>      propagated_route_table = optional(object({<br/>        labels          = optional(list(string))<br/>        route_table_ids = optional(list(string))<br/>      }))<br/>      static_vnet_route = optional(object({<br/>        name                = optional(string)<br/>        address_prefixes    = optional(list(string))<br/>        next_hop_ip_address = optional(string)<br/>      }))<br/>    }))<br/>  }))</pre> | `[]` | no |
 | private\_routing\_enabled | Whether force the private routing through Azure Firewall or the NVA. | `bool` | `true` | no |
 | resource\_group\_name | Resource Group name. | `string` | n/a | yes |
+| routing\_intent\_custom\_name | Custom routing intent name. `hubRoutingIntent` if not set. | `string` | `null` | no |
 | routing\_intent\_enabled | Enable or disable routing intent feature in the Virtual Hub. | `bool` | `false` | no |
 | stack | Project Stack name. | `string` | n/a | yes |
 | type | Specifies the Virtual WAN type. Possible Values are `Basic` and `Standard`. Defaults to `Standard`. | `string` | `"Standard"` | no |
@@ -252,7 +254,7 @@ module "virtual_wan" {
 | vpn\_encryption\_enabled | Boolean flag to specify whether VPN encryption is enabled. | `bool` | `true` | no |
 | vpn\_gateway\_bgp\_peer\_weight | The weight added to routes learned from this BGP speaker. | `number` | `0` | no |
 | vpn\_gateway\_custom\_name | Custom VPN gateway name. | `string` | `null` | no |
-| vpn\_gateway\_diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings. Defaults to `default`. | `string` | `"default"` | no |
+| vpn\_gateway\_diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | vpn\_gateway\_enabled | Whether or not to enable the deployment of a VPN gateway and its connections. | `bool` | `false` | no |
 | vpn\_gateway\_extra\_tags | Extra tags for the VPN gateway. | `map(string)` | `null` | no |
 | vpn\_gateway\_instance\_0\_bgp\_peering\_address | List of custom BGP IP addresses to assign to the first instance. | `list(string)` | `[]` | no |
@@ -284,10 +286,13 @@ module "virtual_wan" {
 | id | ID of the Virtual WAN. |
 | module\_express\_route | Express Route module outputs. |
 | module\_firewall | Firewall module outputs. |
+| module\_routing\_intent | Routing intent module outputs. |
 | module\_virtual\_hub | Virtual Hub module outputs. |
 | module\_vpn | VPN module outputs. |
 | name | Name of the Virtual WAN. |
 | resource | Virtual WAN resource object. |
+| routing\_intent\_id | ID of the routing intent. |
+| routing\_intent\_name | Name of the routing intent. |
 | terraform\_module | Information about this Terraform module. |
 | virtual\_hub\_default\_route\_table\_id | ID of the default route table associated with the Virtual Hub. |
 | virtual\_hub\_id | ID of the Virtual Hub. |
@@ -300,6 +305,6 @@ module "virtual_wan" {
 
 ## Related documentation
 
-- Azure Virtual WAN: [docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about](https://docs.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
-- Azure Firewall: [docs.microsoft.com/en-us/azure/firewall/overview](https://docs.microsoft.com/en-us/azure/firewall/overview)
-- Azure Express Route circuit: [docs.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings](https://docs.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings)
+- Azure Virtual WAN: [learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about](https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about)
+- Azure Firewall: [learn.microsoft.com/en-us/azure/firewall/overview](https://learn.microsoft.com/en-us/azure/firewall/overview)
+- Azure Express Route circuit: [learn.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings](https://learn.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings)

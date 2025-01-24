@@ -23,7 +23,7 @@ variable "logs_metrics_categories" {
 }
 
 variable "diagnostic_settings_custom_name" {
-  description = "Custom name of the diagnostics settings. Defaults to `default`."
+  description = "Custom name of the diagnostic settings. Defaults to `default`."
   type        = string
   default     = "default"
 }

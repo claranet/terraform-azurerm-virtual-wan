@@ -65,6 +65,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| custom\_name | Custom routing intent name. `hubRoutingIntent` if not set. | `string` | `null` | no |
 | internet\_routing\_enabled | Whether or not to enable internet routing through the next hop. | `bool` | `true` | no |
 | next\_hop\_resource\_id | Resource ID of the next hop (e.g. Azure Firewall, NVA, etc.). | `string` | n/a | yes |
 | private\_routing\_enabled | Whether or not to enable private routing through the next hop. | `bool` | `true` | no |
@@ -72,5 +73,9 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| id | ID of the routing intent. |
+| name | Name of the routing intent. |
+| resource | Routing intent resource object. |
 <!-- END_TF_DOCS -->
