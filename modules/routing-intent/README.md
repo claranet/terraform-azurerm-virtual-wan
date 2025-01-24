@@ -1,3 +1,9 @@
+# Routing intent
+
+This module enables the [routing intent](https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies) feature in a Virtual Hub.
+
+Using this module outside the Virtual WAN module requires an existing Virtual Hub.
+
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules
 

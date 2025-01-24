@@ -3,13 +3,13 @@ resource "terraform_data" "routing_precondition" {
 
   triggers_replace = [
     var.azure_firewall_as_next_hop_enabled,
-    var.next_hop_nva_id
+    var.next_hop_nva_id,
   ]
 
   lifecycle {
     precondition {
       condition     = var.azure_firewall_as_next_hop_enabled ? var.next_hop_nva_id == null : var.next_hop_nva_id != null
-      error_message = "The variable 'next_hop_nva_id' must be null if 'azure_firewall_as_next_hop_enabled' is true or must not be empty if 'azure_firewall_as_next_hop_enabled' is false."
+      error_message = "`var.next_hop_nva_id` must be `null` if `var.azure_firewall_as_next_hop_enabled = true` or must not be empty if `var.azure_firewall_as_next_hop_enabled = false`."
     }
   }
 }

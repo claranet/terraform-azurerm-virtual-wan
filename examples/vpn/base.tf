@@ -16,8 +16,8 @@ module "rg" {
   stack          = var.stack
 }
 
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
+module "run" {
+  source  = "claranet/run/azurerm"
   version = "x.x.x"
 
   location       = module.azure_region.location
@@ -27,6 +27,8 @@ module "logs" {
   stack          = var.stack
 
   resource_group_name = module.rg.name
+
+  monitoring_function_enabled = false
 }
 
 data "azurerm_virtual_wan" "main" {

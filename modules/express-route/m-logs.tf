@@ -1,4 +1,4 @@
-module "circuit_diagnostic_settings" {
+module "diagnostic_settings" {
   source  = "claranet/diagnostic-settings/azurerm"
   version = "~> 8.0.0"
 
@@ -15,5 +15,5 @@ module "circuit_diagnostic_settings" {
 
 moved {
   from = module.express_route_circuit_diagnostic_settings
-  to   = module.circuit_diagnostic_settings
+  to   = module.diagnostic_settings
 }

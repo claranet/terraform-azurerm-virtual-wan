@@ -61,8 +61,8 @@ module "express_route" {
   private_peering_vlan_id                       = 1234
 
   logs_destinations_ids = [
-    module.logs.id,
-    module.logs.storage_account_id,
+    module.run.log_analytics_workspace_id,
+    module.run.logs_storage_account_id,
   ]
 
   extra_tags = var.extra_tags
@@ -80,7 +80,7 @@ module "express_route" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| circuit\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
 
 ## Resources
 
