@@ -1,3 +1,37 @@
+## 8.0.0 (2025-02-07)
+
+### ⚠ BREAKING CHANGES
+
+* **AZ-1088:** module v8 structure and updates
+
+### Features
+
+* **AZ-1088:** apply suggestions b060ca4
+* **AZ-1088:** apply suggestions 84120bb
+* **AZ-1088:** module v8 structure and updates 40921a5
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.4 7a548a7
+* **deps:** update dependency opentofu to v1.8.6 9883646
+* **deps:** update dependency opentofu to v1.8.8 e6e2cae
+* **deps:** update dependency opentofu to v1.9.0 0fbbe5c
+* **deps:** update dependency pre-commit to v4.1.0 e6e13ec
+* **deps:** update dependency tflint to v0.54.0 90206e3
+* **deps:** update dependency tflint to v0.55.0 76760fe
+* **deps:** update dependency tflint to v0.55.1 d9bb57b
+* **deps:** update dependency trivy to v0.57.1 830bc3b
+* **deps:** update dependency trivy to v0.58.1 62dbf39
+* **deps:** update dependency trivy to v0.58.2 c24bf6d
+* **deps:** update dependency trivy to v0.59.0 b88fcc0
+* **deps:** update dependency trivy to v0.59.1 86eb295
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.19.0 3ce0bf4
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.20.0 742f646
+* **deps:** update tools 47dd89f
+* **deps:** update tools e6a5644
+* update Github templates 528b12b
+* update tflint config for v0.55.0 9cc32e9
+
 ## 7.8.2 (2024-10-17)
 
 ### Bug Fixes
