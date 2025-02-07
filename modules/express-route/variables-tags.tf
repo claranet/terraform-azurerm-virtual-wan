@@ -1,11 +1,12 @@
 variable "default_tags_enabled" {
-  description = "Option to enabled or disable default tags"
+  description = "Option to enable or disable default tags."
   type        = bool
   default     = true
+  nullable    = false
 }
 
 variable "extra_tags" {
-  description = "Extra tags for Express Route Gateway"
+  description = "Additional tags to add to the Express Route."
   type        = map(string)
-  default     = {}
+  default     = null
 }

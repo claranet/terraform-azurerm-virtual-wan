@@ -1,25 +1,56 @@
-output "express_route_circuit_id" {
-  description = "The ID of the ExpressRoute circuit"
-  value       = azurerm_express_route_circuit.erc.id
+output "resource_gateway" {
+  description = "Express Route gateway resource object."
+  value       = azurerm_express_route_gateway.main
 }
 
-output "express_route_circuit_service_provider_provisioning_state" {
-  description = "The ExpressRoute circuit provisioning state from your chosen service provider"
-  value       = azurerm_express_route_circuit.erc.service_provider_provisioning_state
-}
-
-output "express_route_circuit_service_key" {
-  description = "The string needed by the service provider to provision the ExpressRoute circuit"
-  value       = azurerm_express_route_circuit.erc.service_key
+output "resource_circuit" {
+  description = "Express Route circuit resource object."
+  value       = one(azurerm_express_route_circuit.main[*])
   sensitive   = true
 }
 
-output "express_route_gateway_id" {
-  description = "ID of the ExpressRoute gateway"
-  value       = azurerm_express_route_gateway.ergw.id
+output "resource_circuit_peering" {
+  description = "Express Route circuit peering resource object."
+  value       = one(azurerm_express_route_circuit_peering.main[*])
 }
 
-output "express_route_peering_azure_asn" {
-  description = "ASN (Autonomous System Number) Used by Azure for BGP Peering"
-  value       = try(azurerm_express_route_circuit_peering.ercprivatepeer["express_route"].azure_asn, null)
+output "module_diagnostic_settings" {
+  description = "Diagnostic settings module output."
+  value       = one(module.diagnostic_settings[*])
+}
+
+output "gateway_id" {
+  description = "The ID of the Express Route gateway."
+  value       = azurerm_express_route_gateway.main.id
+}
+
+output "gateway_name" {
+  description = "The name of the Express Route gateway."
+  value       = azurerm_express_route_gateway.main.name
+}
+
+output "circuit_id" {
+  description = "The ID of the Express Route circuit."
+  value       = one(azurerm_express_route_circuit.main[*].id)
+}
+
+output "circuit_name" {
+  description = "The name of the Express Route circuit."
+  value       = one(azurerm_express_route_circuit.main[*].name)
+}
+
+output "circuit_service_provider_provisioning_state" {
+  description = "The Express Route circuit provisioning state from your chosen service provider."
+  value       = one(azurerm_express_route_circuit.main[*].service_provider_provisioning_state)
+}
+
+output "circuit_service_key" {
+  description = "The string needed by the service provider to provision the Express Route circuit."
+  value       = one(azurerm_express_route_circuit.main[*].service_key)
+  sensitive   = true
+}
+
+output "private_peering_azure_asn" {
+  description = "Autonomous System Number used by Azure for BGP peering."
+  value       = one(azurerm_express_route_circuit_peering.main[*].azure_asn)
 }

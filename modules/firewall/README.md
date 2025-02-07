@@ -1,7 +1,8 @@
 # Azure Firewall
-This module creates an [Azure Firewall](https://docs.microsoft.com/en-us/azure/firewall/) attached to a Virtual Hub.
 
-Using this module outside the Virtual Wan module need an existing Virtual Hub.
+This module creates an [Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/) attached to a Virtual Hub.
+
+Using this module outside the Virtual WAN module requires an existing Virtual Hub.
 
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules
@@ -34,85 +35,26 @@ More details about variables set by the `terraform-wrapper` available in the [do
 [Hashicorp Terraform](https://github.com/hashicorp/terraform/). Instead, we recommend to use [OpenTofu](https://github.com/opentofu/opentofu/).
 
 ```hcl
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "x.x.x"
-
-  azure_region = var.azure_region
-}
-
-module "rg" {
-  source  = "claranet/rg/azurerm"
-  version = "x.x.x"
-
-  client_name = var.client_name
-  environment = var.environment
-  location    = module.azure_region.location
-  stack       = var.stack
-
-}
-
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
-  version = "x.x.x"
-
-  client_name    = var.client_name
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
-}
-
-data "azurerm_virtual_wan" "virtual_wan" {
-  name                = var.virtual_wan_name
-  resource_group_name = var.virtual_wan_resource_group_name
-}
-
-module "virtual_hub" {
-  source  = "claranet/virtual-wan/azurerm//modules/virtual-hub"
-  version = "x.x.x"
-
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
-
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-
-  virtual_hub_address_prefix = "10.0.0.0/23"
-  virtual_wan_id             = data.azurerm_virtual_wan.virtual_wan.id
-
-  extra_tags = local.tags
-}
-
 module "firewall" {
   source  = "claranet/virtual-wan/azurerm//modules/firewall"
   version = "x.x.x"
 
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
+  location       = module.azure_region.location
+  location_short = module.azure_region.location_short
+  client_name    = var.client_name
+  environment    = var.environment
+  stack          = var.stack
 
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
+  resource_group_name = module.rg.name
+
+  virtual_hub = module.virtual_hub
 
   logs_destinations_ids = [
-    module.logs.log_analytics_workspace_id,
+    module.run.log_analytics_workspace_id,
+    module.run.logs_storage_account_id,
   ]
-  virtual_hub_id = module.virtual_hub.virtual_hub_id
 
-  extra_tags = local.tags
-}
-
-locals {
-  tags = {
-    env   = "prod"
-    stack = "hub"
-  }
+  extra_tags = var.extra_tags
 }
 ```
 
@@ -120,57 +62,60 @@ locals {
 
 | Name | Version |
 |------|---------|
-| azurecaf | ~> 1.2, >= 1.2.22 |
-| azurerm | ~> 3.39 |
+| azurecaf | ~> 1.2.29 |
+| azurerm | ~> 4.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| firewall\_diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
+| diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_firewall.azfw](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/firewall) | resource |
-| [azurecaf_name.azure_firewall_caf](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
+| [azurerm_firewall.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/firewall) | resource |
+| [azurecaf_name.main](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| client\_name | Name of client. | `string` | n/a | yes |
-| custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
-| custom\_name | Custom Firewall's name | `string` | `null` | no |
-| default\_tags\_enabled | Option to enabled or disable default tags | `bool` | `true` | no |
-| environment | Name of application's environment. | `string` | n/a | yes |
-| extra\_tags | Tags for Firewall resource | `map(string)` | `{}` | no |
-| firewall\_availibility\_zones | Availability zones in which the Azure Firewall should be created. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
-| firewall\_dns\_servers | List of DNS servers that the Azure Firewall will direct DNS traffic to for the name resolution | `list(string)` | `null` | no |
-| firewall\_policy\_id | ID of the Firewall Policy applied to this Firewall. | `string` | `null` | no |
-| firewall\_private\_ip\_ranges | List of SNAT private CIDR IP ranges, or the special string `IANAPrivateRanges`, which indicates Azure Firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918 | `list(string)` | `null` | no |
-| firewall\_public\_ip\_count | Number of public IPs to assign to the Firewall. | `number` | `1` | no |
-| firewall\_sku\_tier | SKU tier of the Firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
+| client\_name | Client name/account used in naming. | `string` | n/a | yes |
+| custom\_name | Custom firewall name. | `string` | `null` | no |
+| default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
+| diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
+| dns\_servers | List of DNS servers that the firewall will redirect DNS traffic to for the name resolution. | `list(string)` | `null` | no |
+| environment | Project environment. | `string` | n/a | yes |
+| extra\_tags | Additional tags to add to the firewall. | `map(string)` | `null` | no |
+| firewall\_policy | ID of the firewall policy applied to this firewall. | <pre>object({<br/>    id = string<br/>  })</pre> | `null` | no |
 | location | Azure location. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
-| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | n/a | yes |
+| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to use Azure EventHub as a destination, you must provide a formatted string containing both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the <code>&#124;</code> character. | `list(string)` | n/a | yes |
 | logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | name\_prefix | Prefix for generated resources names. | `string` | `""` | no |
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
-| resource\_group\_name | Name of the application's resource group. | `string` | n/a | yes |
-| stack | Name of application's stack. | `string` | n/a | yes |
-| virtual\_hub\_id | ID of the Virtual Hub in which to deploy the Firewall | `string` | n/a | yes |
+| private\_ip\_ranges | List of SNAT private IP ranges, or the special string `IANAPrivateRanges`, which indicates the firewall does not SNAT when the destination IP address is a private range per IANA RFC 1918. | `list(string)` | `null` | no |
+| public\_ip\_count | Number of public IPs to assign to the firewall. | `number` | `1` | no |
+| resource\_group\_name | Resource Group name. | `string` | n/a | yes |
+| sku\_tier | SKU tier of the firewall. Possible values are `Premium` and `Standard`. | `string` | `"Standard"` | no |
+| stack | Project Stack name. | `string` | n/a | yes |
+| virtual\_hub | ID of the Virtual Hub in which to deploy the firewall. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
+| zones | Availability zones in which the firewall should be created. | `list(number)` | <pre>[<br/>  1,<br/>  2,<br/>  3<br/>]</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| firewall\_id | ID of the created firewall |
-| firewall\_ip\_configuration | IP configuration of the created firewall |
-| firewall\_management\_ip\_configuration | Management IP configuration of the created firewall |
-| firewall\_private\_ip\_address | Private IP address of the firewall |
-| firewall\_public\_ip | Public IP address of the firewall |
+| id | ID of the firewall. |
+| ip\_configuration | IP configuration of the firewall. |
+| management\_ip\_configuration | Management IP configuration of the firewall. |
+| module\_diagnostic\_settings | Diagnostic settings module output. |
+| name | Name of the firewall. |
+| private\_ip\_address | Private IP address of the firewall. |
+| public\_ip\_addresses | Public IP addresses of the firewall. |
+| resource | Firewall resource object. |
 <!-- END_TF_DOCS -->

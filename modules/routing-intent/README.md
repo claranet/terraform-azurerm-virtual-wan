@@ -1,3 +1,9 @@
+# Routing intent
+
+This module enables the [routing intent](https://learn.microsoft.com/en-us/azure/virtual-wan/how-to-routing-policies) feature in a Virtual Hub.
+
+Using this module outside the Virtual WAN module requires an existing Virtual Hub.
+
 <!-- BEGIN_TF_DOCS -->
 ## Global versioning rule for Claranet Azure modules
 
@@ -29,78 +35,13 @@ More details about variables set by the `terraform-wrapper` available in the [do
 [Hashicorp Terraform](https://github.com/hashicorp/terraform/). Instead, we recommend to use [OpenTofu](https://github.com/opentofu/opentofu/).
 
 ```hcl
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "x.x.x"
-
-  azure_region = var.azure_region
-}
-
-module "rg" {
-  source  = "claranet/rg/azurerm"
-  version = "x.x.x"
-
-  client_name = var.client_name
-  environment = var.environment
-  location    = module.azure_region.location
-  stack       = var.stack
-
-}
-
-module "logs" {
-  source  = "claranet/run/azurerm//modules/logs"
-  version = "x.x.x"
-
-  client_name    = var.client_name
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
-}
-
-data "azurerm_virtual_wan" "virtual_wan" {
-  name                = var.virtual_wan_name
-  resource_group_name = var.virtual_wan_resource_group_name
-}
-
-module "virtual_hub" {
-  source  = "claranet/virtual-wan/azurerm//modules/virtual-hub"
-  version = "x.x.x"
-
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
-
-  location            = module.azure_region.location
-  location_short      = module.azure_region.location_short
-  resource_group_name = module.rg.resource_group_name
-
-  virtual_hub_address_prefix = "10.0.0.0/23"
-  virtual_wan_id             = data.azurerm_virtual_wan.virtual_wan.id
-
-  extra_tags = local.tags
-}
-
-data "azurerm_firewall" "firewall" {
-  name                = var.firewall_name
-  resource_group_name = var.firewall_resource_group_name
-}
-
 module "routing_intent" {
   source  = "claranet/virtual-wan/azurerm//modules/routing-intent"
   version = "x.x.x"
 
-  next_hop_resource_id = data.azurerm_firewall.firewall.id
-  virtual_hub_id       = module.virtual_hub.virtual_hub_id
-}
+  virtual_hub = module.virtual_hub
 
-locals {
-  tags = {
-    env   = "prod"
-    stack = "hub"
-  }
+  next_hop_resource_id = data.azurerm_firewall.main.id
 }
 ```
 
@@ -108,7 +49,7 @@ locals {
 
 | Name | Version |
 |------|---------|
-| azurerm | ~> 3.73 |
+| azurerm | ~> 4.0 |
 
 ## Modules
 
@@ -118,18 +59,23 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azurerm_virtual_hub_routing_intent.routing_intent](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_routing_intent) | resource |
+| [azurerm_virtual_hub_routing_intent.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_routing_intent) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| internet\_routing\_enabled | Whether enable internet routing through this next\_hop. | `bool` | `true` | no |
-| next\_hop\_resource\_id | Resource ID of the next\_hop (eg. Azure Firewall, NVA...). | `string` | n/a | yes |
-| private\_routing\_enabled | Whether enable private routing through this next\_hop. | `bool` | `true` | no |
-| virtual\_hub\_id | Virtual Hub ID to apply the routing intent. | `string` | n/a | yes |
+| custom\_name | Custom routing intent name. `hubRoutingIntent` if not set. | `string` | `null` | no |
+| internet\_routing\_enabled | Whether or not to enable internet routing through the next hop. | `bool` | `true` | no |
+| next\_hop\_resource\_id | Resource ID of the next hop (e.g. Azure Firewall, NVA, etc.). | `string` | n/a | yes |
+| private\_routing\_enabled | Whether or not to enable private routing through the next hop. | `bool` | `true` | no |
+| virtual\_hub | ID of the Virtual Hub in which to enable the routing intent feature. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| id | ID of the routing intent. |
+| name | Name of the routing intent. |
+| resource | Routing intent resource object. |
 <!-- END_TF_DOCS -->

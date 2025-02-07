@@ -1,15 +1,16 @@
-resource "azurerm_virtual_hub" "vhub" {
-  name                = local.vhub_name
-  location            = var.location
+resource "azurerm_virtual_hub" "main" {
+  name     = local.name
+  location = var.location
+
   resource_group_name = var.resource_group_name
 
-  virtual_wan_id = var.virtual_wan_id
-  address_prefix = var.virtual_hub_address_prefix
+  virtual_wan_id = var.virtual_wan.id
 
-  sku = var.virtual_hub_sku
+  sku            = var.sku
+  address_prefix = var.address_prefix
 
   dynamic "route" {
-    for_each = toset(var.virtual_hub_routes)
+    for_each = var.routes
     content {
       address_prefixes    = route.value.address_prefixes
       next_hop_ip_address = route.value.next_hop_ip_address
@@ -19,36 +20,48 @@ resource "azurerm_virtual_hub" "vhub" {
   tags = merge(local.default_tags, var.extra_tags)
 }
 
-resource "azurerm_virtual_hub_connection" "peer_vnets_to_hub" {
-  for_each = var.peered_virtual_networks != null ? { for p in var.peered_virtual_networks : p.vnet_id => p } : {}
+moved {
+  from = azurerm_virtual_hub.vhub
+  to   = azurerm_virtual_hub.main
+}
 
-  remote_virtual_network_id = each.value.vnet_id
-  virtual_hub_id            = azurerm_virtual_hub.vhub.id
+resource "azurerm_virtual_hub_connection" "main" {
+  for_each = local.peered_virtual_networks
 
-  name                      = coalesce(each.value.peering_name, format("peer_%s_to_%s", split("/", each.value.vnet_id)[8], local.vhub_name))
+  name = coalesce(each.value.peering_name, format("peer_%s_to_%s", reverse(split("/", each.key))[0], local.name))
+
+  virtual_hub_id = azurerm_virtual_hub.main.id
+
+  remote_virtual_network_id = each.key
+
   internet_security_enabled = coalesce(each.value.internet_security_enabled, var.internet_security_enabled)
 
   dynamic "routing" {
-    for_each = each.value.routing != null ? ["enabled"] : []
+    for_each = each.value.routing[*]
     content {
-      associated_route_table_id = each.value.routing.associated_route_table_id
+      associated_route_table_id = routing.value.associated_route_table_id
 
       dynamic "propagated_route_table" {
-        for_each = each.value.routing.propagated_route_table != null ? ["enabled"] : []
+        for_each = routing.value.propagated_route_table[*]
         content {
-          labels          = each.value.routing.propagated_route_table.labels
-          route_table_ids = each.value.routing.propagated_route_table.route_table_ids
+          labels          = propagated_route_table.value.labels
+          route_table_ids = propagated_route_table.value.route_table_ids
         }
       }
 
       dynamic "static_vnet_route" {
-        for_each = each.value.routing.static_vnet_route != null ? ["enabled"] : []
+        for_each = routing.value.static_vnet_route[*]
         content {
-          name                = each.value.routing.static_vnet_route.name
-          address_prefixes    = each.value.routing.static_vnet_route.address_prefixes
-          next_hop_ip_address = each.value.routing.static_vnet_route.next_hop_ip_address
+          name                = static_vnet_route.value.name
+          address_prefixes    = static_vnet_route.value.address_prefixes
+          next_hop_ip_address = static_vnet_route.value.next_hop_ip_address
         }
       }
     }
   }
+}
+
+moved {
+  from = azurerm_virtual_hub_connection.peer_vnets_to_hub
+  to   = azurerm_virtual_hub_connection.main
 }

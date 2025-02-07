@@ -1,39 +1,63 @@
-resource "azurerm_express_route_gateway" "ergw" {
-  name                          = local.ergw_name
-  resource_group_name           = var.resource_group_name
-  location                      = var.location
-  scale_units                   = var.express_route_gateway_scale_unit
-  virtual_hub_id                = var.virtual_hub_id
-  allow_non_virtual_wan_traffic = var.express_route_gateway_allow_non_virtual_wan_traffic
+resource "azurerm_express_route_gateway" "main" {
+  name     = local.gateway_name
+  location = var.location
+
+  resource_group_name = var.resource_group_name
+
+  virtual_hub_id = var.virtual_hub.id
+
+  scale_units                   = var.gateway_scale_unit
+  allow_non_virtual_wan_traffic = var.gateway_non_virtual_wan_traffic_allowed
 
   tags = merge(local.default_tags, var.extra_tags)
 }
 
-resource "azurerm_express_route_circuit" "erc" {
-  name                = local.erc_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-
-  bandwidth_in_mbps     = var.express_route_circuit_bandwidth_in_mbps
-  peering_location      = var.express_route_circuit_peering_location
-  service_provider_name = var.express_route_circuit_service_provider
-
-  sku {
-    tier   = var.express_route_sku.tier
-    family = var.express_route_sku.family
-  }
-
-  tags = var.extra_tags
+moved {
+  from = azurerm_express_route_gateway.ergw
+  to   = azurerm_express_route_gateway.main
 }
 
-resource "azurerm_express_route_circuit_peering" "ercprivatepeer" {
-  for_each                      = var.express_route_private_peering_enabled ? toset(["express_route"]) : toset([])
-  resource_group_name           = var.resource_group_name
-  express_route_circuit_name    = azurerm_express_route_circuit.erc.name
+resource "azurerm_express_route_circuit" "main" {
+  count = var.circuit_enabled ? 1 : 0
+
+  name     = local.circuit_name
+  location = var.location
+
+  resource_group_name = var.resource_group_name
+
+  peering_location      = var.circuit_peering_location
+  bandwidth_in_mbps     = var.circuit_bandwidth_in_mbps
+  service_provider_name = var.circuit_service_provider
+
+  sku {
+    tier   = var.circuit_sku.tier
+    family = var.circuit_sku.family
+  }
+
+  tags = merge(local.default_tags, var.extra_tags)
+}
+
+moved {
+  from = azurerm_express_route_circuit.erc
+  to   = azurerm_express_route_circuit.main[0]
+}
+
+resource "azurerm_express_route_circuit_peering" "main" {
+  count = var.private_peering_enabled ? length(azurerm_express_route_circuit.main) : 0
+
+  resource_group_name = var.resource_group_name
+
+  express_route_circuit_name = one(azurerm_express_route_circuit.main[*].name)
+
   peering_type                  = "AzurePrivatePeering"
-  primary_peer_address_prefix   = var.express_route_circuit_private_peering_primary_peer_address_prefix
-  secondary_peer_address_prefix = var.express_route_circuit_private_peering_secondary_peer_address_prefix
-  vlan_id                       = var.express_route_circuit_private_peering_vlan_id
-  shared_key                    = var.express_route_circuit_private_peering_shared_key
-  peer_asn                      = var.express_route_circuit_private_peering_peer_asn
+  primary_peer_address_prefix   = var.private_peering_primary_peer_address_prefix
+  secondary_peer_address_prefix = var.private_peering_secondary_peer_address_prefix
+  shared_key                    = var.private_peering_shared_key
+  peer_asn                      = var.private_peering_peer_asn
+  vlan_id                       = var.private_peering_vlan_id
+}
+
+moved {
+  from = azurerm_express_route_circuit_peering.ercprivatepeer["express_route"]
+  to   = azurerm_express_route_circuit_peering.main[0]
 }

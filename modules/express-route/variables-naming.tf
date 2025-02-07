@@ -16,14 +16,14 @@ variable "name_slug" {
   default     = ""
 }
 
-variable "custom_express_route_gateway_name" {
-  description = "Custom Express Route Gateway name"
+variable "gateway_custom_name" {
+  description = "Custom Express Route gateway name."
   type        = string
   default     = null
 }
 
-variable "custom_express_route_circuit_name" {
-  description = "Custom Express Route Circuit name"
+variable "circuit_custom_name" {
+  description = "Custom Express Route circuit name."
   type        = string
   default     = null
 }
