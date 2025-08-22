@@ -1,6 +1,6 @@
 module "diagnostic_settings" {
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "~> 8.0.0"
+  version = "~> 8.1.0"
 
   custom_name = var.diagnostic_settings_custom_name
   name_prefix = var.name_prefix
