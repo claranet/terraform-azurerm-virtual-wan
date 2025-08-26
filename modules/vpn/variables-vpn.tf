@@ -119,6 +119,15 @@ variable "vpn_connections" {
       local_address_ranges  = list(string)
       remote_address_ranges = list(string)
     })), [])
+    routing = optional(object({
+      associated_route_table = string
+      propagated_route_table = optional(object({
+        route_table_ids = list(string)
+        labels          = optional(list(string))
+      }))
+      inbound_route_map_id  = optional(string)
+      outbound_route_map_id = optional(string)
+    }))
   }))
   default  = []
   nullable = false
