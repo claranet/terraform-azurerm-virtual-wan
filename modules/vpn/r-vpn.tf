@@ -130,6 +130,22 @@ resource "azurerm_vpn_gateway_connection" "main" {
       remote_address_ranges = traffic_selector_policy.value.remote_address_ranges
     }
   }
+
+  dynamic "routing" {
+    for_each = each.value.routing[*]
+    content {
+      associated_route_table = routing.value.associated_route_table
+      dynamic "propagated_route_table" {
+        for_each = routing.value.propagated_route_table[*]
+        content {
+          route_table_ids = propagated_route_table.value.route_table_ids
+          labels          = propagated_route_table.value.labels
+        }
+      }
+      inbound_route_map_id  = routing.value.inbound_route_map_id
+      outbound_route_map_id = routing.value.outbound_route_map_id
+    }
+  }
 }
 
 moved {
