@@ -80,11 +80,12 @@ module "vpn" {
     site_name = "site1"
     links = [
       {
-        name           = "site1-primary-link"
-        bandwidth_mbps = 200
-        bgp_enabled    = true
-        protocol       = "IKEv2"
-        shared_key     = "VeryStrongSecretKeyForPrimaryLink"
+        name                  = "site1-primary-link"
+        bandwidth_mbps        = 200
+        bgp_enabled           = true
+        protocol              = "IKEv2"
+        shared_key            = "VeryStrongSecretKeyForPrimaryLink"
+        egress_nat_rule_names = ["nat-egress-xxx"]
         ipsec_policy = {
           dh_group                 = "DHGroup14"
           ike_encryption_algorithm = "AES256"
@@ -121,6 +122,25 @@ module "vpn" {
     }]
   }]
 
+  # NAT RULES example
+  nat_rules = [
+    {
+      name = "nat-egress-xxx"
+      mode = "EgressSnat"
+      type = "Static"
+      internal_mapping = [
+        {
+          address_space = "10.10.10.0/24"
+        }
+      ]
+      external_mapping = [
+        {
+          address_space = "192.168.1.0/24"
+        }
+      ]
+    },
+  ]
+
   logs_destinations_ids = [
     module.run.log_analytics_workspace_id,
     module.run.logs_storage_account_id,
@@ -149,6 +169,7 @@ module "vpn" {
 |------|------|
 | [azurerm_vpn_gateway.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_gateway) | resource |
 | [azurerm_vpn_gateway_connection.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_gateway_connection) | resource |
+| [azurerm_vpn_gateway_nat_rule.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_gateway_nat_rule) | resource |
 | [azurerm_vpn_site.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_site) | resource |
 | [azurecaf_name.main](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 
@@ -174,13 +195,14 @@ module "vpn" {
 | name\_prefix | Prefix for generated resources names. | `string` | `""` | no |
 | name\_slug | Slug to use with the generated resources names. | `string` | `""` | no |
 | name\_suffix | Suffix for the generated resources names. | `string` | `""` | no |
+| nat\_rules | List of NAT rules to apply to the VPN Gateway. For dynamic NAT rules, if `ip_configuration_name` is not set, the first IP configuration will be used. | <pre>list(object({<br/>    name = string<br/>    external_mapping = list(object({<br/>      address_space = string<br/>      port_range    = optional(string)<br/>    }))<br/>    internal_mapping = list(object({<br/>      address_space = string<br/>      port_range    = optional(string)<br/>    }))<br/>    mode                           = string<br/>    type                           = optional(string, "Static")<br/>    ip_configuration_instance_name = optional(string, "Instance0")<br/>    })<br/>  )</pre> | `[]` | no |
 | resource\_group\_name | Resource Group name. | `string` | n/a | yes |
 | routing\_preference | Azure routing preference. You can choose to route traffic either via the Microsoft network (set to `Microsoft network`) or via the ISP network (set to `Internet`). | `string` | `"Microsoft Network"` | no |
 | scale\_unit | The scale unit for this VPN gateway. | `number` | `1` | no |
 | stack | Project Stack name. | `string` | n/a | yes |
 | virtual\_hub | ID of the Virtual Hub in which to deploy the VPN gateway. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
 | virtual\_wan | ID of the Virtual WAN containing the Virtual Hub. | <pre>object({<br/>    id = string<br/>  })</pre> | n/a | yes |
-| vpn\_connections | VPN connections configuration. | <pre>list(object({<br/>    name                      = string<br/>    site_id                   = optional(string)<br/>    site_name                 = optional(string)<br/>    internet_security_enabled = optional(bool, false)<br/>    links = list(object({<br/>      name                                  = string<br/>      egress_nat_rule_ids                   = optional(list(string))<br/>      ingress_nat_rule_ids                  = optional(list(string))<br/>      bandwidth_mbps                        = optional(number, 10)<br/>      bgp_enabled                           = optional(bool, false)<br/>      connection_mode                       = optional(string, "Default")<br/>      protocol                              = optional(string, "IKEv2")<br/>      ratelimit_enabled                     = optional(bool, false)<br/>      route_weight                          = optional(number, 0)<br/>      shared_key                            = optional(string)<br/>      local_azure_ip_address_enabled        = optional(bool, false)<br/>      policy_based_traffic_selector_enabled = optional(bool, false)<br/>      ipsec_policy = optional(object({<br/>        dh_group                 = string<br/>        ike_encryption_algorithm = string<br/>        ike_integrity_algorithm  = string<br/>        encryption_algorithm     = string<br/>        integrity_algorithm      = string<br/>        pfs_group                = string<br/>        sa_data_size_kb          = number<br/>        sa_lifetime_sec          = number<br/>      }))<br/>    }))<br/>    traffic_selector_policy = optional(list(object({<br/>      local_address_ranges  = list(string)<br/>      remote_address_ranges = list(string)<br/>    })), [])<br/>    routing = optional(object({<br/>      associated_route_table = string<br/>      propagated_route_table = optional(object({<br/>        route_table_ids = list(string)<br/>        labels          = optional(list(string))<br/>      }))<br/>      inbound_route_map_id  = optional(string)<br/>      outbound_route_map_id = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
+| vpn\_connections | VPN connections configuration. | <pre>list(object({<br/>    name                      = string<br/>    site_id                   = optional(string)<br/>    site_name                 = optional(string)<br/>    internet_security_enabled = optional(bool, false)<br/>    links = list(object({<br/>      name                                  = string<br/>      egress_nat_rule_names                 = optional(list(string), [])<br/>      ingress_nat_rule_names                = optional(list(string), [])<br/>      egress_nat_rule_ids                   = optional(list(string), [])<br/>      ingress_nat_rule_ids                  = optional(list(string), [])<br/>      bandwidth_mbps                        = optional(number, 10)<br/>      bgp_enabled                           = optional(bool, false)<br/>      connection_mode                       = optional(string, "Default")<br/>      protocol                              = optional(string, "IKEv2")<br/>      ratelimit_enabled                     = optional(bool, false)<br/>      route_weight                          = optional(number, 0)<br/>      shared_key                            = optional(string)<br/>      local_azure_ip_address_enabled        = optional(bool, false)<br/>      policy_based_traffic_selector_enabled = optional(bool, false)<br/>      ipsec_policy = optional(object({<br/>        dh_group                 = string<br/>        ike_encryption_algorithm = string<br/>        ike_integrity_algorithm  = string<br/>        encryption_algorithm     = string<br/>        integrity_algorithm      = string<br/>        pfs_group                = string<br/>        sa_data_size_kb          = number<br/>        sa_lifetime_sec          = number<br/>      }))<br/>    }))<br/>    traffic_selector_policy = optional(list(object({<br/>      local_address_ranges  = list(string)<br/>      remote_address_ranges = list(string)<br/>    })), [])<br/>    routing = optional(object({<br/>      associated_route_table = string<br/>      propagated_route_table = optional(object({<br/>        route_table_ids = list(string)<br/>        labels          = optional(list(string))<br/>      }))<br/>      inbound_route_map_id  = optional(string)<br/>      outbound_route_map_id = optional(string)<br/>    }))<br/>  }))</pre> | `[]` | no |
 | vpn\_sites | VPN sites configuration. | <pre>list(object({<br/>    name          = string<br/>    cidrs         = optional(list(string))<br/>    device_model  = optional(string)<br/>    device_vendor = optional(string)<br/>    links = list(object({<br/>      name          = string<br/>      fqdn          = optional(string)<br/>      ip_address    = optional(string)<br/>      provider_name = optional(string)<br/>      speed_in_mbps = optional(number)<br/>      bgp = optional(list(object({<br/>        asn             = string<br/>        peering_address = string<br/>      })), [])<br/>    }))<br/>  }))</pre> | `[]` | no |
 
 ## Outputs

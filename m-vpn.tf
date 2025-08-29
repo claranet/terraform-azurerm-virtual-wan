@@ -32,6 +32,8 @@ module "vpn" {
 
   internet_security_enabled = var.internet_security_enabled
 
+  nat_rules = var.nat_rules
+
   logs_destinations_ids   = coalesce(var.vpn_gateway_logs_destinations_ids, var.logs_destinations_ids)
   logs_categories         = var.vpn_gateway_logs_categories
   logs_metrics_categories = var.vpn_gateway_logs_metrics_categories
