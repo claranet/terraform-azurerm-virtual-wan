@@ -1,3 +1,39 @@
+## 8.1.0 (2025-08-29)
+
+### Features
+
+* **AZ-1609:** ✨  add NAT rule resource to VPN Gateway 59f02fa
+
+### Miscellaneous Chores
+
+* **⚙️:** ✏️ update template identifier for MR review 0799816
+* 🗑️ remove old commitlint configuration files 494e5d5
+* **deps:** 🔗 bump AzureRM provider version to v4.31+ 8af2e3b
+* **deps:** update dependency claranet/diagnostic-settings/azurerm to ~> 8.1.0 9a7379b
+* **deps:** update dependency opentofu to v1.10.0 0853144
+* **deps:** update dependency opentofu to v1.10.1 554561d
+* **deps:** update dependency opentofu to v1.10.3 69a73c6
+* **deps:** update dependency opentofu to v1.9.1 f4c3a9e
+* **deps:** update dependency pre-commit to v4.2.0 b91e32a
+* **deps:** update dependency terraform-docs to v0.20.0 37c4759
+* **deps:** update dependency tflint to v0.57.0 e0607a6
+* **deps:** update dependency tflint to v0.58.0 a32b23b
+* **deps:** update dependency tflint to v0.58.1 d445212
+* **deps:** update dependency trivy to v0.60.0 7e9d841
+* **deps:** update dependency trivy to v0.61.1 c822acf
+* **deps:** update dependency trivy to v0.62.0 6a0222d
+* **deps:** update dependency trivy to v0.62.1 b0767ca
+* **deps:** update dependency trivy to v0.63.0 d1e6ffa
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.21.0 adafdec
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.22.0 dc76974
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v6 29c9fcb
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.0 37ac465
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.1 df490eb
+* **deps:** update tools 997552b
+* **deps:** update tools 64d0782
+* **deps:** update tools c6b46c5
+* **deps:** update tools ed6c0b1
+
 ## 8.0.0 (2025-02-07)
 
 ### ⚠ BREAKING CHANGES
