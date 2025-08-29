@@ -43,11 +43,12 @@ module "vpn" {
     site_name = "site1"
     links = [
       {
-        name           = "site1-primary-link"
-        bandwidth_mbps = 200
-        bgp_enabled    = true
-        protocol       = "IKEv2"
-        shared_key     = "VeryStrongSecretKeyForPrimaryLink"
+        name                  = "site1-primary-link"
+        bandwidth_mbps        = 200
+        bgp_enabled           = true
+        protocol              = "IKEv2"
+        shared_key            = "VeryStrongSecretKeyForPrimaryLink"
+        egress_nat_rule_names = ["nat-egress-xxx"]
         ipsec_policy = {
           dh_group                 = "DHGroup14"
           ike_encryption_algorithm = "AES256"
@@ -83,6 +84,25 @@ module "vpn" {
       remote_address_ranges = ["10.92.34.50/32"]
     }]
   }]
+
+  # NAT RULES example
+  nat_rules = [
+    {
+      name = "nat-egress-xxx"
+      mode = "EgressSnat"
+      type = "Static"
+      internal_mapping = [
+        {
+          address_space = "10.10.10.0/24"
+        }
+      ]
+      external_mapping = [
+        {
+          address_space = "192.168.1.0/24"
+        }
+      ]
+    },
+  ]
 
   logs_destinations_ids = [
     module.run.log_analytics_workspace_id,

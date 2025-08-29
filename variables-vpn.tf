@@ -70,8 +70,10 @@ variable "vpn_connections" {
     internet_security_enabled = optional(bool, false)
     links = list(object({
       name                                  = string
-      egress_nat_rule_ids                   = optional(list(string))
-      ingress_nat_rule_ids                  = optional(list(string))
+      egress_nat_rule_names                 = optional(list(string), [])
+      ingress_nat_rule_names                = optional(list(string), [])
+      egress_nat_rule_ids                   = optional(list(string), [])
+      ingress_nat_rule_ids                  = optional(list(string), [])
       bandwidth_mbps                        = optional(number, 10)
       bgp_enabled                           = optional(bool, false)
       connection_mode                       = optional(string, "Default")
@@ -108,4 +110,34 @@ variable "vpn_connections" {
   }))
   default  = []
   nullable = false
+}
+
+variable "nat_rules" {
+  description = "List of NAT rules to apply to the VPN Gateway. For dynamic NAT rules, if `ip_configuration_name` is not set, the first IP configuration will be used."
+  type = list(object({
+    name = string
+    external_mapping = list(object({
+      address_space = string
+      port_range    = optional(string)
+    }))
+    internal_mapping = list(object({
+      address_space = string
+      port_range    = optional(string)
+    }))
+    mode                           = string
+    type                           = optional(string, "Static")
+    ip_configuration_instance_name = optional(string, "Instance0")
+    })
+  )
+  default  = []
+  nullable = false
+  validation {
+    condition     = alltrue([for rule in var.nat_rules : (rule.mode == "IngressSnat" || rule.mode == "EgressSnat")])
+    error_message = "Each NAT rule must use either 'IngressSnat' or 'EgressSnat' for the mode."
+  }
+
+  validation {
+    condition     = alltrue([for rule in var.nat_rules : (rule.type == "Static" || rule.type == "Dynamic")])
+    error_message = "Each NAT rule must use either 'Static' or 'Dynamic' for the type."
+  }
 }

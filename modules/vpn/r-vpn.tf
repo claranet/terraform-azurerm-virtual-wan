@@ -93,10 +93,16 @@ resource "azurerm_vpn_gateway_connection" "main" {
   dynamic "vpn_link" {
     for_each = each.value.links
     content {
-      name                                  = vpn_link.value.name
-      vpn_site_link_id                      = format("%s/vpnSiteLinks/%s", coalesce(each.value.site_id, azurerm_vpn_site.main[each.value.site_name].id), vpn_link.value.name)
-      egress_nat_rule_ids                   = vpn_link.value.egress_nat_rule_ids
-      ingress_nat_rule_ids                  = vpn_link.value.ingress_nat_rule_ids
+      name             = vpn_link.value.name
+      vpn_site_link_id = format("%s/vpnSiteLinks/%s", coalesce(each.value.site_id, azurerm_vpn_site.main[each.value.site_name].id), vpn_link.value.name)
+      egress_nat_rule_ids = concat(
+        vpn_link.value.egress_nat_rule_ids,
+        [for rule in azurerm_vpn_gateway_nat_rule.main : rule.id if rule.mode == "EgressSnat" && contains(vpn_link.value.egress_nat_rule_names, rule.name)],
+      )
+      ingress_nat_rule_ids = concat(
+        vpn_link.value.ingress_nat_rule_ids,
+        [for rule in azurerm_vpn_gateway_nat_rule.main : rule.id if rule.mode == "IngressSnat" && contains(vpn_link.value.ingress_nat_rule_names, rule.name)],
+      )
       bandwidth_mbps                        = vpn_link.value.bandwidth_mbps
       bgp_enabled                           = vpn_link.value.bgp_enabled
       connection_mode                       = vpn_link.value.connection_mode
