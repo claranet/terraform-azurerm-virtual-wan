@@ -69,7 +69,7 @@ module "firewall" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.1.0 |
+| diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
 
 ## Resources
 
