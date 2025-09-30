@@ -160,7 +160,7 @@ module "virtual_wan" {
 
 | Name | Version |
 |------|---------|
-| azurecaf | ~> 1.2.29 |
+| azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.31 |
 | terraform | n/a |
 
