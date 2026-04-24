@@ -40,6 +40,12 @@ variable "express_route_circuit_custom_name" {
   default     = null
 }
 
+variable "express_route_connection_custom_name" {
+  description = "Custom Express Route connection name."
+  type        = string
+  default     = null
+}
+
 variable "firewall_custom_name" {
   description = "Custom firewall name."
   type        = string

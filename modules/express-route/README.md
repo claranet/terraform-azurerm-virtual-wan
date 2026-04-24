@@ -88,8 +88,10 @@ module "express_route" {
 |------|------|
 | [azurerm_express_route_circuit.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit) | resource |
 | [azurerm_express_route_circuit_peering.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit_peering) | resource |
+| [azurerm_express_route_connection.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_connection) | resource |
 | [azurerm_express_route_gateway.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_gateway) | resource |
 | [azurecaf_name.circuit](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
+| [azurecaf_name.connection](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.gateway](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
@@ -103,6 +105,7 @@ module "express_route" {
 | circuit\_service\_provider | The name of the Express Route circuit service provider. | `string` | n/a | yes |
 | circuit\_sku | Express Route circuit SKU. | <pre>object({<br/>    tier   = string<br/>    family = string<br/>  })</pre> | <pre>{<br/>  "family": "MeteredData",<br/>  "tier": "Premium"<br/>}</pre> | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
+| connection\_custom\_name | Custom Express Route connection name. | `string` | `null` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | environment | Project environment. | `string` | n/a | yes |
@@ -142,5 +145,6 @@ module "express_route" {
 | private\_peering\_azure\_asn | Autonomous System Number used by Azure for BGP peering. |
 | resource\_circuit | Express Route circuit resource object. |
 | resource\_circuit\_peering | Express Route circuit peering resource object. |
+| resource\_connection | Express Route connection resource object. |
 | resource\_gateway | Express Route gateway resource object. |
 <!-- END_TF_DOCS -->

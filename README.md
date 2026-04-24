@@ -198,6 +198,7 @@ module "virtual_wan" {
 | express\_route\_circuit\_peering\_location | Express Route circuit peering location. | `string` | `null` | no |
 | express\_route\_circuit\_service\_provider | The name of the Express Route circuit service provider. | `string` | `null` | no |
 | express\_route\_circuit\_sku | Express Route circuit SKU. | <pre>object({<br/>    tier   = string<br/>    family = string<br/>  })</pre> | <pre>{<br/>  "family": "MeteredData",<br/>  "tier": "Premium"<br/>}</pre> | no |
+| express\_route\_connection\_custom\_name | Custom Express Route connection name. | `string` | `null` | no |
 | express\_route\_diagnostic\_settings\_custom\_name | Custom name of the diagnostic settings. Defaults to `default`. | `string` | `"default"` | no |
 | express\_route\_enabled | Enable or disable Express Route. | `bool` | `false` | no |
 | express\_route\_extra\_tags | Extra tags for the Express Route. | `map(string)` | `null` | no |
@@ -278,6 +279,7 @@ module "virtual_wan" {
 | express\_route\_gateway\_id | ID of the Express Route gateway. |
 | express\_route\_gateway\_name | Name of the Express Route gateway. |
 | express\_route\_private\_peering\_azure\_asn | Autonomous System Number used by Azure for BGP peering. |
+| express\_route\_resource\_connection | Express Route connection resource object. |
 | firewall\_id | ID of the firewall. |
 | firewall\_ip\_configuration | IP configuration of the firewall. |
 | firewall\_management\_ip\_configuration | Management IP configuration of the firewall. |

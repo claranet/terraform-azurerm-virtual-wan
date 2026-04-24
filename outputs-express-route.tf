@@ -38,3 +38,8 @@ output "express_route_private_peering_azure_asn" {
   description = "Autonomous System Number used by Azure for BGP peering."
   value       = one(module.express_route[*].private_peering_azure_asn)
 }
+
+output "express_route_resource_connection" {
+  description = "Express Route connection resource object."
+  value       = one(module.express_route[*].resource_connection)
+}

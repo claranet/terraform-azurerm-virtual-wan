@@ -27,3 +27,9 @@ variable "circuit_custom_name" {
   type        = string
   default     = null
 }
+
+variable "connection_custom_name" {
+  description = "Custom Express Route connection name."
+  type        = string
+  default     = null
+}
