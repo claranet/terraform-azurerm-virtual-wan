@@ -48,7 +48,7 @@ module "routing_intent" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurerm | ~> 4.0 |
 
 ## Modules
@@ -58,13 +58,13 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_virtual_hub_routing_intent.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_routing_intent) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | custom\_name | Custom routing intent name. `hubRoutingIntent` if not set. | `string` | `null` | no |
 | internet\_routing\_enabled | Whether or not to enable internet routing through the next hop. | `bool` | `true` | no |
 | next\_hop\_resource\_id | Resource ID of the next hop (e.g. Azure Firewall, NVA, etc.). | `string` | n/a | yes |
@@ -74,7 +74,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | id | ID of the routing intent. |
 | name | Name of the routing intent. |
 | resource | Routing intent resource object. |

@@ -159,7 +159,7 @@ module "virtual_wan" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.31 |
 | terraform | n/a |
@@ -167,7 +167,7 @@ module "virtual_wan" {
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | express\_route | ./modules/express-route | n/a |
 | firewall | ./modules/firewall | n/a |
 | routing\_intent | ./modules/routing-intent | n/a |
@@ -177,7 +177,7 @@ module "virtual_wan" {
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_virtual_wan.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
 | [terraform_data.routing_intent_precondition](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [azurecaf_name.main](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
@@ -185,7 +185,7 @@ module "virtual_wan" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | azure\_firewall\_as\_next\_hop\_enabled | Whether use Azure Firewall as next hop or a NVA. | `bool` | `true` | no |
 | branch\_to\_branch\_traffic\_allowed | Boolean flag to specify whether branch to branch traffic is allowed. | `bool` | `true` | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
@@ -271,7 +271,7 @@ module "virtual_wan" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | express\_route\_circuit\_id | ID of the Express Route circuit. |
 | express\_route\_circuit\_name | Name of the Express Route circuit. |
 | express\_route\_circuit\_service\_key | The string needed by the service provider to provision the Express Route circuit. |

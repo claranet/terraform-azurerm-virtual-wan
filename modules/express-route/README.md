@@ -72,20 +72,20 @@ module "express_route" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_express_route_circuit.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit) | resource |
 | [azurerm_express_route_circuit_peering.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit_peering) | resource |
 | [azurerm_express_route_connection.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_connection) | resource |
@@ -97,7 +97,7 @@ module "express_route" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | circuit\_bandwidth\_in\_mbps | The bandwidth in Mbps of the Express Route circuit being created on the service provider. | `number` | n/a | yes |
 | circuit\_custom\_name | Custom Express Route circuit name. | `string` | `null` | no |
 | circuit\_enabled | Whether or not to create the Express Route circuit. | `bool` | `true` | no |
@@ -134,7 +134,7 @@ module "express_route" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | circuit\_id | The ID of the Express Route circuit. |
 | circuit\_name | The name of the Express Route circuit. |
 | circuit\_service\_key | The string needed by the service provider to provision the Express Route circuit. |

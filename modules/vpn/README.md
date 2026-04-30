@@ -153,20 +153,20 @@ module "vpn" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | diagnostic\_settings | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_vpn_gateway.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_gateway) | resource |
 | [azurerm_vpn_gateway_connection.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_gateway_connection) | resource |
 | [azurerm_vpn_gateway_nat_rule.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vpn_gateway_nat_rule) | resource |
@@ -176,7 +176,7 @@ module "vpn" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | bgp\_peer\_weight | The weight added to routes learned from this BGP speaker. | `number` | `0` | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_name | Custom VPN gateway name. | `string` | `null` | no |
@@ -208,7 +208,7 @@ module "vpn" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | bgp\_settings | BGP settings of the VPN gateway. |
 | id | ID of the VPN gateway. |
 | module\_diagnostic\_settings | Diagnostic settings module output. |

@@ -56,7 +56,7 @@ module "virtual_hub" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.0 |
 
@@ -67,7 +67,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_virtual_hub.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub) | resource |
 | [azurerm_virtual_hub_connection.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_connection) | resource |
 | [azurecaf_name.main](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
@@ -75,7 +75,7 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure. | `string` | n/a | yes |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_name | Custom Virtual Hub name. | `string` | `null` | no |
@@ -98,7 +98,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | default\_route\_table\_id | ID of the default route table associated with the Virtual Hub. |
 | id | ID of the Virtual Hub. |
 | name | Name of the Virtual Hub. |
