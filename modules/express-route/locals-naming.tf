@@ -9,6 +9,7 @@ locals {
     var.name_slug,
   ])
 
-  gateway_name = coalesce(var.gateway_custom_name, data.azurecaf_name.gateway.result)
-  circuit_name = coalesce(var.circuit_custom_name, data.azurecaf_name.circuit.result)
+  gateway_name    = coalesce(var.gateway_custom_name, data.azurecaf_name.gateway.result)
+  circuit_name    = coalesce(var.circuit_custom_name, data.azurecaf_name.circuit.result)
+  connection_name = coalesce(var.connection_custom_name, data.azurecaf_name.connection.result)
 }

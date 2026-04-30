@@ -61,3 +61,11 @@ moved {
   from = azurerm_express_route_circuit_peering.ercprivatepeer["express_route"]
   to   = azurerm_express_route_circuit_peering.main[0]
 }
+
+resource "azurerm_express_route_connection" "main" {
+  count = one(azurerm_express_route_circuit.main[*].service_provider_provisioning_state) == "Provisioned" ? length(azurerm_express_route_circuit_peering.main) : 0
+
+  name                             = local.connection_name
+  express_route_gateway_id         = azurerm_express_route_gateway.main.id
+  express_route_circuit_peering_id = one(azurerm_express_route_circuit_peering.main[*].id)
+}

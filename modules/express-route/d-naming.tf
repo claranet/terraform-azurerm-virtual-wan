@@ -17,3 +17,12 @@ data "azurecaf_name" "circuit" {
   clean_input   = true
   separator     = "-"
 }
+
+data "azurecaf_name" "connection" {
+  name        = var.stack
+  prefixes    = compact([local.name_prefix, "ercn"])
+  suffixes    = compact([var.client_name, var.location_short, var.environment, local.name_suffix])
+  use_slug    = false
+  clean_input = true
+  separator   = "-"
+}

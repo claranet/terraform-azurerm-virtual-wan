@@ -17,6 +17,7 @@ module "express_route" {
 
   gateway_custom_name             = var.express_route_gateway_custom_name
   circuit_custom_name             = var.express_route_circuit_custom_name
+  connection_custom_name          = var.express_route_connection_custom_name
   diagnostic_settings_custom_name = var.express_route_diagnostic_settings_custom_name
 
   virtual_hub = module.virtual_hub
