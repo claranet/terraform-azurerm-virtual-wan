@@ -1,3 +1,17 @@
+## 8.2.0 (2026-05-14)
+
+### Features
+
+* **express-route:** add Express Route connection resource 8856c2f
+
+### Miscellaneous Chores
+
+* **deps:** 🔗 update mise conf for OpenTofu 3e324b6
+* **deps:** update dependency terraform-docs to v0.23.0 61f6dc7
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.3.0 b08daea
+* **pre-commit:** 🔧 move to prek 055d07b
+* **tfdocs:** bump tfdocs to v0.22 🔧 f698ceb
+
 ## 8.1.3 (2026-03-27)
 
 ### Bug Fixes
