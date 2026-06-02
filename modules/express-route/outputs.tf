@@ -1,6 +1,7 @@
 output "resource_gateway" {
   description = "Express Route gateway resource object."
   value       = azurerm_express_route_gateway.main
+  sensitive   = true
 }
 
 output "resource_circuit" {

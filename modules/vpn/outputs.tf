@@ -1,16 +1,19 @@
 output "resource" {
   description = "VPN gateway resource object."
   value       = azurerm_vpn_gateway.main
+  sensitive   = true
 }
 
 output "resource_vpn_site" {
   description = "VPN site resource object."
   value       = azurerm_vpn_site.main
+  sensitive   = true
 }
 
 output "resource_vpn_connection" {
   description = "VPN connection resource object."
   value       = azurerm_vpn_gateway_connection.main
+  sensitive   = true
 }
 
 output "module_diagnostic_settings" {

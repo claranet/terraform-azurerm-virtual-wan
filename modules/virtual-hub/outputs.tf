@@ -1,11 +1,13 @@
 output "resource" {
   description = "Virtual Hub resource object."
   value       = azurerm_virtual_hub.main
+  sensitive   = true
 }
 
 output "resource_virtual_hub_connection" {
   description = "Virtual Hub connection resource object."
   value       = azurerm_virtual_hub_connection.main
+  sensitive   = true
 }
 
 output "id" {

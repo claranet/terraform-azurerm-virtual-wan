@@ -1,6 +1,7 @@
 output "resource" {
   description = "Virtual WAN resource object."
   value       = azurerm_virtual_wan.main
+  sensitive   = true
 }
 
 output "id" {

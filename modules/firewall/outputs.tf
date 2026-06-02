@@ -1,6 +1,7 @@
 output "resource" {
   description = "Firewall resource object."
   value       = azurerm_firewall.main
+  sensitive   = true
 }
 
 output "module_diagnostic_settings" {

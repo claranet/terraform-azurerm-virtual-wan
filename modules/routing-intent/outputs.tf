@@ -1,6 +1,7 @@
 output "resource" {
   description = "Routing intent resource object."
   value       = azurerm_virtual_hub_routing_intent.main
+  sensitive   = true
 }
 
 output "id" {
