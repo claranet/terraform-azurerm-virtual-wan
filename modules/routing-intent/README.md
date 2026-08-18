@@ -50,7 +50,7 @@ module "routing_intent" {
 
 | Name | Version |
 | ---- | ------- |
-| azurerm | ~> 4.0 |
+| azurerm | ~> 5.0 |
 
 ## Modules
 
