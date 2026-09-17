@@ -26,5 +26,7 @@ module "run" {
   environment    = var.environment
   stack          = var.stack
 
+  resource_group_name = module.rg.name
+
   monitoring_function_enabled = false
 }
