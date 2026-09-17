@@ -1,6 +1,8 @@
 module "virtual_hub" {
   source = "./modules/virtual-hub"
 
+  count = var.virtual_hub_enabled ? 1 : 0
+
   location       = var.location
   location_short = var.location_short
   client_name    = var.client_name
@@ -30,4 +32,9 @@ module "virtual_hub" {
 moved {
   from = module.vhub
   to   = module.virtual_hub
+}
+
+moved {
+  from = module.virtual_hub
+  to   = module.virtual_hub[0]
 }

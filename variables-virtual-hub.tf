@@ -5,10 +5,28 @@ variable "virtual_hub_sku" {
   nullable    = false
 }
 
-variable "virtual_hub_address_prefix" {
-  description = "The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure."
-  type        = string
+variable "virtual_hub_enabled" {
+  description = "Boolean flag to specify whether to create the Virtual Hub. Set it to `false` to only manage the Virtual WAN. When disabled, all the other `var.virtual_hub_*` variables and `var.peered_virtual_networks` are ignored."
+  type        = bool
+  default     = true
   nullable    = false
+}
+
+variable "virtual_hub_address_prefix" {
+  description = "The address prefix which should be used for this Virtual Hub. Required when `var.virtual_hub_enabled` is `true`, ignored otherwise. Cannot be smaller than a /24. A /23 is recommended by Azure."
+  type        = string
+  default     = null
+  nullable    = true
+
+  validation {
+    condition     = var.virtual_hub_enabled ? (var.virtual_hub_address_prefix != null && trimspace(var.virtual_hub_address_prefix) != "") : true
+    error_message = "`var.virtual_hub_address_prefix` must not be null nor empty when `var.virtual_hub_enabled` is `true`."
+  }
+
+  validation {
+    condition     = var.virtual_hub_address_prefix == null ? true : tonumber(split("/", var.virtual_hub_address_prefix)[1]) <= 24
+    error_message = "Virtual Hub address prefix must be at least /24. A /23 is recommended by Azure."
+  }
 }
 
 variable "virtual_hub_routes" {

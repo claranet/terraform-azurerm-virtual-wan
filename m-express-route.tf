@@ -20,7 +20,7 @@ module "express_route" {
   connection_custom_name          = var.express_route_connection_custom_name
   diagnostic_settings_custom_name = var.express_route_diagnostic_settings_custom_name
 
-  virtual_hub = module.virtual_hub
+  virtual_hub = one(module.virtual_hub[*])
 
   gateway_scale_unit                      = var.express_route_gateway_scale_unit
   gateway_non_virtual_wan_traffic_allowed = var.express_route_gateway_non_virtual_wan_traffic_allowed

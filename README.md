@@ -181,6 +181,7 @@ module "virtual_wan" {
 | ---- | ---- |
 | [azurerm_virtual_wan.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_wan) | resource |
 | [terraform_data.routing_intent_precondition](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.virtual_hub_precondition](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [azurecaf_name.main](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
@@ -247,8 +248,9 @@ module "virtual_wan" {
 | routing\_intent\_enabled | Enable or disable routing intent feature in the Virtual Hub. | `bool` | `false` | no |
 | stack | Project Stack name. | `string` | n/a | yes |
 | type | Specifies the Virtual WAN type. Possible Values are `Basic` and `Standard`. Defaults to `Standard`. | `string` | `"Standard"` | no |
-| virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Cannot be smaller than a /24. A /23 is recommended by Azure. | `string` | n/a | yes |
+| virtual\_hub\_address\_prefix | The address prefix which should be used for this Virtual Hub. Required when `var.virtual_hub_enabled` is `true`, ignored otherwise. Cannot be smaller than a /24. A /23 is recommended by Azure. | `string` | `null` | no |
 | virtual\_hub\_custom\_name | Custom Virtual Hub name. | `string` | `null` | no |
+| virtual\_hub\_enabled | Boolean flag to specify whether to create the Virtual Hub. Set it to `false` to only manage the Virtual WAN. When disabled, all the other `var.virtual_hub_*` variables and `var.peered_virtual_networks` are ignored. | `bool` | `true` | no |
 | virtual\_hub\_extra\_tags | Extra tags for the Virtual Hub. | `map(string)` | `null` | no |
 | virtual\_hub\_routes | List of route objects. `var.routes[*].next_hop_ip_address` values can be `azure_firewall` or an IP address. | <pre>list(object({<br/>    address_prefixes    = list(string)<br/>    next_hop_ip_address = string<br/>  }))</pre> | `[]` | no |
 | virtual\_hub\_sku | The SKU of the Virtual Hub. Possible values are `Basic` and `Standard`. | `string` | `"Standard"` | no |
@@ -291,16 +293,16 @@ module "virtual_wan" {
 | module\_express\_route | Express Route module outputs. |
 | module\_firewall | Firewall module outputs. |
 | module\_routing\_intent | Routing intent module outputs. |
-| module\_virtual\_hub | Virtual Hub module outputs. |
+| module\_virtual\_hub | Virtual Hub module outputs. `null` when `var.virtual_hub_enabled` is `false`. |
 | module\_vpn | VPN module outputs. |
 | name | Name of the Virtual WAN. |
 | resource | Virtual WAN resource object. |
 | routing\_intent\_id | ID of the routing intent. |
 | routing\_intent\_name | Name of the routing intent. |
 | terraform\_module | Information about this Terraform module. |
-| virtual\_hub\_default\_route\_table\_id | ID of the default route table associated with the Virtual Hub. |
-| virtual\_hub\_id | ID of the Virtual Hub. |
-| virtual\_hub\_name | Name of the Virtual Hub. |
+| virtual\_hub\_default\_route\_table\_id | ID of the default route table associated with the Virtual Hub. `null` when `var.virtual_hub_enabled` is `false`. |
+| virtual\_hub\_id | ID of the Virtual Hub. `null` when `var.virtual_hub_enabled` is `false`. |
+| virtual\_hub\_name | Name of the Virtual Hub. `null` when `var.virtual_hub_enabled` is `false`. |
 | vpn\_gateway\_bgp\_settings | BGP settings of the VPN gateway. |
 | vpn\_gateway\_connections\_ids | Map of VPN gateway connections (name => ID). |
 | vpn\_gateway\_id | ID of the VPN gateway. |

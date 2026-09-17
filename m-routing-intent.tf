@@ -19,7 +19,7 @@ module "routing_intent" {
 
   count = length(terraform_data.routing_intent_precondition)
 
-  virtual_hub = module.virtual_hub
+  virtual_hub = one(module.virtual_hub[*])
 
   custom_name = var.routing_intent_custom_name
 
