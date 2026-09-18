@@ -1,3 +1,17 @@
+## 9.1.0 (2026-09-18)
+
+### Features
+
+* **AZ-1698:** make Virtual Hub creation optional cf77755
+
+### Bug Fixes
+
+* **examples:** add missing resource_group_name to the run module in no-hub 42b9dc2
+
+### Miscellaneous Chores
+
+* **deps:** ⬆️ update tools 🔗 d05350b
+
 ## 9.0.0 (2026-08-25)
 
 ### ⚠ BREAKING CHANGES
