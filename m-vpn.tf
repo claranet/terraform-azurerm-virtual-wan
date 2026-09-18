@@ -19,7 +19,7 @@ module "vpn" {
   diagnostic_settings_custom_name = var.vpn_gateway_diagnostic_settings_custom_name
 
   virtual_wan = azurerm_virtual_wan.main
-  virtual_hub = module.virtual_hub
+  virtual_hub = one(module.virtual_hub[*])
 
   scale_unit                     = var.vpn_gateway_scale_unit
   routing_preference             = var.vpn_gateway_routing_preference

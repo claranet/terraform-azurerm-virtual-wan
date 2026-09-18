@@ -18,7 +18,7 @@ module "firewall" {
   custom_name                     = var.firewall_custom_name
   diagnostic_settings_custom_name = var.firewall_diagnostic_settings_custom_name
 
-  virtual_hub = module.virtual_hub
+  virtual_hub = one(module.virtual_hub[*])
 
   public_ip_count   = var.firewall_public_ip_count
   firewall_policy   = var.firewall_policy
